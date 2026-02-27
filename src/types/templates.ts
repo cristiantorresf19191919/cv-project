@@ -1,4 +1,4 @@
-export type TemplateName = 'noir' | 'arctic' | 'term' | 'edit' | 'neon' | 'glass';
+export type TemplateName = 'noir' | 'arctic' | 'term' | 'edit' | 'neon' | 'glass' | 'exec' | 'mono' | 'ember' | 'midnight';
 
 export interface ThemeConfig {
   bg: string;

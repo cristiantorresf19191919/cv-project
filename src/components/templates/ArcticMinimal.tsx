@@ -110,8 +110,11 @@ export default function ArcticMinimal() {
             <div className={s.ti}>
               <div className={s.tc}>
                 <h3 className={s.tcH3}>{exp.t}</h3>
-                <div className={s.co}>{exp.co}</div>
-                <div className={s.dt}>{exp.dt}</div>
+                <div className={s.meta}>
+                  <span className={s.co}>{exp.co}</span>
+                  <span className={s.metaDot}>•</span>
+                  <span className={s.dt}>{exp.dt}</span>
+                </div>
                 <div className={s.td}>{exp.d}</div>
                 <ul className={s.tcUl}>
                   {exp.a.map((a, j) => <li key={j} className={s.tcLi}>{a}</li>)}

@@ -1,0 +1,712 @@
+/* ─────────────────────────────────────────────
+   MonochromeSplit — Bold B&W Creative CV
+   ───────────────────────────────────────────── */
+
+.template {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  background: #fff;
+  color: #111;
+  min-height: 100vh;
+}
+
+/* ── Split layout ── */
+.split {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Black left panel ── */
+.panelLeft {
+  width: 35%;
+  background: #000;
+  color: #fff;
+  position: sticky;
+  top: 58px;
+  height: calc(100vh - 58px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 1.5rem 2rem;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.panelLeft::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── White right panel ── */
+.panelRight {
+  width: 65%;
+  background: #fff;
+  padding: 3rem 3.5rem 4rem;
+  min-height: 100vh;
+}
+
+/* ── Photo ── */
+.photoWrap {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+  margin-bottom: 1.2rem;
+}
+
+.photoWrap :global(.profile-photo) {
+  filter: grayscale(100%);
+  object-fit: cover;
+}
+
+/* ── Vertical name ── */
+.verticalName {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 5.5rem;
+  font-weight: 700;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1;
+  margin: 1rem 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  user-select: none;
+  opacity: 0.92;
+}
+
+/* ── Profile info (left panel) ── */
+.profileInfo {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.profileTitle {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #e11d48;
+  margin-bottom: 0.4rem;
+}
+
+.profileTagline {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.contactRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.55rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.contactRow span:first-child {
+  font-size: 0.85rem;
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.contactRow a {
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.contactRow a:hover {
+  color: #e11d48;
+}
+
+/* ── Social icons (left panel) ── */
+.socials {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+  justify-content: center;
+}
+
+.socialBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.socialBtn:hover {
+  background: #e11d48;
+  border-color: #e11d48;
+  transform: translateY(-2px);
+}
+
+/* ── Section (right panel) ── */
+.section {
+  margin-bottom: 3.5rem;
+}
+
+.sectionHeader {
+  margin-bottom: 2rem;
+}
+
+.sectionTag {
+  font-size: 0.62rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #e11d48;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #000;
+  letter-spacing: -1px;
+  line-height: 1.15;
+}
+
+/* ── About / description ── */
+.aboutText {
+  font-size: 0.92rem;
+  color: #444;
+  line-height: 1.95;
+  max-width: 90%;
+}
+
+/* ── Stats row ── */
+.statsRow {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statNum {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #000;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.62rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 0.2rem;
+}
+
+/* ── Experience timeline ── */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: #e2e2e2;
+}
+
+.timelineItem {
+  position: relative;
+  margin-bottom: 2.2rem;
+  padding-bottom: 0.5rem;
+}
+
+.timelineItem:last-child {
+  margin-bottom: 0;
+}
+
+.timelineDot {
+  position: absolute;
+  left: -2rem;
+  top: 6px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #000;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px #000;
+  z-index: 1;
+}
+
+.timelineDate {
+  font-size: 0.68rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+.timelineRole {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 0.15rem;
+}
+
+.timelineCompany {
+  font-size: 0.82rem;
+  color: #e11d48;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.timelineDesc {
+  font-size: 0.82rem;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 0.7rem;
+}
+
+.timelineList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.8rem;
+}
+
+.timelineListItem {
+  padding-left: 1.2rem;
+  text-indent: -1.2rem;
+  font-size: 0.78rem;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 0.25rem;
+}
+
+.timelineListItem::before {
+  content: '\2014\00a0';
+  color: #ccc;
+}
+
+.timelineTech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+}
+
+.techTag {
+  padding: 0.2rem 0.55rem;
+  background: #f5f5f5;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  color: #333;
+  font-weight: 500;
+}
+
+/* ── Skills ── */
+.skillsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.skillCard {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 1.4rem;
+  transition: all 0.35s;
+}
+
+.skillCard:hover {
+  border-color: #ccc;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+  transform: translateY(-3px);
+}
+
+.skillIco {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.skillTitle {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 0.6rem;
+}
+
+.skillTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.skillTag {
+  padding: 0.2rem 0.5rem;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  color: #555;
+}
+
+/* ── Projects ── */
+.projectsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+}
+
+.projectCard {
+  display: flex;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: all 0.35s;
+}
+
+.projectCard:hover {
+  border-color: #ccc;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  transform: translateY(-3px);
+}
+
+.projectImage {
+  width: 200px;
+  min-height: 140px;
+  position: relative;
+  background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
+  flex-shrink: 0;
+}
+
+.projectBody {
+  padding: 1.4rem;
+  flex: 1;
+}
+
+.projectTitle {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 0.4rem;
+}
+
+.projectDesc {
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 0.8rem;
+}
+
+.projectLink {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #e11d48;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+/* ── Interests grid ── */
+.interestsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 0.8rem;
+}
+
+.interestCard {
+  aspect-ratio: 1;
+  background: #000;
+  color: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: all 0.35s;
+  cursor: default;
+}
+
+.interestCard:hover {
+  background: #e11d48;
+  transform: scale(1.06);
+}
+
+.interestIco {
+  font-size: 1.5rem;
+}
+
+.interestLabel {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+/* ── Contact CTA (right panel bottom) ── */
+.contactCTA {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.btnPrimary {
+  padding: 0.75rem 1.8rem;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+  letter-spacing: 0.5px;
+}
+
+.btnPrimary:hover {
+  background: #e11d48;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(225, 29, 72, 0.2);
+}
+
+.btnSecondary {
+  padding: 0.75rem 1.8rem;
+  background: transparent;
+  color: #000;
+  border: 1.5px solid #ddd;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.btnSecondary:hover {
+  border-color: #000;
+  color: #000;
+}
+
+/* ── Red accent line divider ── */
+.accentLine {
+  width: 40px;
+  height: 2px;
+  background: #e11d48;
+  margin-bottom: 1.5rem;
+  border: none;
+}
+
+/* ── Contact grid (right panel) ── */
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.contactCard {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 1.2rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.contactCard:hover {
+  border-color: #ccc;
+  transform: translateY(-2px);
+}
+
+.contactCardIco {
+  font-size: 1.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.contactCardLabel {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 0.72rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.25rem;
+}
+
+.contactCardValue {
+  font-size: 0.8rem;
+  color: #111;
+  text-decoration: none;
+}
+
+.contactCardValue:hover {
+  color: #e11d48;
+}
+
+/* ────────────────────────────────────────────
+   Responsive
+   ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .panelRight {
+    padding: 2.5rem 2rem 3rem;
+  }
+
+  .skillsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .verticalName {
+    font-size: 4rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.8rem;
+  }
+
+  .contactGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .split {
+    flex-direction: column;
+  }
+
+  .panelLeft {
+    width: 100%;
+    position: relative;
+    top: auto;
+    height: auto;
+    padding: 2.5rem 1.5rem 2rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .verticalName {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 3rem;
+    letter-spacing: 4px;
+    margin: 0.5rem 0;
+    flex: none;
+    text-align: center;
+  }
+
+  .panelRight {
+    width: 100%;
+    padding: 2rem 1.5rem 3rem;
+  }
+
+  .photoWrap {
+    width: 140px;
+    height: 140px;
+  }
+
+  .statsRow {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .skillsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .projectCard {
+    flex-direction: column;
+  }
+
+  .projectImage {
+    width: 100%;
+    min-height: 160px;
+  }
+
+  .interestsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sectionTitle {
+    font-size: 1.6rem;
+  }
+
+  .statNum {
+    font-size: 2.2rem;
+  }
+
+  .contactGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .verticalName {
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+  }
+
+  .sectionTitle {
+    font-size: 1.4rem;
+  }
+
+  .panelRight {
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .interestsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contactCTA {
+    flex-direction: column;
+  }
+
+  .btnPrimary,
+  .btnSecondary {
+    text-align: center;
+    width: 100%;
+  }
+
+  .aboutText {
+    max-width: 100%;
+  }
+}

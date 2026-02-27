@@ -1,15 +1,17 @@
 'use client';
 
 import { useTemplate } from '@/context/TemplateContext';
+import { useLanguage } from '@/context/LanguageContext';
 import { THEMES, TEMPLATE_LIST } from '@/data/themes';
 import { TemplateName } from '@/types/templates';
 import styles from '@/styles/switcher.module.css';
 
 export default function TemplateSwitcher() {
   const { current, switchTemplate } = useTemplate();
+  const { lang, toggleLang } = useLanguage();
   const theme = THEMES[current];
 
-  const isDarkNav = current !== 'arctic' && current !== 'edit';
+  const isDarkNav = current !== 'arctic' && current !== 'edit' && current !== 'exec' && current !== 'mono';
 
   return (
     <div
@@ -59,6 +61,30 @@ export default function TemplateSwitcher() {
           );
         })}
       </div>
+
+      <div className={styles.divider} />
+
+      <button
+        className={styles.langToggle}
+        onClick={toggleLang}
+        style={{
+          borderColor: isDarkNav ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.12)',
+          ['--lang-accent' as string]: theme.accent,
+        }}
+      >
+        <span
+          className={`${styles.langOpt} ${lang === 'en' ? styles.langActive : ''}`}
+          style={lang === 'en' ? { background: theme.accent, color: '#fff' } : { color: isDarkNav ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)' }}
+        >
+          EN
+        </span>
+        <span
+          className={`${styles.langOpt} ${lang === 'es' ? styles.langActive : ''}`}
+          style={lang === 'es' ? { background: theme.accent, color: '#fff' } : { color: isDarkNav ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)' }}
+        >
+          ES
+        </span>
+      </button>
     </div>
   );
 }

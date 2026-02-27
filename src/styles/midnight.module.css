@@ -1,0 +1,734 @@
+/* ======================================================
+   MidnightPortfolio – Dark three-column CV template
+   Inspired by Sachin Raj dark portfolio design
+   ====================================================== */
+
+/* ---------- Root wrapper ---------- */
+.template {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  background: #0d1117;
+  color: #e5e7eb;
+  min-height: 100vh;
+}
+
+/* ---------- Three-column grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: 260px 1fr 240px;
+  min-height: 100vh;
+}
+
+/* ---------- LEFT SIDEBAR ---------- */
+.left {
+  background: #0b0f14;
+  border-right: 1px solid rgba(6, 182, 212, 0.08);
+  padding: 2.5rem 1.5rem 2rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  scrollbar-width: thin;
+  scrollbar-color: #161b22 #0b0f14;
+}
+
+.left::-webkit-scrollbar {
+  width: 4px;
+}
+
+.left::-webkit-scrollbar-thumb {
+  background: #161b22;
+  border-radius: 4px;
+}
+
+/* Photo ring */
+.photoRing {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, #06b6d4, #3b82f6, #8b5cf6);
+  flex-shrink: 0;
+}
+
+.photoInner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  background: #0b0f14;
+}
+
+/* Identity */
+.sidebarName {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #f0f6fc;
+  text-align: center;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+}
+
+.sidebarTitle {
+  font-size: 0.72rem;
+  color: #06b6d4;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+/* Contact list */
+.contactList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 0.4rem;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.78rem;
+  color: #9ca3af;
+  word-break: break-all;
+}
+
+.contactIcon {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #161b22;
+  border-radius: 8px;
+  font-size: 0.82rem;
+}
+
+.contactText {
+  color: #9ca3af;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contactText:hover {
+  color: #06b6d4;
+}
+
+/* Divider */
+.divider {
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.15), transparent);
+  margin: 0.2rem 0;
+  flex-shrink: 0;
+}
+
+/* Social icons row */
+.socials {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.2rem;
+}
+
+.socialLink {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid #21262d;
+  background: transparent;
+  color: #9ca3af;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.socialLink:hover {
+  background: #06b6d4;
+  border-color: #06b6d4;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Download button */
+.downloadBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+  margin-top: auto;
+  letter-spacing: 0.5px;
+}
+
+.downloadBtn:hover {
+  background: linear-gradient(135deg, #22d3ee, #06b6d4);
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ---------- CENTER CONTENT ---------- */
+.center {
+  padding: 3rem 2.5rem 4rem;
+  min-width: 0;
+}
+
+/* Section spacing */
+.section {
+  margin-bottom: 3rem;
+}
+
+/* Section label */
+.sectionLabel {
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #06b6d4;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #f0f6fc;
+  letter-spacing: -0.5px;
+  margin-bottom: 1.2rem;
+}
+
+/* About text */
+.aboutText {
+  font-size: 0.92rem;
+  color: #9ca3af;
+  line-height: 1.85;
+  max-width: 95%;
+}
+
+/* Stats row */
+.statsRow {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.statCard {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 12px;
+  padding: 1rem 1.4rem;
+  text-align: center;
+  flex: 1;
+  transition: border-color 0.3s;
+}
+
+.statCard:hover {
+  border-color: rgba(6, 182, 212, 0.3);
+}
+
+.statNum {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #06b6d4;
+}
+
+.statLabel {
+  font-size: 0.62rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 0.15rem;
+}
+
+/* Service / skill grid */
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.serviceCard {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 14px;
+  padding: 1.4rem;
+  transition: all 0.35s;
+  cursor: default;
+}
+
+.serviceCard:hover {
+  border-color: rgba(6, 182, 212, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.serviceIcon {
+  font-size: 1.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.serviceTitle {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f0f6fc;
+  margin-bottom: 0.35rem;
+}
+
+.serviceTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.serviceTag {
+  padding: 0.2rem 0.5rem;
+  background: rgba(6, 182, 212, 0.08);
+  border: 1px solid rgba(6, 182, 212, 0.12);
+  border-radius: 6px;
+  font-size: 0.67rem;
+  color: #06b6d4;
+  font-weight: 500;
+}
+
+/* Experience cards */
+.expCard {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-left: 3px solid #06b6d4;
+  border-radius: 14px;
+  padding: 1.5rem 1.6rem;
+  margin-bottom: 1rem;
+  transition: all 0.35s;
+}
+
+.expCard:hover {
+  border-color: #21262d;
+  border-left-color: #22d3ee;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.expRole {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f0f6fc;
+}
+
+.expMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.15rem;
+}
+
+.expCompany {
+  color: #06b6d4;
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+
+.expDot {
+  color: #4b5563;
+  font-size: 0.72rem;
+}
+
+.expDate {
+  color: #6b7280;
+  font-size: 0.75rem;
+}
+
+.expDesc {
+  color: #9ca3af;
+  line-height: 1.8;
+  margin: 0.6rem 0 1rem;
+  font-size: 0.85rem;
+}
+
+.expList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.8rem;
+}
+
+.expListItem {
+  padding-left: 1.3rem;
+  text-indent: -1.3rem;
+  color: #9ca3af;
+  line-height: 1.8;
+  margin-bottom: 0.3rem;
+  font-size: 0.82rem;
+}
+
+.expListItem::before {
+  content: '\25B8\00a0';
+  color: #06b6d4;
+}
+
+.expTech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.6rem;
+}
+
+.expTechTag {
+  padding: 0.2rem 0.55rem;
+  background: rgba(6, 182, 212, 0.06);
+  border: 1px solid rgba(6, 182, 212, 0.1);
+  border-radius: 6px;
+  font-size: 0.68rem;
+  color: #22d3ee;
+}
+
+/* Projects */
+.projectGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.projectCard {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: all 0.35s;
+  text-decoration: none;
+  display: block;
+}
+
+.projectCard:hover {
+  border-color: rgba(6, 182, 212, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.projectImg {
+  width: 100%;
+  height: 160px;
+  position: relative;
+  background: linear-gradient(135deg, #161b22, #0d1117);
+  overflow: hidden;
+}
+
+.projectBody {
+  padding: 1.2rem;
+}
+
+.projectTitle {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f0f6fc;
+  margin-bottom: 0.4rem;
+}
+
+.projectDesc {
+  font-size: 0.8rem;
+  color: #6b7280;
+  line-height: 1.7;
+  margin-bottom: 0.7rem;
+}
+
+.projectLink {
+  color: #06b6d4;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ---------- RIGHT SIDEBAR ---------- */
+.right {
+  background: #0b0f14;
+  border-left: 1px solid rgba(6, 182, 212, 0.08);
+  padding: 3rem 1.3rem 2rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #161b22 #0b0f14;
+}
+
+.right::-webkit-scrollbar {
+  width: 4px;
+}
+
+.right::-webkit-scrollbar-thumb {
+  background: #161b22;
+  border-radius: 4px;
+}
+
+.rightTitle {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #f0f6fc;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.3px;
+}
+
+/* Skill bars */
+.skillBars {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.skillBarItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.skillBarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skillBarName {
+  font-size: 0.75rem;
+  color: #e5e7eb;
+  font-weight: 500;
+}
+
+.skillBarPct {
+  font-size: 0.68rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.skillBarTrack {
+  width: 100%;
+  height: 6px;
+  background: #161b22;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.skillBarFill {
+  height: 100%;
+  border-radius: 4px;
+  transform-origin: left;
+}
+
+/* Individual skill bar colors */
+.barTeal {
+  background: linear-gradient(90deg, #06b6d4, #22d3ee);
+}
+
+.barBlue {
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+.barPurple {
+  background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+}
+
+.barGreen {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.barPink {
+  background: linear-gradient(90deg, #ec4899, #f472b6);
+}
+
+.barOrange {
+  background: linear-gradient(90deg, #f97316, #fb923c);
+}
+
+.barIndigo {
+  background: linear-gradient(90deg, #6366f1, #818cf8);
+}
+
+.barRed {
+  background: linear-gradient(90deg, #ef4444, #f87171);
+}
+
+/* Right sidebar divider */
+.rightDivider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.12), transparent);
+  margin: 1.5rem 0;
+}
+
+/* Right sidebar tools list */
+.toolsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.toolItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.6rem;
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  color: #9ca3af;
+  transition: all 0.25s;
+}
+
+.toolItem:hover {
+  border-color: rgba(6, 182, 212, 0.2);
+  color: #e5e7eb;
+}
+
+.toolDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #06b6d4;
+  flex-shrink: 0;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+/* Tablet: hide right sidebar, skills bars move to center */
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: 260px 1fr;
+  }
+
+  .right {
+    display: none;
+  }
+
+  .center {
+    padding: 2.5rem 2rem 3rem;
+  }
+}
+
+/* Narrow tablet / large phone: single column */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    position: relative;
+    height: auto;
+    padding: 2rem 1.5rem;
+    border-right: none;
+    border-bottom: 1px solid rgba(6, 182, 212, 0.08);
+  }
+
+  .center {
+    padding: 2rem 1.2rem 3rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+
+  .serviceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statsRow {
+    flex-wrap: wrap;
+  }
+
+  .statCard {
+    min-width: 120px;
+  }
+
+  .expMeta {
+    flex-wrap: wrap;
+  }
+
+  .projectGrid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Show right sidebar content inline on mobile */
+  .right {
+    display: block;
+    position: relative;
+    height: auto;
+    border-left: none;
+    border-top: 1px solid rgba(6, 182, 212, 0.08);
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* Small phone */
+@media (max-width: 480px) {
+  .left {
+    padding: 1.5rem 1rem;
+  }
+
+  .photoRing {
+    width: 120px;
+    height: 120px;
+  }
+
+  .sidebarName {
+    font-size: 1.1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.3rem;
+  }
+
+  .center {
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .serviceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .downloadBtn {
+    font-size: 0.75rem;
+    padding: 0.65rem 0.8rem;
+  }
+}
+
+/* Skill bar mobile visibility (show bars inline when right sidebar is hidden on tablet) */
+@media (min-width: 769px) and (max-width: 1100px) {
+  .mobileSkillBars {
+    display: block;
+  }
+}
+
+@media (min-width: 1101px) {
+  .mobileSkillBars {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobileSkillBars {
+    display: none;
+  }
+}

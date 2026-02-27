@@ -9,6 +9,10 @@ import TerminalHacker from '@/components/templates/TerminalHacker';
 import EditorialLuxe from '@/components/templates/EditorialLuxe';
 import NeonCyber from '@/components/templates/NeonCyber';
 import Glassmorphism from '@/components/templates/Glassmorphism';
+import ExecutivePro from '@/components/templates/ExecutivePro';
+import MonochromeSplit from '@/components/templates/MonochromeSplit';
+import DarkEmber from '@/components/templates/DarkEmber';
+import MidnightPortfolio from '@/components/templates/MidnightPortfolio';
 import { TemplateName } from '@/types/templates';
 import { ComponentType } from 'react';
 
@@ -19,6 +23,10 @@ const templateMap: Record<TemplateName, ComponentType> = {
   edit: EditorialLuxe,
   neon: NeonCyber,
   glass: Glassmorphism,
+  exec: ExecutivePro,
+  mono: MonochromeSplit,
+  ember: DarkEmber,
+  midnight: MidnightPortfolio,
 };
 
 export default function Home() {

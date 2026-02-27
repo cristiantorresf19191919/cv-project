@@ -12,6 +12,7 @@ import {
 import './globals.css';
 import { ContentProvider } from '@/context/ContentContext';
 import { TemplateProvider } from '@/context/TemplateContext';
+import { LanguageProvider } from '@/context/LanguageContext';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -87,9 +88,11 @@ export default function RootLayout({
       <body
         className={`${cormorant.variable} ${montserrat.variable} ${playfair.variable} ${spaceMono.variable} ${bebasNeue.variable} ${syne.variable} ${outfit.variable} ${crimsonPro.variable}`}
       >
-        <ContentProvider>
-          <TemplateProvider>{children}</TemplateProvider>
-        </ContentProvider>
+        <LanguageProvider>
+          <ContentProvider>
+            <TemplateProvider>{children}</TemplateProvider>
+          </ContentProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
