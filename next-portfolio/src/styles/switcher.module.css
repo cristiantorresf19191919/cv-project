@@ -1,0 +1,112 @@
+.switcher {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10000;
+  padding: 0.9rem 2rem;
+  background: rgba(10, 10, 10, 0.88);
+  backdrop-filter: blur(30px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  transition: background 0.5s ease;
+}
+
+.logo {
+  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #d4af37, #f0d780);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+  flex-shrink: 0;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.label {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
+  transition: color 0.5s ease;
+}
+
+.scroll {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 1;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.btn {
+  flex-shrink: 0;
+  padding: 0.5rem 1.1rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.07);
+  border-radius: 100px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.btnActive {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 15px var(--glow, rgba(212, 175, 55, 0.2));
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  transition: box-shadow 0.3s;
+}
+
+.dotActive {
+  box-shadow: 0 0 8px currentColor;
+}
+
+@media (max-width: 480px) {
+  .logo {
+    display: none;
+  }
+  .divider {
+    display: none;
+  }
+  .btn {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
