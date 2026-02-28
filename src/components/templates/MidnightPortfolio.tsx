@@ -40,6 +40,12 @@ const socialPop = {
   }),
 };
 
+const cardHover = {
+  y: -6,
+  scale: 1.02,
+  transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
+};
+
 /* ---------- skill bar data ---------- */
 
 interface SkillBar {
@@ -130,6 +136,14 @@ export default function MidnightPortfolio() {
             {data.name} {data.last}
           </div>
           <div className={s.sidebarTitle}>{data.title}</div>
+
+          {/* Availability Badge */}
+          {data.availability === 'open' && (
+            <div className={s.availBadge}>
+              <span className={s.availDot} />
+              {t.availableForHire}
+            </div>
+          )}
 
           <div className={s.divider} />
 
@@ -225,11 +239,7 @@ export default function MidnightPortfolio() {
                 <motion.div
                   key={i}
                   variants={staggerItem}
-                  whileHover={{
-                    y: -6,
-                    scale: 1.02,
-                    transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
-                  }}
+                  whileHover={cardHover}
                   className={s.serviceCard}
                 >
                   <div className={s.serviceIcon}>{skill.ico}</div>
@@ -294,6 +304,34 @@ export default function MidnightPortfolio() {
             ))}
           </div>
 
+          {/* Testimonials */}
+          {data.testimonials && data.testimonials.length > 0 && (
+            <div className={s.section}>
+              <AnimatedSection direction="up">
+                <div className={s.sectionLabel}>{t.testimonialsTag}</div>
+                <h2 className={s.sectionTitle}>{t.testimonials}</h2>
+              </AnimatedSection>
+              <StaggerChildren className={s.testimonialsGrid} stagger={0.12}>
+                {data.testimonials.map((testimonial, i) => (
+                  <motion.div
+                    key={i}
+                    variants={staggerItem}
+                    whileHover={cardHover}
+                    className={s.testimonialCard}
+                  >
+                    <div className={s.testimonialQuote}>&ldquo;{testimonial.quote}&rdquo;</div>
+                    <div className={s.testimonialAuthor}>
+                      <div className={s.testimonialName}>{testimonial.name}</div>
+                      <div className={s.testimonialRole}>
+                        {testimonial.role} &middot; {testimonial.company}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </StaggerChildren>
+            </div>
+          )}
+
           {/* Projects */}
           {data.projects.length > 0 && (
             <div className={s.section}>
@@ -341,6 +379,31 @@ export default function MidnightPortfolio() {
                       </div>
                     </div>
                   </motion.a>
+                ))}
+              </StaggerChildren>
+            </div>
+          )}
+
+          {/* Education */}
+          {data.education && data.education.length > 0 && (
+            <div className={s.section}>
+              <AnimatedSection direction="up">
+                <div className={s.sectionLabel}>{t.educationTag}</div>
+                <h2 className={s.sectionTitle}>{t.education}</h2>
+              </AnimatedSection>
+              <StaggerChildren className={s.eduGrid} stagger={0.1}>
+                {data.education.map((edu, i) => (
+                  <motion.div
+                    key={i}
+                    variants={staggerItem}
+                    whileHover={cardHover}
+                    className={s.eduCard}
+                  >
+                    <div className={s.eduDegree}>{edu.degree}</div>
+                    <div className={s.eduSchool}>{edu.school}</div>
+                    <div className={s.eduDate}>{edu.date}</div>
+                    {edu.desc && <div className={s.eduDesc}>{edu.desc}</div>}
+                  </motion.div>
                 ))}
               </StaggerChildren>
             </div>

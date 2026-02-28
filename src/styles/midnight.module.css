@@ -123,6 +123,35 @@
   color: #06b6d4;
 }
 
+/* Availability Badge */
+.availBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 100px;
+  color: #10b981;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.availDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: availPulseMid 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes availPulseMid {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  50% { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+}
+
 /* Divider */
 .divider {
   width: 80%;
@@ -459,6 +488,107 @@
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
+}
+
+/* ---------- Testimonials ---------- */
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.testimonialCard {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-left: 3px solid #06b6d4;
+  border-radius: 14px;
+  padding: 1.5rem;
+  transition: all 0.35s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.testimonialCard:hover {
+  border-color: #21262d;
+  border-left-color: #22d3ee;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.testimonialQuote {
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: #9ca3af;
+  line-height: 1.85;
+  margin-bottom: 1rem;
+}
+
+.testimonialAuthor {
+  border-top: 1px solid #21262d;
+  padding-top: 0.7rem;
+}
+
+.testimonialName {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #f0f6fc;
+}
+
+.testimonialRole {
+  font-size: 0.72rem;
+  color: #6b7280;
+  margin-top: 0.1rem;
+}
+
+/* ---------- Education ---------- */
+.eduGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.eduCard {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-left: 3px solid #06b6d4;
+  border-radius: 14px;
+  padding: 1.3rem;
+  transition: all 0.35s;
+}
+
+.eduCard:hover {
+  border-color: #21262d;
+  border-left-color: #22d3ee;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.eduDegree {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f0f6fc;
+  margin-bottom: 0.2rem;
+}
+
+.eduSchool {
+  font-size: 0.82rem;
+  color: #06b6d4;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.eduDate {
+  font-size: 0.72rem;
+  color: #6b7280;
+}
+
+.eduDesc {
+  font-size: 0.78rem;
+  color: #9ca3af;
+  line-height: 1.7;
+  margin-top: 0.35rem;
 }
 
 /* ---------- RIGHT SIDEBAR ---------- */

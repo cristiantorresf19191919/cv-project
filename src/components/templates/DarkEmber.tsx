@@ -153,6 +153,13 @@ export default function DarkEmber() {
             {data.title}
           </motion.div>
 
+          {data.availability === 'open' && (
+            <motion.div variants={popIn} className={s.availBadge}>
+              <span className={s.availDot} />
+              {t.openToWork}
+            </motion.div>
+          )}
+
           <motion.h1 variants={slideFromLeft} className={s.heroName}>
             {data.name}{' '}
             <span className={s.heroNameAccent}>{data.last}</span>
@@ -300,17 +307,48 @@ export default function DarkEmber() {
         </StaggerChildren>
       </section>
 
+      {/* ── Testimonials ─────────────────────────────── */}
+      {data.testimonials && data.testimonials.length > 0 && (
+        <section className={s.section}>
+          <AnimatedSection>
+            <div className={s.sectionHeader}>
+              <div className={s.sectionTag}>{t.testimonialsTag}</div>
+              <h2 className={s.sectionTitle}>{t.testimonials}</h2>
+            </div>
+          </AnimatedSection>
+
+          <StaggerChildren className={s.testimonialsGrid} stagger={0.12}>
+            {data.testimonials.map((testimonial, i) => (
+              <motion.div
+                key={i}
+                variants={staggerItem}
+                whileHover={cardHover}
+                className={s.testimonialCard}
+              >
+                <div className={s.testimonialQuote}>&ldquo;{testimonial.quote}&rdquo;</div>
+                <div className={s.testimonialAuthor}>
+                  <div className={s.testimonialName}>{testimonial.name}</div>
+                  <div className={s.testimonialRole}>
+                    {testimonial.role} &middot; {testimonial.company}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </StaggerChildren>
+        </section>
+      )}
+
       {/* ── Education ────────────────────────────────── */}
       <section className={s.section}>
         <AnimatedSection>
           <div className={s.sectionHeader}>
-            <div className={s.sectionTag}>{t.education}</div>
+            <div className={s.sectionTag}>{t.educationTag}</div>
             <h2 className={s.sectionTitle}>{t.education}</h2>
           </div>
         </AnimatedSection>
 
         <StaggerChildren className={s.eduGrid} stagger={0.1}>
-          {data.stats.map((stat, i) => (
+          {data.education.map((edu, i) => (
             <motion.div
               key={i}
               variants={staggerItem}
@@ -318,8 +356,10 @@ export default function DarkEmber() {
               className={s.eduCard}
             >
               <div className={s.eduIcon}>🎓</div>
-              <div className={s.eduDegree}>{stat.n}</div>
-              <div className={s.eduSchool}>{stat.l}</div>
+              <div className={s.eduDegree}>{edu.degree}</div>
+              <div className={s.eduSchool}>{edu.school}</div>
+              <div className={s.eduDate}>{edu.date}</div>
+              {edu.desc && <div className={s.eduDesc}>{edu.desc}</div>}
             </motion.div>
           ))}
         </StaggerChildren>

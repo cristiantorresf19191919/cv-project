@@ -72,6 +72,11 @@ const skillHover = {
   transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
 };
 
+const cardHover = {
+  y: -4,
+  transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
+};
+
 /* ── Interest data ── */
 const interests = [
   { ico: '💻', label: 'Coding' },
@@ -109,6 +114,14 @@ export default function MonochromeSplit() {
               priority
             />
           </motion.div>
+
+          {/* Availability Badge */}
+          {data.availability === 'open' && (
+            <motion.div variants={infoFade} className={s.availBadge}>
+              <span className={s.availDot} />
+              {t.openToWork}
+            </motion.div>
+          )}
 
           {/* Vertical name */}
           <motion.div variants={nameSlide} className={s.verticalName}>
@@ -270,6 +283,38 @@ export default function MonochromeSplit() {
             </StaggerChildren>
           </div>
 
+          {/* Testimonials */}
+          {data.testimonials && data.testimonials.length > 0 && (
+            <div className={s.section}>
+              <AnimatedSection direction="up" delay={0.1}>
+                <div className={s.sectionHeader}>
+                  <span className={s.sectionTag}>{t.testimonialsTag}</span>
+                  <h2 className={s.sectionTitle}>{t.testimonials}</h2>
+                </div>
+                <hr className={s.accentLine} />
+              </AnimatedSection>
+
+              <StaggerChildren className={s.testimonialsGrid} stagger={0.12}>
+                {data.testimonials.map((testimonial, i) => (
+                  <motion.div
+                    key={i}
+                    variants={staggerItem}
+                    whileHover={cardHover}
+                    className={s.testimonialCard}
+                  >
+                    <div className={s.testimonialQuote}>&ldquo;{testimonial.quote}&rdquo;</div>
+                    <div className={s.testimonialAuthor}>
+                      <div className={s.testimonialName}>{testimonial.name}</div>
+                      <div className={s.testimonialRole}>
+                        {testimonial.role} &middot; {testimonial.company}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </StaggerChildren>
+            </div>
+          )}
+
           {/* Projects */}
           {data.projects.length > 0 && (
             <div className={s.section}>
@@ -319,6 +364,35 @@ export default function MonochromeSplit() {
                       </div>
                     </div>
                   </motion.a>
+                ))}
+              </StaggerChildren>
+            </div>
+          )}
+
+          {/* Education */}
+          {data.education && data.education.length > 0 && (
+            <div className={s.section}>
+              <AnimatedSection direction="up" delay={0.1}>
+                <div className={s.sectionHeader}>
+                  <span className={s.sectionTag}>{t.educationTag}</span>
+                  <h2 className={s.sectionTitle}>{t.education}</h2>
+                </div>
+                <hr className={s.accentLine} />
+              </AnimatedSection>
+
+              <StaggerChildren className={s.eduGrid} stagger={0.1}>
+                {data.education.map((edu, i) => (
+                  <motion.div
+                    key={i}
+                    variants={staggerItem}
+                    whileHover={cardHover}
+                    className={s.eduCard}
+                  >
+                    <div className={s.eduDegree}>{edu.degree}</div>
+                    <div className={s.eduSchool}>{edu.school}</div>
+                    <div className={s.eduDate}>{edu.date}</div>
+                    {edu.desc && <div className={s.eduDesc}>{edu.desc}</div>}
+                  </motion.div>
                 ))}
               </StaggerChildren>
             </div>

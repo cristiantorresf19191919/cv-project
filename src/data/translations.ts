@@ -20,6 +20,11 @@ export interface Translations {
   services: string;
   courses: string;
   passions: string;
+  testimonials: string;
+  testimonialsTag: string;
+  educationTag: string;
+  availableForHire: string;
+  openToWork: string;
   // Buttons
   getInTouch: string;
   viewGithub: string;
@@ -56,6 +61,11 @@ export const translations: Record<Lang, Translations> = {
     services: 'What I Do',
     courses: 'Certifications',
     passions: 'Passions',
+    testimonials: 'What People Say',
+    testimonialsTag: 'Testimonials',
+    educationTag: 'Learning',
+    availableForHire: 'Available for Hire',
+    openToWork: 'Open to Work',
     getInTouch: 'Get In Touch',
     viewGithub: 'View GitHub',
     viewProject: 'View Project',
@@ -70,7 +80,7 @@ export const translations: Record<Lang, Translations> = {
   },
   es: {
     summary: 'Resumen',
-    skills: 'Experiencia Técnica',
+    skills: 'Experiencia T\u00E9cnica',
     skillsTag: 'Mi Arsenal',
     experience: 'Trayectoria Profesional',
     experienceTag: 'Carrera',
@@ -78,25 +88,30 @@ export const translations: Record<Lang, Translations> = {
     projectsTag: 'Trabajo Destacado',
     contact: 'Contacto',
     contactTag: 'Conectemos',
-    education: 'Educación',
+    education: 'Educaci\u00F3n',
     achievements: 'Logros Clave',
     profile: 'Perfil',
     interests: 'Intereses',
-    about: 'Sobre Mí',
+    about: 'Sobre M\u00ED',
     tools: 'Herramientas',
     services: 'Lo Que Hago',
     courses: 'Certificaciones',
     passions: 'Pasiones',
+    testimonials: 'Lo Que Dicen',
+    testimonialsTag: 'Testimonios',
+    educationTag: 'Aprendizaje',
+    availableForHire: 'Disponible para Contratar',
+    openToWork: 'Abierto a Oportunidades',
     getInTouch: 'Contactar',
     viewGithub: 'Ver GitHub',
     viewProject: 'Ver Proyecto',
     downloadResume: 'Descargar CV',
-    yearsExp: 'Años de Experiencia',
+    yearsExp: 'A\u00F1os de Experiencia',
     companies: 'Empresas',
     projectsDelivered: 'Proyectos Entregados',
     present: 'Presente',
-    location: 'Ubicación',
-    phone: 'Teléfono',
+    location: 'Ubicaci\u00F3n',
+    phone: 'Tel\u00E9fono',
     email: 'Correo',
   },
 };

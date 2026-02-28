@@ -93,6 +93,14 @@ export default function ExecutivePro() {
           </div>
           <div className={s.sidebarTitle}>{data.title}</div>
 
+          {/* Availability Badge */}
+          {data.availability === 'open' && (
+            <div className={s.availBadge}>
+              <span className={s.availDot} />
+              {t.openToWork}
+            </div>
+          )}
+
           {/* Contact Info */}
           <div className={s.sidebarSecTitle}>{t.contact}</div>
           <ul className={s.contactList}>
@@ -335,24 +343,52 @@ export default function ExecutivePro() {
             </AnimatedSection>
           )}
 
+          {/* Testimonials */}
+          {data.testimonials && data.testimonials.length > 0 && (
+            <AnimatedSection>
+              <div className={s.testimonialsSection}>
+                <div className={s.secHeader}>
+                  <div className={s.secTag}>{t.testimonialsTag}</div>
+                  <h2 className={s.secTitle}>{t.testimonials}</h2>
+                </div>
+                <StaggerChildren className={s.testimonialsGrid} stagger={0.12}>
+                  {data.testimonials.map((testimonial, i) => (
+                    <motion.div
+                      key={i}
+                      variants={staggerItem}
+                      whileHover={cardHover}
+                      className={s.testimonialCard}
+                    >
+                      <div className={s.testimonialQuote}>&ldquo;{testimonial.quote}&rdquo;</div>
+                      <div className={s.testimonialAuthor}>
+                        <div className={s.testimonialName}>{testimonial.name}</div>
+                        <div className={s.testimonialRole}>
+                          {testimonial.role} &middot; {testimonial.company}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </StaggerChildren>
+              </div>
+            </AnimatedSection>
+          )}
+
           {/* Education */}
           <AnimatedSection>
             <div className={s.eduSection}>
               <div className={s.secHeader}>
-                <div className={s.secTag}>{t.courses}</div>
+                <div className={s.secTag}>{t.educationTag}</div>
                 <h2 className={s.secTitle}>{t.education}</h2>
               </div>
               <StaggerChildren className={s.eduGrid} stagger={0.1}>
-                <motion.div variants={staggerItem} whileHover={cardHover} className={s.eduCard}>
-                  <div className={s.eduDegree}>Systems Engineering</div>
-                  <div className={s.eduSchool}>Universidad Distrital</div>
-                  <div className={s.eduDate}>2016 — 2021</div>
-                </motion.div>
-                <motion.div variants={staggerItem} whileHover={cardHover} className={s.eduCard}>
-                  <div className={s.eduDegree}>React & Advanced JS</div>
-                  <div className={s.eduSchool}>Platzi & Udemy</div>
-                  <div className={s.eduDate}>2020 — Present</div>
-                </motion.div>
+                {data.education.map((edu, i) => (
+                  <motion.div key={i} variants={staggerItem} whileHover={cardHover} className={s.eduCard}>
+                    <div className={s.eduDegree}>{edu.degree}</div>
+                    <div className={s.eduSchool}>{edu.school}</div>
+                    <div className={s.eduDate}>{edu.date}</div>
+                    {edu.desc && <div className={s.eduDesc}>{edu.desc}</div>}
+                  </motion.div>
+                ))}
               </StaggerChildren>
             </div>
           </AnimatedSection>

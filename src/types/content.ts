@@ -26,6 +26,20 @@ export interface Project {
   tech: string[];
 }
 
+export interface Testimonial {
+  quote: string;
+  name: string;
+  role: string;
+  company: string;
+}
+
+export interface Education {
+  degree: string;
+  school: string;
+  date: string;
+  desc?: string;
+}
+
 export interface PortfolioData {
   name: string;
   last: string;
@@ -37,10 +51,13 @@ export interface PortfolioData {
   github: string;
   linkedin: string;
   loc: string;
+  availability: string;
   stats: Stat[];
   skills: Skill[];
   exp: Experience[];
   projects: Project[];
+  testimonials: Testimonial[];
+  education: Education[];
 }
 
 export interface PortfolioContent {
