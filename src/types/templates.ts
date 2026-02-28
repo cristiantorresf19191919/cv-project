@@ -12,4 +12,6 @@ export interface TemplateInfo {
   name: TemplateName;
   label: string;
   dotColor: string;
+  desc: string;
+  shortcut: string;
 }

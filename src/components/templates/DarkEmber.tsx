@@ -7,6 +7,7 @@ import { useContent } from '@/context/ContentContext';
 import { useLanguage } from '@/context/LanguageContext';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
+import AnimatedCounter from '@/components/shared/AnimatedCounter';
 import s from '@/styles/ember.module.css';
 
 /* ── Animation variants ───────────────────────────────── */
@@ -200,7 +201,7 @@ export default function DarkEmber() {
                   stiffness: 200,
                 }}
               >
-                <div className={s.statNum}>{stat.n}</div>
+                <AnimatedCounter value={stat.n} className={s.statNum} />
                 <div className={s.statLabel}>{stat.l}</div>
               </motion.div>
             ))}

@@ -4,8 +4,8 @@ export const DEFAULT_DATA: PortfolioData = {
   name: "Cristian",
   last: "Torres",
   title: "Full Stack Developer",
-  tagline: "React & Next.js Specialist",
-  desc: "React / Next.js specialist with 5+ years building performant web products. Expert in modern TypeScript and React-based UI systems with Storybook and React Query. Strong backend experience with Node.js and Nest.js micro-services, designing scalable APIs and integrating with GraphQL backends. Comfortable shipping Dockerized apps and ensuring end-to-end performance. Recently expanding my toolkit with Kotlin + Spring Boot.",
+  tagline: "I build React systems that scale to millions of users",
+  desc: "React & Next.js specialist with 5+ years shipping production web products at companies like Audi and Driveway.com. I've built design systems adopted by 12+ teams, reduced API latency by 40% through smart caching, and delivered enterprise-grade UI platforms from zero to launch. Expert in TypeScript, React Query, GraphQL, and micro-service architecture. Currently expanding into Kotlin + Spring Boot for full-stack versatility.",
   email: "cristian.torres19@hotmail.com",
   phone: "+57 323 799 2985",
   github: "github.com/cristianscript",
@@ -100,7 +100,7 @@ export const DEFAULT_DATA: PortfolioData = {
   projects: [
     {
       title: "Optimus Agency \u2014 Developer Hub",
-      desc: "A developer resource platform with blog, coding challenges, and curated guides for React, Kotlin, TypeScript, and more. Built with modern web technologies and a focus on developer experience.",
+      desc: "Full-stack developer resource platform featuring live coding playgrounds, Kotlin/React/TypeScript courses, interview prep modules, and a technical blog. Serves 500+ developers with interactive learning tools and a command palette search.",
       url: "https://agencypartner2.netlify.app/es/developer-section",
       image: "/images/project-optimus.png",
       tech: ["Next.js", "TypeScript", "Contentful", "Netlify"]

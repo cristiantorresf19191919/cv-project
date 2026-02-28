@@ -135,11 +135,72 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
+.shortcutHint {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0;
+  flex-shrink: 0;
+}
+
+.kbdHint {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.kbdHint:hover {
+  opacity: 0.7;
+}
+
+.kbdKey {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1;
+}
+
+.kbdLabel {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  font-size: 0.58rem;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .kbdHint {
+    display: none;
+  }
+  .shortcutHint {
+    display: none;
+  }
+}
+
 @media (max-width: 480px) {
   .logo {
     display: none;
   }
   .divider {
+    display: none;
+  }
+  .label {
     display: none;
   }
   .btn {

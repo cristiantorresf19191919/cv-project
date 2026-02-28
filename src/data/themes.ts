@@ -74,14 +74,14 @@ export const THEMES: Record<TemplateName, ThemeConfig> = {
 };
 
 export const TEMPLATE_LIST: TemplateInfo[] = [
-  { name: 'noir', label: 'Noir Elegance', dotColor: '#d4af37' },
-  { name: 'arctic', label: 'Arctic Minimal', dotColor: '#6366f1' },
-  { name: 'term', label: 'Terminal Hacker', dotColor: '#00ff41' },
-  { name: 'edit', label: 'Editorial Luxe', dotColor: '#c9a96e' },
-  { name: 'neon', label: 'Neon Cyber', dotColor: '#ff0080' },
-  { name: 'glass', label: 'Glassmorphism', dotColor: '#764ba2' },
-  { name: 'exec', label: 'Executive Pro', dotColor: '#2563eb' },
-  { name: 'mono', label: 'Monochrome Split', dotColor: '#000000' },
-  { name: 'ember', label: 'Dark Ember', dotColor: '#f97316' },
-  { name: 'midnight', label: 'Midnight Portfolio', dotColor: '#06b6d4' },
+  { name: 'noir', label: 'Noir Elegance', dotColor: '#d4af37', desc: 'Luxury dark theme with gold accents', shortcut: '1' },
+  { name: 'arctic', label: 'Arctic Minimal', dotColor: '#6366f1', desc: 'Clean & professional light design', shortcut: '2' },
+  { name: 'term', label: 'Terminal Hacker', dotColor: '#00ff41', desc: 'Retro terminal for tech teams', shortcut: '3' },
+  { name: 'edit', label: 'Editorial Luxe', dotColor: '#c9a96e', desc: 'Magazine-style editorial layout', shortcut: '4' },
+  { name: 'neon', label: 'Neon Cyber', dotColor: '#ff0080', desc: 'Bold cyberpunk neon aesthetic', shortcut: '5' },
+  { name: 'glass', label: 'Glassmorphism', dotColor: '#764ba2', desc: 'Modern frosted glass design', shortcut: '6' },
+  { name: 'exec', label: 'Executive Pro', dotColor: '#2563eb', desc: 'Corporate sidebar with timeline', shortcut: '7' },
+  { name: 'mono', label: 'Monochrome Split', dotColor: '#000000', desc: 'Bold B&W split-screen layout', shortcut: '8' },
+  { name: 'ember', label: 'Dark Ember', dotColor: '#f97316', desc: 'Warm dark theme with skill bars', shortcut: '9' },
+  { name: 'midnight', label: 'Midnight Portfolio', dotColor: '#06b6d4', desc: 'Three-column deep space design', shortcut: '0' },
 ];

@@ -40,6 +40,7 @@ export default function TemplateSwitcher() {
               key={tmpl.name}
               className={`${styles.btn} ${isActive ? styles.btnActive : ''}`}
               onClick={() => switchTemplate(tmpl.name as TemplateName)}
+              title={`${tmpl.desc} (${tmpl.shortcut})`}
               style={{
                 borderColor: isActive
                   ? theme.accent
@@ -57,6 +58,9 @@ export default function TemplateSwitcher() {
                 style={{ background: tmpl.dotColor }}
               />
               {tmpl.label}
+              {isActive && (
+                <span className={styles.shortcutHint}>{tmpl.shortcut}</span>
+              )}
             </button>
           );
         })}
@@ -67,6 +71,7 @@ export default function TemplateSwitcher() {
       <button
         className={styles.langToggle}
         onClick={toggleLang}
+        title="Toggle language (L)"
         style={{
           borderColor: isDarkNav ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.12)',
           ['--lang-accent' as string]: theme.accent,
@@ -85,6 +90,11 @@ export default function TemplateSwitcher() {
           ES
         </span>
       </button>
+
+      <div className={styles.kbdHint}>
+        <span className={styles.kbdKey}>1-0</span>
+        <span className={styles.kbdLabel}>switch</span>
+      </div>
     </div>
   );
 }

@@ -3,6 +3,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTemplate } from '@/context/TemplateContext';
 import TemplateSwitcher from '@/components/shared/TemplateSwitcher';
+import ScrollProgress from '@/components/shared/ScrollProgress';
+import KeyboardNav from '@/components/shared/KeyboardNav';
 import NoirElegance from '@/components/templates/NoirElegance';
 import ArcticMinimal from '@/components/templates/ArcticMinimal';
 import TerminalHacker from '@/components/templates/TerminalHacker';
@@ -35,7 +37,9 @@ export default function Home() {
 
   return (
     <>
+      <ScrollProgress />
       <TemplateSwitcher />
+      <KeyboardNav />
       <div style={{ paddingTop: '58px', minHeight: '100vh' }}>
         <AnimatePresence mode="wait">
           {!isTransitioning && (
