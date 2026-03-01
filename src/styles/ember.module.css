@@ -51,6 +51,7 @@
   height: 6px;
   border-radius: 50%;
   background: #f97316;
+  box-shadow: 0 0 12px 3px rgba(249, 115, 22, 0.3);
   animation: pulse 2s ease-in-out infinite;
 }
 
@@ -310,9 +311,13 @@
 
 .skillsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.2rem;
   margin-top: 2.5rem;
+}
+
+.skillsGrid > *:first-child {
+  grid-column: span 2;
 }
 
 .skillCard {
@@ -320,6 +325,7 @@
   padding: 1.8rem;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 20px rgba(0, 0, 0, 0.25);
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -356,12 +362,20 @@
   font-size: 0.72rem;
   color: #fb923c;
   font-weight: 500;
+  cursor: pointer;
   transition: all 0.3s;
 }
 
 .skillTag:hover {
   background: rgba(249, 115, 22, 0.18);
   border-color: rgba(249, 115, 22, 0.3);
+  transform: scale(1.08);
+}
+
+.skillTagActive {
+  background: rgba(249, 115, 22, 0.25);
+  border-color: rgba(249, 115, 22, 0.5);
+  transform: scale(1.08);
 }
 
 /* ── Language Proficiency ─────────────────────────────── */
@@ -421,6 +435,7 @@
   padding: 1.8rem;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 20px rgba(0, 0, 0, 0.25);
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   display: flex;
   flex-direction: column;
@@ -430,6 +445,15 @@
   border-color: rgba(249, 115, 22, 0.25);
   box-shadow: 0 8px 30px rgba(249, 115, 22, 0.08);
   transform: translateY(-4px);
+}
+
+.expCardDimmed {
+  opacity: 0.25;
+}
+
+.expCardHighlighted {
+  border-color: rgba(249, 115, 22, 0.5) !important;
+  box-shadow: 0 0 25px rgba(249, 115, 22, 0.15);
 }
 
 .expCompany {
@@ -451,11 +475,13 @@
 }
 
 .expDate {
-  font-size: 0.78rem;
-  color: #6b7280;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.72rem;
+  color: #4b5563;
   margin-bottom: 0.8rem;
   padding-bottom: 0.8rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  letter-spacing: 0.5px;
 }
 
 .expDesc {
@@ -463,6 +489,30 @@
   color: #9ca3af;
   line-height: 1.8;
   flex: 1;
+}
+
+.expAchievements {
+  list-style: none;
+  padding: 0;
+  margin: 0.8rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.expAchievementItem {
+  display: grid;
+  grid-template-columns: 1.2rem 1fr;
+  font-size: 0.82rem;
+  color: #9ca3af;
+  line-height: 1.7;
+}
+
+.expAchievementItem::before {
+  content: '\25B8';
+  color: #f97316;
+  font-size: 0.7rem;
+  padding-top: 0.15rem;
 }
 
 .expTech {
@@ -496,6 +546,7 @@
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-left: 3px solid #f97316;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 20px rgba(0, 0, 0, 0.25);
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -526,8 +577,10 @@
 }
 
 .eduDate {
-  font-size: 0.75rem;
-  color: #6b7280;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.72rem;
+  color: #4b5563;
+  letter-spacing: 0.5px;
 }
 
 .eduDesc {
@@ -551,6 +604,7 @@
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-left: 3px solid #f97316;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 20px rgba(0, 0, 0, 0.25);
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   display: flex;
   flex-direction: column;
@@ -594,14 +648,17 @@
 
 .projectsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .projectCard {
   background: #161b22;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 20px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   text-decoration: none;
@@ -750,6 +807,61 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
+/* ── Contact Detail Cards ─────────────────────────────── */
+
+.contactDetailGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  max-width: 1150px;
+  margin: 0 auto 2rem;
+  padding: 0 2.5rem;
+}
+
+.contactDetailCard {
+  background: #161b22;
+  padding: 1.5rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 20px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contactDetailCard:hover {
+  border-color: rgba(249, 115, 22, 0.25);
+  box-shadow: 0 8px 30px rgba(249, 115, 22, 0.08);
+  transform: translateY(-4px);
+}
+
+.contactDetailIcon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f97316;
+}
+
+.contactDetailLabel {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.contactDetailValue {
+  font-size: 0.78rem;
+  color: #9ca3af;
+  word-break: break-all;
+}
+
 /* ── Footer spacer ────────────────────────────────────── */
 
 .footer {
@@ -808,6 +920,18 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .skillsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .skillsGrid > *:first-child {
+    grid-column: span 2;
+  }
+
+  .contactDetailGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .sectionTitle {
     font-size: 2.1rem;
   }
@@ -828,6 +952,15 @@
 
   .skillsGrid {
     grid-template-columns: 1fr;
+  }
+
+  .skillsGrid > *:first-child {
+    grid-column: span 1;
+  }
+
+  .contactDetailGrid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 1.5rem;
   }
 
   .contactSection {
@@ -888,5 +1021,11 @@
 
   .langLevel {
     text-align: left;
+  }
+
+  .contactDetailGrid {
+    grid-template-columns: 1fr 1fr;
+    padding: 0 1rem;
+    gap: 0.8rem;
   }
 }

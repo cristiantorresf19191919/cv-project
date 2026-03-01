@@ -8,7 +8,13 @@ import { useLanguage } from '@/context/LanguageContext';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
 import AnimatedCounter from '@/components/shared/AnimatedCounter';
+import ContactForm from '@/components/shared/ContactForm';
 import s from '@/styles/ember.module.css';
+import { parseBold } from '@/utils/parseBold';
+import { useSkillHighlight } from '@/context/SkillHighlightContext';
+import { getTechColor } from '@/utils/techBrandColors';
+import { useCopyToClipboard } from '@/utils/contactActions';
+import { EmailIcon, PhoneIcon, GithubIcon, LocationIcon } from '@/components/shared/ContactIcons';
 
 /* ── Animation variants ───────────────────────────────── */
 
@@ -138,6 +144,8 @@ function LanguageBar({ name, pct, level }: { name: string; pct: number; level: s
 export default function DarkEmber() {
   const { data, photoUrl } = useContent();
   const { t } = useLanguage();
+  const { activeSkill, setActiveSkill } = useSkillHighlight();
+  const { copied, copy } = useCopyToClipboard();
 
   return (
     <div className={s.template}>
@@ -253,7 +261,15 @@ export default function DarkEmber() {
               <h3 className={s.skillCardTitle}>{skill.t}</h3>
               <div className={s.skillCardTags}>
                 {skill.tags.map((tag, j) => (
-                  <span key={j} className={s.skillTag}>{tag}</span>
+                  <span
+                    key={j}
+                    className={`${s.skillTag} ${activeSkill === tag ? s.skillTagActive : ''}`}
+                    onMouseEnter={() => setActiveSkill(tag)}
+                    onMouseLeave={() => setActiveSkill(null)}
+                    style={activeSkill === tag ? { backgroundColor: getTechColor(tag) || undefined, color: '#fff', borderColor: getTechColor(tag) || undefined } : undefined}
+                  >
+                    {tag}
+                  </span>
                 ))}
               </div>
             </motion.div>
@@ -290,16 +306,23 @@ export default function DarkEmber() {
               key={i}
               variants={staggerItem}
               whileHover={cardHover}
-              className={s.expCard}
+              className={`${s.expCard} ${activeSkill && !exp.tech.includes(activeSkill) ? s.expCardDimmed : ''} ${activeSkill && exp.tech.includes(activeSkill) ? s.expCardHighlighted : ''}`}
             >
               <div className={s.expCompany}>{exp.co}</div>
               <h3 className={s.expTitle}>{exp.t}</h3>
               <div className={s.expDate}>{exp.dt}</div>
               <p className={s.expDesc}>{exp.d}</p>
+              {exp.a && exp.a.length > 0 && (
+                <ul className={s.expAchievements}>
+                  {exp.a.map((a, j) => (
+                    <li key={j} className={s.expAchievementItem}>{parseBold(a)}</li>
+                  ))}
+                </ul>
+              )}
               {exp.tech.length > 0 && (
                 <div className={s.expTech}>
-                  {exp.tech.map((t, j) => (
-                    <span key={j} className={s.expTechTag}>{t}</span>
+                  {exp.tech.map((techItem, j) => (
+                    <span key={j} className={s.expTechTag}>{techItem}</span>
                   ))}
                 </div>
               )}
@@ -419,6 +442,50 @@ export default function DarkEmber() {
         </section>
       )}
 
+      {/* ── Contact Detail Cards ────────────────────── */}
+      <AnimatedSection direction="up" delay={0.1}>
+        <div className={s.contactDetailGrid}>
+          <div
+            className={s.contactDetailCard}
+            onClick={() => copy(data.email, 'email')}
+          >
+            <div className={s.contactDetailIcon}><EmailIcon /></div>
+            <div className={s.contactDetailLabel}>{copied === 'email' ? 'Copied!' : t.email}</div>
+            <div className={s.contactDetailValue}>{data.email}</div>
+          </div>
+          <div
+            className={s.contactDetailCard}
+            onClick={() => copy(data.phone, 'phone')}
+          >
+            <div className={s.contactDetailIcon}><PhoneIcon /></div>
+            <div className={s.contactDetailLabel}>{copied === 'phone' ? 'Copied!' : t.phone}</div>
+            <div className={s.contactDetailValue}>{data.phone}</div>
+          </div>
+          <a
+            className={s.contactDetailCard}
+            href={`https://${data.github}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none' }}
+          >
+            <div className={s.contactDetailIcon}><GithubIcon /></div>
+            <div className={s.contactDetailLabel}>GitHub</div>
+            <div className={s.contactDetailValue}>{data.github}</div>
+          </a>
+          <a
+            className={s.contactDetailCard}
+            href={`https://maps.google.com/?q=${encodeURIComponent(data.loc)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none' }}
+          >
+            <div className={s.contactDetailIcon}><LocationIcon /></div>
+            <div className={s.contactDetailLabel}>{t.location}</div>
+            <div className={s.contactDetailValue}>{data.loc}</div>
+          </a>
+        </div>
+      </AnimatedSection>
+
       {/* ── Contact CTA ──────────────────────────────── */}
       <AnimatedSection direction="up" scale>
         <section className={s.contactSection}>
@@ -445,6 +512,7 @@ export default function DarkEmber() {
               LinkedIn
             </a>
           </div>
+          <ContactForm />
         </section>
       </AnimatedSection>
 

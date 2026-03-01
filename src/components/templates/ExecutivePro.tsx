@@ -7,6 +7,12 @@ import { useLanguage } from '@/context/LanguageContext';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
 import AnimatedCounter from '@/components/shared/AnimatedCounter';
+import ContactForm from '@/components/shared/ContactForm';
+import { parseBold } from '@/utils/parseBold';
+import { useSkillHighlight } from '@/context/SkillHighlightContext';
+import { getTechColor } from '@/utils/techBrandColors';
+import { useCopyToClipboard } from '@/utils/contactActions';
+import { EmailIcon, PhoneIcon, GithubIcon, LocationIcon, LinkedinIcon } from '@/components/shared/ContactIcons';
 import s from '@/styles/executive.module.css';
 
 /* ─── Animation Variants ───────────────────────────────────────── */
@@ -62,6 +68,8 @@ const achievementHover = {
 export default function ExecutivePro() {
   const { data, photoUrl } = useContent();
   const { t } = useLanguage();
+  const { activeSkill, setActiveSkill } = useSkillHighlight();
+  const { copied, copy } = useCopyToClipboard();
 
   return (
     <div className={s.template}>
@@ -105,42 +113,57 @@ export default function ExecutivePro() {
           {/* Contact Info */}
           <div className={s.sidebarSecTitle}>{t.contact}</div>
           <ul className={s.contactList}>
+            <li
+              className={s.contactItem}
+              onClick={() => copy(data.email, 'email')}
+              style={{ cursor: 'pointer' }}
+            >
+              <span className={s.contactIcon}><EmailIcon /></span>
+              <span className={s.contactLink}>
+                {copied === 'email' ? 'Copied!' : data.email}
+              </span>
+            </li>
+            <li
+              className={s.contactItem}
+              onClick={() => copy(data.phone, 'phone')}
+              style={{ cursor: 'pointer' }}
+            >
+              <span className={s.contactIcon}><PhoneIcon /></span>
+              <span className={s.contactLink}>
+                {copied === 'phone' ? 'Copied!' : data.phone}
+              </span>
+            </li>
             <li className={s.contactItem}>
-              <span className={s.contactIcon}>📧</span>
-              <a href={`mailto:${data.email}`} className={s.contactLink}>
-                {data.email}
+              <a
+                href={`https://maps.google.com/?q=${encodeURIComponent(data.loc)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={s.contactItemLink}
+              >
+                <span className={s.contactIcon}><LocationIcon /></span>
+                <span className={s.contactLink}>{data.loc}</span>
               </a>
             </li>
             <li className={s.contactItem}>
-              <span className={s.contactIcon}>📱</span>
-              <a href={`tel:${data.phone.replace(/\s/g, '')}`} className={s.contactLink}>
-                {data.phone}
-              </a>
-            </li>
-            <li className={s.contactItem}>
-              <span className={s.contactIcon}>📍</span>
-              <span>{data.loc}</span>
-            </li>
-            <li className={s.contactItem}>
-              <span className={s.contactIcon}>💻</span>
               <a
                 href={`https://${data.github}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={s.contactLink}
+                className={s.contactItemLink}
               >
-                {data.github}
+                <span className={s.contactIcon}><GithubIcon /></span>
+                <span className={s.contactLink}>{data.github}</span>
               </a>
             </li>
             <li className={s.contactItem}>
-              <span className={s.contactIcon}>🔗</span>
               <a
                 href={`https://${data.linkedin}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={s.contactLink}
+                className={s.contactItemLink}
               >
-                {data.linkedin}
+                <span className={s.contactIcon}><LinkedinIcon /></span>
+                <span className={s.contactLink}>{data.linkedin}</span>
               </a>
             </li>
           </ul>
@@ -160,7 +183,10 @@ export default function ExecutivePro() {
                       <motion.span
                         key={j}
                         variants={skillPillVariant}
-                        className={s.skillPill}
+                        className={`${s.skillPill} ${activeSkill === tag ? s.skillPillActive : ''}`}
+                        onMouseEnter={() => setActiveSkill(tag)}
+                        onMouseLeave={() => setActiveSkill(null)}
+                        style={activeSkill === tag ? { backgroundColor: getTechColor(tag) || undefined, color: '#fff', borderColor: getTechColor(tag) || undefined } : undefined}
                       >
                         {tag}
                       </motion.span>
@@ -258,7 +284,7 @@ export default function ExecutivePro() {
               <div className={s.timeline}>
                 {data.exp.map((exp, i) => (
                   <AnimatedSection key={i} direction="right" delay={i * 0.1}>
-                    <div className={s.timelineItem}>
+                    <div className={`${s.timelineItem} ${activeSkill && !exp.tech.includes(activeSkill) ? s.timelineItemDimmed : ''} ${activeSkill && exp.tech.includes(activeSkill) ? s.timelineItemHighlighted : ''}`}>
                       <div className={s.timelineDot} />
                       <motion.div className={s.timelineCard} whileHover={cardHover}>
                         <h3 className={s.expTitle}>{exp.t}</h3>
@@ -271,7 +297,7 @@ export default function ExecutivePro() {
                         <ul className={s.expAchievements}>
                           {exp.a.map((achievement, j) => (
                             <li key={j} className={s.expAchievementItem}>
-                              {achievement}
+                              {parseBold(achievement)}
                             </li>
                           ))}
                         </ul>
@@ -391,6 +417,17 @@ export default function ExecutivePro() {
                   </motion.div>
                 ))}
               </StaggerChildren>
+            </div>
+          </AnimatedSection>
+
+          {/* Contact Form */}
+          <AnimatedSection>
+            <div className={s.eduSection}>
+              <div className={s.secHeader}>
+                <div className={s.secTag}>{t.contactTag}</div>
+                <h2 className={s.secTitle}>{t.getInTouch}</h2>
+              </div>
+              <ContactForm />
             </div>
           </AnimatedSection>
         </motion.main>

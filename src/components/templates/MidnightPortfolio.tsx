@@ -8,6 +8,12 @@ import { useLanguage } from '@/context/LanguageContext';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
 import AnimatedCounter from '@/components/shared/AnimatedCounter';
+import ContactForm from '@/components/shared/ContactForm';
+import { parseBold } from '@/utils/parseBold';
+import { useSkillHighlight } from '@/context/SkillHighlightContext';
+import { getTechColor } from '@/utils/techBrandColors';
+import { useCopyToClipboard } from '@/utils/contactActions';
+import { EmailIcon, PhoneIcon, GithubIcon, LocationIcon } from '@/components/shared/ContactIcons';
 import s from '@/styles/midnight.module.css';
 
 /* ---------- animation variants ---------- */
@@ -99,6 +105,8 @@ function AnimatedSkillBar({ skill, index }: { skill: SkillBar; index: number }) 
 export default function MidnightPortfolio() {
   const { data, photoUrl } = useContent();
   const { t } = useLanguage();
+  const { activeSkill, setActiveSkill } = useSkillHighlight();
+  const { copied, copy } = useCopyToClipboard();
 
   /* social links config */
   const socials = [
@@ -150,20 +158,46 @@ export default function MidnightPortfolio() {
 
           {/* Contact info */}
           <div className={s.contactList}>
+            <div
+              className={s.contactItem}
+              onClick={() => copy(data.email, 'email')}
+              style={{ cursor: 'pointer' }}
+            >
+              <span className={s.contactIcon}><EmailIcon /></span>
+              <span className={s.contactText}>
+                {copied === 'email' ? 'Copied!' : data.email}
+              </span>
+            </div>
+            <div
+              className={s.contactItem}
+              onClick={() => copy(data.phone, 'phone')}
+              style={{ cursor: 'pointer' }}
+            >
+              <span className={s.contactIcon}><PhoneIcon /></span>
+              <span className={s.contactText}>
+                {copied === 'phone' ? 'Copied!' : data.phone}
+              </span>
+            </div>
             <div className={s.contactItem}>
-              <span className={s.contactIcon}>📧</span>
-              <a href={`mailto:${data.email}`} className={s.contactText}>
-                {data.email}
+              <a
+                href={`https://${data.github}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={s.contactIcon}
+              >
+                <GithubIcon />
+              </a>
+              <a
+                href={`https://${data.github}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={s.contactText}
+              >
+                {data.github}
               </a>
             </div>
             <div className={s.contactItem}>
-              <span className={s.contactIcon}>📱</span>
-              <a href={`tel:${data.phone}`} className={s.contactText}>
-                {data.phone}
-              </a>
-            </div>
-            <div className={s.contactItem}>
-              <span className={s.contactIcon}>📍</span>
+              <span className={s.contactIcon}><LocationIcon /></span>
               <span className={s.contactText}>{data.loc}</span>
             </div>
           </div>
@@ -247,7 +281,13 @@ export default function MidnightPortfolio() {
                   <h3 className={s.serviceTitle}>{skill.t}</h3>
                   <div className={s.serviceTags}>
                     {skill.tags.map((tag, j) => (
-                      <span key={j} className={s.serviceTag}>
+                      <span
+                        key={j}
+                        className={`${s.serviceTag} ${activeSkill === tag ? s.serviceTagActive : ''}`}
+                        onMouseEnter={() => setActiveSkill(tag)}
+                        onMouseLeave={() => setActiveSkill(null)}
+                        style={activeSkill === tag ? { backgroundColor: getTechColor(tag) || undefined, color: '#fff', borderColor: getTechColor(tag) || undefined } : undefined}
+                      >
                         {tag}
                       </span>
                     ))}
@@ -278,7 +318,7 @@ export default function MidnightPortfolio() {
             </AnimatedSection>
             {data.exp.map((exp, i) => (
               <AnimatedSection key={i} direction="up" delay={i * 0.12} scale>
-                <div className={s.expCard}>
+                <div className={`${s.expCard} ${activeSkill && !exp.tech.includes(activeSkill) ? s.expCardDimmed : ''} ${activeSkill && exp.tech.includes(activeSkill) ? s.expCardHighlighted : ''}`}>
                   <h3 className={s.expRole}>{exp.t}</h3>
                   <div className={s.expMeta}>
                     <span className={s.expCompany}>{exp.co}</span>
@@ -289,14 +329,14 @@ export default function MidnightPortfolio() {
                   <ul className={s.expList}>
                     {exp.a.map((item, j) => (
                       <li key={j} className={s.expListItem}>
-                        {item}
+                        {parseBold(item)}
                       </li>
                     ))}
                   </ul>
                   <div className={s.expTech}>
-                    {exp.tech.map((t, j) => (
+                    {exp.tech.map((techName, j) => (
                       <span key={j} className={s.expTechTag}>
-                        {t}
+                        {techName}
                       </span>
                     ))}
                   </div>
@@ -409,6 +449,15 @@ export default function MidnightPortfolio() {
               </StaggerChildren>
             </div>
           )}
+
+          {/* Contact Form */}
+          <div className={s.section} style={{ marginTop: '2rem' }}>
+            <AnimatedSection direction="up">
+              <div className={s.sectionLabel}>{t.contact}</div>
+              <h2 className={s.sectionTitle}>{t.getInTouch}</h2>
+            </AnimatedSection>
+            <ContactForm />
+          </div>
         </main>
 
         {/* ============ RIGHT SIDEBAR ============ */}

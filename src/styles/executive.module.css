@@ -191,21 +191,31 @@
 }
 
 .contactIcon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
   background: var(--navy-light);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
   flex-shrink: 0;
   transition: all 0.3s ease;
+  color: var(--sidebar-muted);
 }
 
 .contactItem:hover .contactIcon {
   background: var(--accent);
+  color: var(--white);
   transform: scale(1.05);
+}
+
+.contactItemLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: inherit;
+  text-decoration: none;
+  width: 100%;
 }
 
 .contactLink {
@@ -240,29 +250,38 @@
 }
 
 .skillTags {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.4rem;
   margin-bottom: 2rem;
+}
+
+.skillTags > :first-child {
+  grid-column: span 2;
 }
 
 .skillPill {
   padding: 0.3rem 0.7rem;
   background: var(--navy-lighter);
   border: 1px solid rgba(37, 99, 235, 0.15);
-  border-radius: 14px;
+  border-radius: 6px;
   font-size: 0.72rem;
   color: var(--sidebar-text);
   transition: all 0.3s ease;
-  cursor: default;
+  cursor: pointer;
 }
 
 .skillPill:hover {
   background: var(--accent);
   color: var(--white);
   border-color: var(--accent);
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.06);
   box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.skillPillActive {
+  transform: scale(1.08);
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.3);
 }
 
 /* ─── Achievements in Sidebar ──────────────────────────────────── */
@@ -500,12 +519,12 @@
   border-radius: 14px;
   padding: 1.5rem 1.8rem;
   transition: all 0.35s ease;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .timelineCard:hover {
   border-color: var(--accent);
-  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.08);
+  box-shadow: 0 12px 36px rgba(37, 99, 235, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
   transform: translateX(6px);
 }
 
@@ -537,8 +556,11 @@
 }
 
 .expDate {
-  font-size: 0.82rem;
+  font-family: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+  font-size: 0.78rem;
   color: var(--gray-400);
+  font-weight: 400;
+  letter-spacing: 0.3px;
 }
 
 .expDesc {
@@ -556,8 +578,8 @@
 }
 
 .expAchievementItem {
-  position: relative;
-  padding-left: 1.4rem;
+  display: grid;
+  grid-template-columns: 1.2rem 1fr;
   font-size: 0.85rem;
   color: var(--gray-600);
   line-height: 1.7;
@@ -566,13 +588,11 @@
 
 .expAchievementItem::before {
   content: '';
-  position: absolute;
-  left: 0;
-  top: 9px;
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: var(--accent);
+  margin-top: 0.55em;
 }
 
 .expTech {
@@ -598,6 +618,21 @@
   border-color: var(--accent);
 }
 
+/* ─── Skill-to-experience filtering ───────────────────────────── */
+.timelineItemDimmed {
+  opacity: 0.25;
+  transition: opacity 0.3s ease;
+}
+
+.timelineItemHighlighted {
+  transition: all 0.3s ease;
+}
+
+.timelineItemHighlighted .timelineCard {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 25px rgba(37, 99, 235, 0.15);
+}
+
 /* ─── Projects Section ─────────────────────────────────────────── */
 .projectsSection {
   margin-bottom: 3rem;
@@ -609,6 +644,8 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .projectCard {
@@ -849,6 +886,15 @@
     grid-column: 1 / -1;
   }
 
+  .skillTags {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .contactIcon {
+    width: 40px;
+    height: 40px;
+  }
+
   .main {
     padding: 2rem 1.5rem 3rem;
   }
@@ -900,6 +946,16 @@
 @media (max-width: 480px) {
   .sidebar {
     grid-template-columns: 1fr;
+  }
+
+  .skillTags {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contactIcon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
   }
 
   .statsRow {

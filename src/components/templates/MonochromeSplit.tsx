@@ -7,6 +7,12 @@ import { useLanguage } from '@/context/LanguageContext';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
 import AnimatedCounter from '@/components/shared/AnimatedCounter';
+import ContactForm from '@/components/shared/ContactForm';
+import { parseBold } from '@/utils/parseBold';
+import { useSkillHighlight } from '@/context/SkillHighlightContext';
+import { getTechColor } from '@/utils/techBrandColors';
+import { useCopyToClipboard } from '@/utils/contactActions';
+import { EmailIcon, PhoneIcon, GithubIcon, LocationIcon } from '@/components/shared/ContactIcons';
 import s from '@/styles/monochrome.module.css';
 
 /* ── Animation variants ── */
@@ -93,6 +99,8 @@ const interests = [
 export default function MonochromeSplit() {
   const { data, photoUrl } = useContent();
   const { t } = useLanguage();
+  const { activeSkill, setActiveSkill } = useSkillHighlight();
+  const { copied, copy } = useCopyToClipboard();
 
   return (
     <div className={s.template}>
@@ -227,7 +235,7 @@ export default function MonochromeSplit() {
               {data.exp.map((exp, i) => (
                 <motion.div
                   key={i}
-                  className={s.timelineItem}
+                  className={`${s.timelineItem} ${activeSkill && !exp.tech.includes(activeSkill) ? s.timelineDimmed : ''} ${activeSkill && exp.tech.includes(activeSkill) ? s.timelineHighlighted : ''}`}
                   variants={timelineEntry}
                   initial="hidden"
                   whileInView="visible"
@@ -241,7 +249,7 @@ export default function MonochromeSplit() {
                   <div className={s.timelineDesc}>{exp.d}</div>
                   <ul className={s.timelineList}>
                     {exp.a.map((item, j) => (
-                      <li key={j} className={s.timelineListItem}>{item}</li>
+                      <li key={j} className={s.timelineListItem}>{parseBold(item)}</li>
                     ))}
                   </ul>
                   <div className={s.timelineTech}>
@@ -276,7 +284,15 @@ export default function MonochromeSplit() {
                   <h3 className={s.skillTitle}>{skill.t}</h3>
                   <div className={s.skillTags}>
                     {skill.tags.map((tag, j) => (
-                      <span key={j} className={s.skillTag}>{tag}</span>
+                      <span
+                        key={j}
+                        className={`${s.skillTag} ${activeSkill === tag ? s.skillTagActive : ''}`}
+                        onMouseEnter={() => setActiveSkill(tag)}
+                        onMouseLeave={() => setActiveSkill(null)}
+                        style={activeSkill === tag ? { backgroundColor: getTechColor(tag) || '#000', color: '#fff', borderColor: getTechColor(tag) || '#000' } : undefined}
+                      >
+                        {tag}
+                      </span>
                     ))}
                   </div>
                 </motion.div>
@@ -435,32 +451,33 @@ export default function MonochromeSplit() {
 
             <AnimatedSection direction="up" delay={0.2}>
               <div className={s.contactGrid}>
-                <div className={s.contactCard}>
-                  <div className={s.contactCardIco}>📧</div>
-                  <div className={s.contactCardLabel}>{t.email}</div>
-                  <a href={`mailto:${data.email}`} className={s.contactCardValue}>{data.email}</a>
+                <div className={s.contactCard} onClick={() => copy(data.email, 'email')} style={{ cursor: 'pointer' }}>
+                  <div className={s.contactCardIco}><EmailIcon /></div>
+                  <div className={s.contactCardLabel}>{copied === 'email' ? 'Copied!' : t.email}</div>
+                  <span className={s.contactCardValue}>{data.email}</span>
                 </div>
-                <div className={s.contactCard}>
-                  <div className={s.contactCardIco}>📱</div>
-                  <div className={s.contactCardLabel}>{t.phone}</div>
-                  <a href={`tel:+57${data.phone.replace(/\D/g, '').slice(2)}`} className={s.contactCardValue}>{data.phone}</a>
+                <div className={s.contactCard} onClick={() => copy(data.phone, 'phone')} style={{ cursor: 'pointer' }}>
+                  <div className={s.contactCardIco}><PhoneIcon /></div>
+                  <div className={s.contactCardLabel}>{copied === 'phone' ? 'Copied!' : t.phone}</div>
+                  <span className={s.contactCardValue}>{data.phone}</span>
                 </div>
-                <div className={s.contactCard}>
-                  <div className={s.contactCardIco}>💻</div>
+                <a className={s.contactCard} href={`https://${data.github}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                  <div className={s.contactCardIco}><GithubIcon /></div>
                   <div className={s.contactCardLabel}>GitHub</div>
-                  <a href={`https://${data.github}`} target="_blank" rel="noopener noreferrer" className={s.contactCardValue}>{data.github}</a>
-                </div>
-                <div className={s.contactCard}>
-                  <div className={s.contactCardIco}>📍</div>
+                  <span className={s.contactCardValue}>{data.github}</span>
+                </a>
+                <a className={s.contactCard} href={`https://maps.google.com/?q=${encodeURIComponent(data.loc)}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                  <div className={s.contactCardIco}><LocationIcon /></div>
                   <div className={s.contactCardLabel}>{t.location}</div>
                   <span className={s.contactCardValue}>{data.loc}</span>
-                </div>
+                </a>
               </div>
 
               <div className={s.contactCTA}>
                 <a href={`mailto:${data.email}`} className={s.btnPrimary}>{t.getInTouch}</a>
                 <a href={`https://${data.github}`} target="_blank" rel="noopener noreferrer" className={s.btnSecondary}>{t.viewGithub}</a>
               </div>
+              <ContactForm />
             </AnimatedSection>
           </div>
         </main>
