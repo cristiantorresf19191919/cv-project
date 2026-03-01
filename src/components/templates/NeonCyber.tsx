@@ -6,7 +6,13 @@ import { useContent } from '@/context/ContentContext';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
 import SectionHeader from '@/components/shared/SectionHeader';
+import ContactForm from '@/components/shared/ContactForm';
 import s from '@/styles/neon.module.css';
+import { parseBold } from '@/utils/parseBold';
+import { useSkillHighlight } from '@/context/SkillHighlightContext';
+import { getTechColor } from '@/utils/techBrandColors';
+import { useCopyToClipboard } from '@/utils/contactActions';
+import { EmailIcon, PhoneIcon, GithubIcon, LocationIcon } from '@/components/shared/ContactIcons';
 
 const heroContainer = {
   hidden: {},
@@ -51,6 +57,8 @@ const contactHover = {
 
 export default function NeonCyber() {
   const { data, photoUrl } = useContent();
+  const { activeSkill, setActiveSkill } = useSkillHighlight();
+  const { copied, copy } = useCopyToClipboard();
 
   return (
     <div className={s.template}>
@@ -97,7 +105,17 @@ export default function NeonCyber() {
               <div className={s.ico}>{skill.ico}</div>
               <h3 className={s.scH3}>{skill.t}</h3>
               <div className={s.tgs}>
-                {skill.tags.map((tag, j) => <span key={j} className={s.tg}>{tag}</span>)}
+                {skill.tags.map((tag, j) => (
+                  <span
+                    key={j}
+                    className={`${s.tg} ${activeSkill === tag ? s.tgActive : ''}`}
+                    onMouseEnter={() => setActiveSkill(tag)}
+                    onMouseLeave={() => setActiveSkill(null)}
+                    style={activeSkill === tag ? { backgroundColor: getTechColor(tag) || undefined, color: '#fff', borderColor: getTechColor(tag) || undefined } : undefined}
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </motion.div>
           ))}
@@ -110,13 +128,15 @@ export default function NeonCyber() {
         {data.exp.map((exp, i) => (
           <AnimatedSection key={i} direction="left" delay={i * 0.12} scale>
             <div className={s.ti}>
-              <div className={s.tc}>
+              <div className={`${s.tc} ${activeSkill && !exp.tech.includes(activeSkill) ? s.tcDimmed : ''} ${activeSkill && exp.tech.includes(activeSkill) ? s.tcHighlighted : ''}`}>
                 <h3 className={s.tcH3}>{exp.t}</h3>
                 <div className={s.co}>{exp.co}</div>
                 <div className={s.dt}>{exp.dt}</div>
                 <div className={s.td}>{exp.d}</div>
                 <ul className={s.tcUl}>
-                  {exp.a.map((a, j) => <li key={j} className={s.tcLi}>{a}</li>)}
+                  {exp.a.map((a, j) => (
+                    <li key={j} className={s.tcLi}>{parseBold(a)}</li>
+                  ))}
                 </ul>
                 <div className={s.tt}>
                   {exp.tech.map((t, j) => <span key={j} className={s.ttg}>{t}</span>)}
@@ -169,26 +189,31 @@ export default function NeonCyber() {
       <div className={s.sec}>
         <SectionHeader tag="Get In Touch" title="Let&#39;s Work Together" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         <StaggerChildren className={s.cg} stagger={0.08}>
-          <motion.div variants={staggerItem} whileHover={contactHover} className={s.cc}>
-            <div className={s.ci}>📧</div>
-            <h3 className={s.ccH3}>Email</h3>
-            <a href={`mailto:${data.email}`} className={s.ccA}>{data.email}</a>
+          <motion.div variants={staggerItem} whileHover={contactHover}
+            className={s.cc} onClick={() => copy(data.email, 'email')} style={{ cursor: 'pointer' }}>
+            <div className={s.ci}><EmailIcon /></div>
+            <h3 className={s.ccH3}>{copied === 'email' ? 'Copied!' : 'Email'}</h3>
+            <span className={s.ccA}>{data.email}</span>
           </motion.div>
-          <motion.div variants={staggerItem} whileHover={contactHover} className={s.cc}>
-            <div className={s.ci}>📱</div>
-            <h3 className={s.ccH3}>Phone</h3>
-            <a href={`tel:+57${data.phone.replace(/\D/g, '').slice(2)}`} className={s.ccA}>{data.phone}</a>
+          <motion.div variants={staggerItem} whileHover={contactHover}
+            className={s.cc} onClick={() => copy(data.phone, 'phone')} style={{ cursor: 'pointer' }}>
+            <div className={s.ci}><PhoneIcon /></div>
+            <h3 className={s.ccH3}>{copied === 'phone' ? 'Copied!' : 'Phone'}</h3>
+            <span className={s.ccA}>{data.phone}</span>
           </motion.div>
-          <motion.div variants={staggerItem} whileHover={contactHover} className={s.cc}>
-            <div className={s.ci}>💻</div>
+          <motion.a variants={staggerItem} whileHover={contactHover}
+            className={s.cc} href={`https://${data.github}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+            <div className={s.ci}><GithubIcon /></div>
             <h3 className={s.ccH3}>GitHub</h3>
-            <a href={`https://${data.github}`} target="_blank" rel="noopener noreferrer" className={s.ccA}>{data.github}</a>
-          </motion.div>
-          <motion.div variants={staggerItem} whileHover={contactHover} className={s.cc}>
-            <div className={s.ci}>📍</div>
+            <span className={s.ccA}>{data.github}</span>
+          </motion.a>
+          <motion.a variants={staggerItem} whileHover={contactHover}
+            className={s.cc} href={`https://maps.google.com/?q=${encodeURIComponent(data.loc)}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+            <div className={s.ci}><LocationIcon /></div>
             <h3 className={s.ccH3}>Location</h3>
-            <p className={s.ccP}>{data.loc}</p>
-          </motion.div>
+            <span className={s.ccA}>{data.loc}</span>
+          </motion.a>
+          <ContactForm />
         </StaggerChildren>
       </div>
     </div>
