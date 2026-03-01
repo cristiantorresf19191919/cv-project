@@ -13,6 +13,7 @@ import './globals.css';
 import { ContentProvider } from '@/context/ContentContext';
 import { TemplateProvider } from '@/context/TemplateContext';
 import { LanguageProvider } from '@/context/LanguageContext';
+import { SkillHighlightProvider } from '@/context/SkillHighlightContext';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -90,7 +91,9 @@ export default function RootLayout({
       >
         <LanguageProvider>
           <ContentProvider>
-            <TemplateProvider>{children}</TemplateProvider>
+            <SkillHighlightProvider>
+              <TemplateProvider>{children}</TemplateProvider>
+            </SkillHighlightProvider>
           </ContentProvider>
         </LanguageProvider>
       </body>
