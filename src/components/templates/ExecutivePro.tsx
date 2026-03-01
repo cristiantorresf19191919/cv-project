@@ -297,7 +297,7 @@ export default function ExecutivePro() {
                         <ul className={s.expAchievements}>
                           {exp.a.map((achievement, j) => (
                             <li key={j} className={s.expAchievementItem}>
-                              {parseBold(achievement)}
+                              <span>{parseBold(achievement)}</span>
                             </li>
                           ))}
                         </ul>

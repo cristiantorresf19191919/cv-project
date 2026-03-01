@@ -135,7 +135,7 @@ export default function NeonCyber() {
                 <div className={s.td}>{exp.d}</div>
                 <ul className={s.tcUl}>
                   {exp.a.map((a, j) => (
-                    <li key={j} className={s.tcLi}>{parseBold(a)}</li>
+                    <li key={j} className={s.tcLi}><span>{parseBold(a)}</span></li>
                   ))}
                 </ul>
                 <div className={s.tt}>

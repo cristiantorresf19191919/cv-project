@@ -249,7 +249,7 @@ export default function MonochromeSplit() {
                   <div className={s.timelineDesc}>{exp.d}</div>
                   <ul className={s.timelineList}>
                     {exp.a.map((item, j) => (
-                      <li key={j} className={s.timelineListItem}>{parseBold(item)}</li>
+                      <li key={j} className={s.timelineListItem}><span>{parseBold(item)}</span></li>
                     ))}
                   </ul>
                   <div className={s.timelineTech}>

@@ -329,7 +329,7 @@ export default function MidnightPortfolio() {
                   <ul className={s.expList}>
                     {exp.a.map((item, j) => (
                       <li key={j} className={s.expListItem}>
-                        {parseBold(item)}
+                        <span>{parseBold(item)}</span>
                       </li>
                     ))}
                   </ul>

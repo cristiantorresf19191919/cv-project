@@ -315,7 +315,7 @@ export default function DarkEmber() {
               {exp.a && exp.a.length > 0 && (
                 <ul className={s.expAchievements}>
                   {exp.a.map((a, j) => (
-                    <li key={j} className={s.expAchievementItem}>{parseBold(a)}</li>
+                    <li key={j} className={s.expAchievementItem}><span>{parseBold(a)}</span></li>
                   ))}
                 </ul>
               )}
