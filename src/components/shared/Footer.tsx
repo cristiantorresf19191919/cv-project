@@ -5,6 +5,7 @@ import { useTemplate } from '@/context/TemplateContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { THEMES } from '@/data/themes';
 import { GithubIcon, LinkedinIcon, EmailIcon } from '@/components/shared/ContactIcons';
+import { generateResumePDF } from '@/utils/generateResumePDF';
 import styles from '@/styles/footer.module.css';
 
 const DARK_TEMPLATES = new Set(['noir', 'term', 'neon', 'ember', 'midnight', 'horizon', 'glass']);
@@ -29,6 +30,10 @@ export default function Footer() {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDownloadPDF = () => {
+    generateResumePDF(data, t);
   };
 
   return (
@@ -69,6 +74,14 @@ export default function Footer() {
           </a>
         )}
       </div>
+
+      {/* Download Resume */}
+      <button className={styles.downloadBtn} onClick={handleDownloadPDF} type="button">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className={styles.downloadIcon}>
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+        </svg>
+        {t.downloadResume}
+      </button>
 
       {/* Featured Repos */}
       <div className={styles.reposSection}>
