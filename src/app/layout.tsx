@@ -75,8 +75,50 @@ const crimsonPro = Crimson_Pro({
 });
 
 export const metadata: Metadata = {
-  title: 'Cristian Torres - Full Stack Developer',
-  description: 'React / Next.js specialist with 5+ years building performant web products.',
+  title: 'Cristian Torres - Full Stack Developer | React & Next.js Specialist',
+  description:
+    'React & Next.js specialist with 5+ years shipping production web products at Audi and Driveway.com. Expert in TypeScript, React Query, GraphQL, and micro-service architecture.',
+  keywords: [
+    'Cristian Torres',
+    'Full Stack Developer',
+    'React Developer',
+    'Next.js',
+    'TypeScript',
+    'Frontend Engineer',
+    'Portfolio',
+    'Bogota Colombia',
+  ],
+  authors: [{ name: 'Cristian Torres' }],
+  creator: 'Cristian Torres',
+  metadataBase: new URL('https://cristiantorres.dev'),
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    title: 'Cristian Torres - Full Stack Developer',
+    description:
+      'React & Next.js specialist with 5+ years shipping production web products. 12 stunning portfolio templates.',
+    siteName: 'Cristian Torres Portfolio',
+    images: [
+      {
+        url: '/images/og-cover.png',
+        width: 1200,
+        height: 630,
+        alt: 'Cristian Torres - Full Stack Developer Portfolio',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Cristian Torres - Full Stack Developer',
+    description:
+      'React & Next.js specialist with 5+ years shipping production web products.',
+    images: ['/images/og-cover.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
 };
 
 export default function RootLayout({
@@ -84,8 +126,42 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Cristian Torres',
+    jobTitle: 'Full Stack Developer',
+    description:
+      'React & Next.js specialist with 5+ years shipping production web products at Audi and Driveway.com.',
+    url: 'https://cristiantorres.dev',
+    sameAs: [
+      'https://github.com/cristiantorresf19191919',
+      'https://linkedin.com/in/cristian-torres-dev',
+    ],
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Bogota',
+      addressCountry: 'CO',
+    },
+    knowsAbout: [
+      'React',
+      'Next.js',
+      'TypeScript',
+      'Node.js',
+      'GraphQL',
+      'Kotlin',
+      'Spring Boot',
+    ],
+  });
+
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd }}
+        />
+      </head>
       <body
         className={`${cormorant.variable} ${montserrat.variable} ${playfair.variable} ${spaceMono.variable} ${bebasNeue.variable} ${syne.variable} ${outfit.variable} ${crimsonPro.variable}`}
       >

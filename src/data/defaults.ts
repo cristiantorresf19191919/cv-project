@@ -104,6 +104,20 @@ export const DEFAULT_DATA: PortfolioData = {
       url: "https://agencypartner2.netlify.app/es/developer-section",
       image: "/images/project-optimus.png",
       tech: ["Next.js", "TypeScript", "Contentful", "Netlify"]
+    },
+    {
+      title: "AuraSpa \u2014 Spa Management Platform",
+      desc: "End-to-end spa and wellness management SaaS with real-time booking, staff scheduling, inventory tracking, and customer CRM. Handles 1,000+ monthly appointments with automated reminders and payment integration.",
+      url: "https://github.com/cristiantorresf19191919/AuraSpa",
+      image: "/images/project-auraspa.png",
+      tech: ["React", "TypeScript", "Node.js", "PostgreSQL", "Redis"]
+    },
+    {
+      title: "Agendalo \u2014 Smart Scheduling System",
+      desc: "Intelligent appointment scheduling platform with calendar sync, conflict resolution, and automated reminders. Features a drag-and-drop interface and multi-timezone support for distributed teams.",
+      url: "https://github.com/cristiantorresf19191919/agendalo",
+      image: "/images/project-agendalo.png",
+      tech: ["Next.js", "TypeScript", "Prisma", "Tailwind CSS"]
     }
   ],
   testimonials: [

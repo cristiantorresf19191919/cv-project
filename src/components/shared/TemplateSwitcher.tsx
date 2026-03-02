@@ -206,6 +206,17 @@ export default function TemplateSwitcher() {
         <MonitorIcon className={styles.kbdIcon} />
         <span className={styles.kbdLabel}>switch</span>
       </div>
+
+      <div className={styles.divider} />
+
+      <div
+        className={`${styles.kbdHint} ${isDarkNav ? styles.kbdHintDark : styles.kbdHintLight}`}
+        title="Press Cmd+K to open command palette"
+      >
+        <span className={styles.kbdLabel} style={{ letterSpacing: '0.3px' }}>
+          {typeof navigator !== 'undefined' && /Mac|iPhone/.test(navigator.userAgent) ? '⌘K' : 'Ctrl+K'}
+        </span>
+      </div>
     </div>
   );
 }

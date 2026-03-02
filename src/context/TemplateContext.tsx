@@ -2,7 +2,8 @@
 
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { TemplateName } from '@/types/templates';
-import { THEMES } from '@/data/themes';
+import { THEMES, TEMPLATE_LIST } from '@/data/themes';
+import { Analytics } from '@/utils/analytics';
 
 interface TemplateContextValue {
   current: TemplateName;
@@ -27,6 +28,14 @@ export function TemplateProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const theme = THEMES[current];
     document.body.style.background = theme.bg;
+
+    // Dynamic page title
+    const info = TEMPLATE_LIST.find((t) => t.name === current);
+    const label = info?.label ?? current;
+    document.title = `Cristian Torres | ${label}`;
+
+    // Track template view
+    Analytics.templateView(current);
   }, [current]);
 
   const switchTemplate = useCallback((name: TemplateName) => {

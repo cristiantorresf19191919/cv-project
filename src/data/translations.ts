@@ -44,6 +44,13 @@ export interface Translations {
   builtWith: string;
   rights: string;
   featuredRepos: string;
+  // Command Palette & Actions
+  searchPlaceholder: string;
+  sharePortfolio: string;
+  linkCopied: string;
+  scrollToTop: string;
+  sendEmail: string;
+  readingTime: string;
 }
 
 export const translations: Record<Lang, Translations> = {
@@ -86,6 +93,12 @@ export const translations: Record<Lang, Translations> = {
     builtWith: 'Built with Next.js & React',
     rights: 'All rights reserved',
     featuredRepos: 'Featured Repos',
+    searchPlaceholder: 'Search templates, actions...',
+    sharePortfolio: 'Share Portfolio',
+    linkCopied: 'Link copied!',
+    scrollToTop: 'Scroll to Top',
+    sendEmail: 'Send Email',
+    readingTime: 'min read',
   },
   es: {
     summary: 'Resumen',
@@ -126,5 +139,11 @@ export const translations: Record<Lang, Translations> = {
     builtWith: 'Hecho con Next.js & React',
     rights: 'Todos los derechos reservados',
     featuredRepos: 'Repos Destacados',
+    searchPlaceholder: 'Buscar plantillas, acciones...',
+    sharePortfolio: 'Compartir Portfolio',
+    linkCopied: 'Enlace copiado!',
+    scrollToTop: 'Ir al Inicio',
+    sendEmail: 'Enviar Email',
+    readingTime: 'min de lectura',
   },
 };

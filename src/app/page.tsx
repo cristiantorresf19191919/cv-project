@@ -17,6 +17,10 @@ import DarkEmber from '@/components/templates/DarkEmber';
 import MidnightPortfolio from '@/components/templates/MidnightPortfolio';
 import SereneBento from '@/components/templates/SereneBento';
 import Horizon from '@/components/templates/Horizon';
+import CommandPalette from '@/components/shared/CommandPalette';
+import FloatingActions from '@/components/shared/FloatingActions';
+import StatusBadge from '@/components/shared/StatusBadge';
+import EasterEgg from '@/components/shared/EasterEgg';
 import { TemplateName } from '@/types/templates';
 import { ComponentType } from 'react';
 
@@ -44,6 +48,10 @@ export default function Home() {
       <ScrollProgress />
       <TemplateSwitcher />
       <KeyboardNav />
+      <CommandPalette />
+      <FloatingActions />
+      <StatusBadge />
+      <EasterEgg />
       <div style={{ paddingTop: '58px', minHeight: '100vh' }}>
         <AnimatePresence mode="wait">
           {!isTransitioning && (

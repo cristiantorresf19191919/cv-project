@@ -80,3 +80,51 @@ button:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
 }
+
+/* ═══════════════════════════════════════════════════════
+   Print Stylesheet
+   ═══════════════════════════════════════════════════════ */
+@media print {
+  /* Hide all UI chrome */
+  [class*="switcher"],
+  [class*="Switcher"],
+  [class*="scrollProgress"],
+  [class*="ScrollProgress"],
+  [class*="keyboard"],
+  [class*="Keyboard"],
+  [class*="floating"],
+  [class*="Floating"],
+  [class*="statusBadge"],
+  [class*="StatusBadge"],
+  [class*="commandPalette"],
+  [class*="CommandPalette"],
+  footer {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body::after {
+    display: none !important;
+  }
+
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  @page {
+    margin: 1.5cm;
+  }
+}
