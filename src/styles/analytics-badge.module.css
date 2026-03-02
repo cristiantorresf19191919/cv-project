@@ -1,0 +1,90 @@
+/* ═══════════════════════════════════════════════════════
+   Analytics Badge — total views with sparkline chart
+   ═══════════════════════════════════════════════════════ */
+
+.badge {
+  position: fixed;
+  top: 72px;
+  right: 1.5rem;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(12, 12, 16, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  font-family: var(--font-montserrat, system-ui);
+  cursor: default;
+  user-select: none;
+  min-width: 100px;
+}
+
+/* ── Top row: icon + number + label ───────────────── */
+.top {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.eyeIcon {
+  width: 13px;
+  height: 13px;
+  color: var(--badge-accent, #6366f1);
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.number {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: -0.3px;
+  line-height: 1;
+}
+
+.label {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* ── Sparkline chart ──────────────────────────────── */
+.sparkline {
+  width: 100%;
+  height: 22px;
+  display: block;
+}
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .badge {
+    top: auto;
+    bottom: 5.5rem;
+    right: 1rem;
+    padding: 0.4rem 0.6rem;
+    min-width: 85px;
+  }
+
+  .number {
+    font-size: 0.75rem;
+  }
+
+  .sparkline {
+    height: 18px;
+  }
+}
+
+@media print {
+  .badge {
+    display: none;
+  }
+}

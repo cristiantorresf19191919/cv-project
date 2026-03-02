@@ -9,6 +9,7 @@ import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
 import AnimatedCounter from '@/components/shared/AnimatedCounter';
 import ContactForm from '@/components/shared/ContactForm';
+import ReactionBar from '@/components/shared/ReactionBar';
 import Footer from '@/components/shared/Footer';
 import { parseBold } from '@/utils/parseBold';
 import { useSkillHighlight } from '@/context/SkillHighlightContext';
@@ -341,6 +342,7 @@ export default function MidnightPortfolio() {
                       </span>
                     ))}
                   </div>
+                  <ReactionBar sectionId={`exp-${i}`} />
                 </div>
               </AnimatedSection>
             ))}

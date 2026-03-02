@@ -1,0 +1,100 @@
+/* ═══════════════════════════════════════════════════════
+   Visitor Pulse — real-time live viewer indicator
+   ═══════════════════════════════════════════════════════ */
+
+.pulse {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(12, 12, 16, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  font-family: var(--font-montserrat, system-ui);
+  cursor: default;
+  user-select: none;
+}
+
+/* ── Live dot with pulse ring ─────────────────────── */
+.liveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ef4444;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.liveDot::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: #ef4444;
+  opacity: 0;
+  animation: livePulse 1.8s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(2); }
+}
+
+/* ── LIVE label ───────────────────────────────────── */
+.liveLabel {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #ef4444;
+  line-height: 1;
+}
+
+/* ── Separator ────────────────────────────────────── */
+.divider {
+  width: 1px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+
+/* ── Count text ───────────────────────────────────── */
+.count {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .pulse {
+    bottom: 1rem;
+    left: 1rem;
+    padding: 0.35rem 0.7rem;
+    gap: 0.35rem;
+  }
+
+  .count {
+    font-size: 0.6rem;
+  }
+
+  .liveLabel {
+    font-size: 0.52rem;
+  }
+}
+
+@media print {
+  .pulse {
+    display: none;
+  }
+}

@@ -7,6 +7,7 @@ import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
 import SectionHeader from '@/components/shared/SectionHeader';
 import ContactForm from '@/components/shared/ContactForm';
+import ReactionBar from '@/components/shared/ReactionBar';
 import s from '@/styles/horizon.module.css';
 
 const heroContainer = {
@@ -132,6 +133,7 @@ export default function Horizon() {
                       <span key={j} className={s.ttg}>{t}</span>
                     ))}
                   </div>
+                  <ReactionBar sectionId={`exp-${i}`} />
                 </div>
               </div>
             </AnimatedSection>

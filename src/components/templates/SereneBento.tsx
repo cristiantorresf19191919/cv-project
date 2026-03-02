@@ -7,6 +7,7 @@ import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
 import SectionHeader from '@/components/shared/SectionHeader';
 import ContactForm from '@/components/shared/ContactForm';
+import ReactionBar from '@/components/shared/ReactionBar';
 import s from '@/styles/serene.module.css';
 
 const heroContainer = {
@@ -130,6 +131,7 @@ export default function SereneBento() {
                       <span key={j} className={s.ttg}>{t}</span>
                     ))}
                   </div>
+                  <ReactionBar sectionId={`exp-${i}`} />
                 </div>
               </div>
             </AnimatedSection>

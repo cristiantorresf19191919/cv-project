@@ -19,7 +19,9 @@ import SereneBento from '@/components/templates/SereneBento';
 import Horizon from '@/components/templates/Horizon';
 import CommandPalette from '@/components/shared/CommandPalette';
 import FloatingActions from '@/components/shared/FloatingActions';
-import StatusBadge from '@/components/shared/StatusBadge';
+import LiveAvailability from '@/components/shared/LiveAvailability';
+import VisitorPulse from '@/components/shared/VisitorPulse';
+import AnalyticsBadge from '@/components/shared/AnalyticsBadge';
 import EasterEgg from '@/components/shared/EasterEgg';
 import { TemplateName } from '@/types/templates';
 import { ComponentType } from 'react';
@@ -50,7 +52,9 @@ export default function Home() {
       <KeyboardNav />
       <CommandPalette />
       <FloatingActions />
-      <StatusBadge />
+      <LiveAvailability />
+      <VisitorPulse />
+      <AnalyticsBadge />
       <EasterEgg />
       <div style={{ paddingTop: '58px', minHeight: '100vh' }}>
         <AnimatePresence mode="wait">
