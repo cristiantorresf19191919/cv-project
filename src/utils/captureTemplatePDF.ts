@@ -1,103 +1,145 @@
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 
-/**
- * Captures the currently visible template as a pixel-perfect PDF.
- * Hides UI chrome (switcher, nav, footer) during capture,
- * then splits the long screenshot into A4 pages.
- */
-export async function captureTemplatePDF(filename: string): Promise<void> {
-  // ── 1. Find the template container ───────────────────
-  const templateEl =
-    document.querySelector<HTMLElement>('[class*="template"]');
+/* ══════════════════════════════════════════════════════
+   Pixel-perfect template-to-PDF capture
+   ──────────────────────────────────────────────────────
+   1. Finds the template via [data-pdf-target]
+   2. Hides UI chrome & footer
+   3. Forces static styles (no transforms/filters)
+   4. Captures at 2x with html2canvas
+   5. Slices into A4 pages (each page gets its own
+      canvas crop — no clipping artefacts)
+   6. Restores everything
+   ══════════════════════════════════════════════════════ */
 
-  if (!templateEl) {
-    alert('Could not find template to export.');
+const A4_W_MM = 210;
+const A4_H_MM = 297;
+
+export async function captureTemplatePDF(filename: string): Promise<void> {
+  // ── 1. Find target ─────────────────────────────────
+  const wrapper = document.querySelector<HTMLElement>('[data-pdf-target]');
+  if (!wrapper) {
+    alert('Template not found.');
     return;
   }
 
-  // ── 2. Collect UI elements to hide during capture ────
-  const hideSelectors = [
-    '[class*="switcher"]',       // TemplateSwitcher bar
-    '[class*="Switcher"]',
-    '[class*="keyboard"]',       // KeyboardNav
-    '[class*="Keyboard"]',
-    '[class*="scrollProgress"]', // ScrollProgress bar
-    '[class*="ScrollProgress"]',
-    '[class*="footer"]',         // Footer component
-    '[class*="Footer"]',
-  ];
-
-  const hidden: { el: HTMLElement; prev: string }[] = [];
-
-  for (const sel of hideSelectors) {
-    document.querySelectorAll<HTMLElement>(sel).forEach((el) => {
-      // Don't hide elements inside the template itself (like footer text)
-      // Only hide top-level chrome
-      if (!templateEl.contains(el) || el.tagName === 'FOOTER') {
-        hidden.push({ el, prev: el.style.display });
-        el.style.display = 'none';
-      }
-    });
+  // The actual .template div is the first child of the motion wrapper
+  const templateEl = wrapper.firstElementChild as HTMLElement | null;
+  if (!templateEl) {
+    alert('Template not found.');
+    return;
   }
 
-  // Also hide the footer inside the template
-  const footerInTemplate = templateEl.querySelector<HTMLElement>('footer');
-  if (footerInTemplate) {
-    hidden.push({ el: footerInTemplate, prev: footerInTemplate.style.display });
-    footerInTemplate.style.display = 'none';
+  // ── 2. Save scroll position & scroll to top ────────
+  const prevScrollY = window.scrollY;
+  window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+
+  // Small delay to let the browser settle after scroll
+  await new Promise((r) => setTimeout(r, 100));
+
+  // ── 3. Hide UI chrome ──────────────────────────────
+  const restoreFns: (() => void)[] = [];
+
+  function hideEl(el: HTMLElement) {
+    const prev = el.style.display;
+    el.style.display = 'none';
+    restoreFns.push(() => { el.style.display = prev; });
   }
 
-  // Remove top padding from parent container during capture
-  const parentContainer = templateEl.parentElement;
-  let prevPadding = '';
-  if (parentContainer) {
-    prevPadding = parentContainer.style.paddingTop;
-    parentContainer.style.paddingTop = '0';
+  // Hide switcher bar, scroll progress, keyboard nav
+  document.querySelectorAll<HTMLElement>(
+    '[class*="switcher"], [class*="Switcher"], [class*="scrollProgress"], [class*="ScrollProgress"], [class*="keyboard"], [class*="Keyboard"]'
+  ).forEach((el) => {
+    if (!templateEl.contains(el)) hideEl(el);
+  });
+
+  // Hide footer inside template
+  const footer = templateEl.querySelector<HTMLElement>('footer');
+  if (footer) hideEl(footer);
+
+  // Remove parent padding (the 58px top padding for the switcher bar)
+  const parentDiv = wrapper.parentElement;
+  if (parentDiv) {
+    const prevPad = parentDiv.style.paddingTop;
+    parentDiv.style.paddingTop = '0';
+    restoreFns.push(() => { parentDiv.style.paddingTop = prevPad; });
   }
 
-  // ── 3. Capture with html2canvas ──────────────────────
+  // Neutralise framer-motion transforms on the wrapper
+  const prevTransform = wrapper.style.transform;
+  const prevFilter = wrapper.style.filter;
+  wrapper.style.transform = 'none';
+  wrapper.style.filter = 'none';
+  restoreFns.push(() => {
+    wrapper.style.transform = prevTransform;
+    wrapper.style.filter = prevFilter;
+  });
+
+  // ── 4. Resolve background color ────────────────────
+  // html2canvas sometimes misses CSS gradients, so we
+  // compute the dominant bg and pass it as fallback
+  const computed = getComputedStyle(templateEl);
+  const bgColor = computed.backgroundColor || '#000000';
+
+  // ── 5. Capture ─────────────────────────────────────
   try {
+    await new Promise((r) => setTimeout(r, 200)); // let reflow settle
+
     const canvas = await html2canvas(templateEl, {
-      scale: 2,                    // 2x for crisp text
-      useCORS: true,               // allow cross-origin images
+      scale: 2,
+      useCORS: true,
       allowTaint: true,
-      backgroundColor: null,       // preserve template bg
+      backgroundColor: bgColor,
       logging: false,
-      windowWidth: templateEl.scrollWidth,
-      windowHeight: templateEl.scrollHeight,
+      imageTimeout: 15000,
+      // Capture the full scroll area of the template
+      width: templateEl.offsetWidth,
+      height: templateEl.scrollHeight,
+      scrollX: 0,
+      scrollY: 0,
     });
 
-    // ── 4. Split into A4 pages ───────────────────────────
-    const imgWidth = 210;          // A4 width in mm
-    const pageHeight = 297;        // A4 height in mm
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    // ── 6. Build multi-page PDF by slicing canvas ──────
+    const pxPerMm = canvas.width / A4_W_MM;
+    const pageHeightPx = Math.floor(A4_H_MM * pxPerMm);
+    const totalPages = Math.ceil(canvas.height / pageHeightPx);
 
     const pdf = new jsPDF('p', 'mm', 'a4');
-    let position = 0;
-    let remainingHeight = imgHeight;
-    const imgData = canvas.toDataURL('image/jpeg', 0.92);
 
-    // First page
-    pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-    remainingHeight -= pageHeight;
+    for (let page = 0; page < totalPages; page++) {
+      if (page > 0) pdf.addPage();
 
-    // Additional pages if content overflows
-    while (remainingHeight > 0) {
-      position -= pageHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-      remainingHeight -= pageHeight;
+      // Crop this page's slice from the full canvas
+      const sliceY = page * pageHeightPx;
+      const sliceH = Math.min(pageHeightPx, canvas.height - sliceY);
+
+      const pageCanvas = document.createElement('canvas');
+      pageCanvas.width = canvas.width;
+      pageCanvas.height = pageHeightPx; // always full page height
+
+      const ctx = pageCanvas.getContext('2d');
+      if (!ctx) continue;
+
+      // Fill background for the last page (may be shorter)
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+
+      // Draw the slice
+      ctx.drawImage(
+        canvas,
+        0, sliceY, canvas.width, sliceH,   // source rect
+        0, 0, canvas.width, sliceH,         // dest rect
+      );
+
+      const pageData = pageCanvas.toDataURL('image/jpeg', 0.92);
+      pdf.addImage(pageData, 'JPEG', 0, 0, A4_W_MM, A4_H_MM);
     }
 
     pdf.save(filename);
   } finally {
-    // ── 5. Restore hidden elements ─────────────────────
-    for (const { el, prev } of hidden) {
-      el.style.display = prev;
-    }
-    if (parentContainer) {
-      parentContainer.style.paddingTop = prevPadding;
-    }
+    // ── 7. Restore everything ────────────────────────
+    for (const fn of restoreFns) fn();
+    window.scrollTo({ top: prevScrollY, behavior: 'instant' as ScrollBehavior });
   }
 }

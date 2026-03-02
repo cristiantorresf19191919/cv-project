@@ -49,6 +49,7 @@ export default function Home() {
           {!isTransitioning && (
             <motion.div
               key={current}
+              data-pdf-target
               initial={{ opacity: 0, scale: 0.97, y: 20, filter: 'blur(12px)' }}
               animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
               exit={{ opacity: 0, scale: 0.97, y: -10, filter: 'blur(8px)' }}
