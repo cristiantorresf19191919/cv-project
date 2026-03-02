@@ -75,12 +75,32 @@
   box-shadow: 0 4px 16px color-mix(in srgb, var(--footer-accent) 35%, transparent);
 }
 
+.downloadBtn:disabled {
+  opacity: 0.8;
+  cursor: wait;
+  transform: none;
+}
+
+.downloadBtnLoading {
+  pointer-events: none;
+}
+
 .downloadIcon {
   width: 16px;
   height: 16px;
   stroke: currentColor;
   stroke-width: 2;
   fill: none;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* ── Featured Repos ────────────────────────────────── */

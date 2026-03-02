@@ -1,11 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import { useContent } from '@/context/ContentContext';
 import { useTemplate } from '@/context/TemplateContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { THEMES } from '@/data/themes';
 import { GithubIcon, LinkedinIcon, EmailIcon } from '@/components/shared/ContactIcons';
-import { generateResumePDF } from '@/utils/generateResumePDF';
 import styles from '@/styles/footer.module.css';
 
 const DARK_TEMPLATES = new Set(['noir', 'term', 'neon', 'ember', 'midnight', 'horizon', 'glass']);
@@ -27,13 +27,22 @@ export default function Footer() {
   const { t } = useLanguage();
   const theme = THEMES[current];
   const isDark = DARK_TEMPLATES.has(current);
+  const [exporting, setExporting] = useState(false);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDownloadPDF = () => {
-    generateResumePDF(data, t);
+  const handleDownloadPDF = async () => {
+    if (exporting) return;
+    setExporting(true);
+    try {
+      const { captureTemplatePDF } = await import('@/utils/captureTemplatePDF');
+      const filename = `${data.name}_${data.last}_${current}_Resume.pdf`;
+      await captureTemplatePDF(filename);
+    } finally {
+      setExporting(false);
+    }
   };
 
   return (
@@ -76,11 +85,27 @@ export default function Footer() {
       </div>
 
       {/* Download Resume */}
-      <button className={styles.downloadBtn} onClick={handleDownloadPDF} type="button">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className={styles.downloadIcon}>
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
-        </svg>
-        {t.downloadResume}
+      <button
+        className={`${styles.downloadBtn} ${exporting ? styles.downloadBtnLoading : ''}`}
+        onClick={handleDownloadPDF}
+        type="button"
+        disabled={exporting}
+      >
+        {exporting ? (
+          <>
+            <svg className={styles.spinner} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeDasharray="50 20" />
+            </svg>
+            Generating PDF…
+          </>
+        ) : (
+          <>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className={styles.downloadIcon}>
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+            </svg>
+            {t.downloadResume}
+          </>
+        )}
       </button>
 
       {/* Featured Repos */}
