@@ -15,6 +15,8 @@ import ExecutivePro from '@/components/templates/ExecutivePro';
 import MonochromeSplit from '@/components/templates/MonochromeSplit';
 import DarkEmber from '@/components/templates/DarkEmber';
 import MidnightPortfolio from '@/components/templates/MidnightPortfolio';
+import SereneBento from '@/components/templates/SereneBento';
+import Horizon from '@/components/templates/Horizon';
 import { TemplateName } from '@/types/templates';
 import { ComponentType } from 'react';
 
@@ -29,6 +31,8 @@ const templateMap: Record<TemplateName, ComponentType> = {
   mono: MonochromeSplit,
   ember: DarkEmber,
   midnight: MidnightPortfolio,
+  serene: SereneBento,
+  horizon: Horizon,
 };
 
 export default function Home() {

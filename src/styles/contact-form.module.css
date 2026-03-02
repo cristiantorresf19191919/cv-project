@@ -1,0 +1,122 @@
+/* Contact form - uses CSS variables for template-specific theming */
+.wrapper {
+  margin-top: 2.5rem;
+  --form-accent: #6366f1;
+  --form-bg: rgba(255, 255, 255, 0.05);
+  --form-border: rgba(255, 255, 255, 0.12);
+  --form-text: #f8f9fa;
+  --form-placeholder: rgba(255, 255, 255, 0.4);
+  --form-label: rgba(255, 255, 255, 0.7);
+}
+
+.wrapperLight {
+  --form-bg: rgba(0, 0, 0, 0.03);
+  --form-border: rgba(0, 0, 0, 0.1);
+  --form-text: #1a1a2e;
+  --form-placeholder: rgba(0, 0, 0, 0.4);
+  --form-label: rgba(0, 0, 0, 0.6);
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  max-width: 640px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.fieldFull {
+  grid-column: 1 / -1;
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--form-label);
+}
+
+.input,
+.textarea {
+  padding: 0.85rem 1.1rem;
+  border-radius: 12px;
+  border: 1px solid var(--form-border);
+  background: var(--form-bg);
+  color: var(--form-text);
+  font-size: 0.95rem;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--form-placeholder);
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--form-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--form-accent) 20%, transparent);
+}
+
+.textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.submitWrap {
+  grid-column: 1 / -1;
+  margin-top: 0.5rem;
+}
+
+.submit {
+  padding: 0.9rem 2.2rem;
+  border-radius: 12px;
+  border: none;
+  background: var(--form-accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s, filter 0.2s;
+}
+
+.submit:hover:not(:disabled) {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.feedback {
+  grid-column: 1 / -1;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+.feedbackSuccess {
+  background: color-mix(in srgb, #22c55e 15%, transparent);
+  border: 1px solid color-mix(in srgb, #22c55e 40%, transparent);
+  color: #22c55e;
+}
+
+.feedbackError {
+  background: color-mix(in srgb, #ef4444 15%, transparent);
+  border: 1px solid color-mix(in srgb, #ef4444 40%, transparent);
+  color: #ef4444;
+}
+
+@media (max-width: 600px) {
+  .form {
+    grid-template-columns: 1fr;
+  }
+}

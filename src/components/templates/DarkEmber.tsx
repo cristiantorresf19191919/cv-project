@@ -9,6 +9,7 @@ import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
 import AnimatedCounter from '@/components/shared/AnimatedCounter';
 import ContactForm from '@/components/shared/ContactForm';
+import Footer from '@/components/shared/Footer';
 import s from '@/styles/ember.module.css';
 import { parseBold } from '@/utils/parseBold';
 import { useSkillHighlight } from '@/context/SkillHighlightContext';
@@ -516,10 +517,7 @@ export default function DarkEmber() {
         </section>
       </AnimatedSection>
 
-      {/* ── Footer ───────────────────────────────────── */}
-      <footer className={s.footer}>
-        {data.name} {data.last} &middot; {data.loc}
-      </footer>
+      <Footer />
     </div>
   );
 }

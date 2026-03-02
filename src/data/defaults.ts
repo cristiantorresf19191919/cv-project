@@ -8,7 +8,7 @@ export const DEFAULT_DATA: PortfolioData = {
   desc: "React & Next.js specialist with 5+ years shipping production web products at companies like Audi and Driveway.com. I've built design systems adopted by 12+ teams, reduced API latency by 40% through smart caching, and delivered enterprise-grade UI platforms from zero to launch. Expert in TypeScript, React Query, GraphQL, and micro-service architecture. Currently expanding into Kotlin + Spring Boot for full-stack versatility.",
   email: "cristian.torres19@hotmail.com",
   phone: "+57 323 799 2985",
-  github: "github.com/cristianscript",
+  github: "github.com/cristiantorresf19191919",
   linkedin: "linkedin.com/in/cristian-torres-dev",
   loc: "Bogota, Colombia",
   availability: "open",

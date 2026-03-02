@@ -1,4 +1,4 @@
-export type TemplateName = 'noir' | 'arctic' | 'term' | 'edit' | 'neon' | 'glass' | 'exec' | 'mono' | 'ember' | 'midnight';
+export type TemplateName = 'noir' | 'arctic' | 'term' | 'edit' | 'neon' | 'glass' | 'exec' | 'mono' | 'ember' | 'midnight' | 'serene' | 'horizon';
 
 export interface ThemeConfig {
   bg: string;
@@ -8,10 +8,13 @@ export interface ThemeConfig {
   labelColor: string;
 }
 
+export type TemplateCategory = 'dark' | 'light' | 'special';
+
 export interface TemplateInfo {
   name: TemplateName;
   label: string;
   dotColor: string;
   desc: string;
   shortcut: string;
+  category: TemplateCategory;
 }

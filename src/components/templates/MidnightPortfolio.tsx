@@ -9,6 +9,7 @@ import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
 import AnimatedCounter from '@/components/shared/AnimatedCounter';
 import ContactForm from '@/components/shared/ContactForm';
+import Footer from '@/components/shared/Footer';
 import { parseBold } from '@/utils/parseBold';
 import { useSkillHighlight } from '@/context/SkillHighlightContext';
 import { getTechColor } from '@/utils/techBrandColors';
@@ -498,6 +499,7 @@ export default function MidnightPortfolio() {
           </div>
         </motion.aside>
       </div>
+      <Footer />
     </div>
   );
 }

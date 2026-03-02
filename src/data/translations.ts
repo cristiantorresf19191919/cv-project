@@ -39,6 +39,11 @@ export interface Translations {
   location: string;
   phone: string;
   email: string;
+  // Footer
+  backToTop: string;
+  builtWith: string;
+  rights: string;
+  featuredRepos: string;
 }
 
 export const translations: Record<Lang, Translations> = {
@@ -77,6 +82,10 @@ export const translations: Record<Lang, Translations> = {
     location: 'Location',
     phone: 'Phone',
     email: 'Email',
+    backToTop: 'Back to Top',
+    builtWith: 'Built with Next.js & React',
+    rights: 'All rights reserved',
+    featuredRepos: 'Featured Repos',
   },
   es: {
     summary: 'Resumen',
@@ -113,5 +122,9 @@ export const translations: Record<Lang, Translations> = {
     location: 'Ubicaci\u00F3n',
     phone: 'Tel\u00E9fono',
     email: 'Correo',
+    backToTop: 'Volver Arriba',
+    builtWith: 'Hecho con Next.js & React',
+    rights: 'Todos los derechos reservados',
+    featuredRepos: 'Repos Destacados',
   },
 };

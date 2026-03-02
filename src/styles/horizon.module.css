@@ -1,0 +1,498 @@
+.template {
+  --accent: #e07c5a;
+  --bg: #1a1a1a;
+  --card: #242424;
+  --text: #f5f5f5;
+  --muted: rgba(255, 255, 255, 0.5);
+  --border: rgba(255, 255, 255, 0.08);
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.hero {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 6rem 3rem 5rem;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 4rem;
+  align-items: center;
+  min-height: 85vh;
+}
+
+.heroContent {
+  max-width: 580px;
+}
+
+.heroLine {
+  width: 60px;
+  height: 4px;
+  background: var(--accent);
+  margin-bottom: 2rem;
+}
+
+.heroTag {
+  display: block;
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.h1,
+.h1Last {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 6rem;
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: 2px;
+  color: var(--text);
+  margin: 0;
+}
+
+.h1Last {
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.sub {
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+
+.desc {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+}
+
+.stats {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 2.5rem;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.stN {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.stL {
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--muted);
+}
+
+.btns {
+  display: flex;
+  gap: 1rem;
+}
+
+.b1 {
+  padding: 1rem 2.2rem;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.b1:hover {
+  background: #d96a48;
+  transform: translateY(-2px);
+}
+
+.b2 {
+  padding: 1rem 2.2rem;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-weight: 600;
+  font-size: 1rem;
+  border: 2px solid var(--border);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.b2:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.photoSide {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.photoFrame {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: 2px solid var(--border);
+}
+
+.photoFrame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  box-shadow: inset 0 0 0 1px var(--accent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.photoSide:hover .photoFrame::after {
+  opacity: 0.5;
+}
+
+/* Sections */
+.sec {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 3rem;
+  position: relative;
+}
+
+.secRule {
+  width: 60px;
+  height: 4px;
+  background: var(--accent);
+  margin-bottom: 2.5rem;
+}
+
+.secH {
+  margin-bottom: 3rem;
+}
+
+.secTag {
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+
+.secTitle {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: var(--text);
+}
+
+/* Skills */
+.sg {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.sc {
+  background: var(--card);
+  padding: 2rem;
+  border: 1px solid var(--border);
+  transition: all 0.35s;
+}
+
+.sc:hover {
+  border-color: rgba(224, 124, 90, 0.3);
+}
+
+.ico {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.scH3 {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.tgs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tg {
+  padding: 0.35rem 0.8rem;
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: rgba(224, 124, 90, 0.1);
+  color: var(--muted);
+  border: 1px solid rgba(224, 124, 90, 0.2);
+  transition: all 0.25s;
+}
+
+.tg:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* Timeline */
+.tl {
+  position: relative;
+}
+
+.ti {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.ti:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.tc {
+  transition: opacity 0.3s;
+}
+
+.tcHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.tcH3 {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--text);
+}
+
+.dt {
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.co {
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+
+.td {
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.tcUl {
+  list-style: none;
+}
+
+.tcLi {
+  padding-left: 1.5rem;
+  position: relative;
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.tcLi::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.tt {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.ttg {
+  padding: 0.3rem 0.7rem;
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-size: 0.8rem;
+  background: rgba(224, 124, 90, 0.1);
+  color: var(--muted);
+  border: 1px solid rgba(224, 124, 90, 0.15);
+}
+
+/* Portfolio */
+.pg {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.5rem;
+}
+
+.pc {
+  background: var(--card);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: all 0.35s;
+}
+
+.pc:hover {
+  border-color: rgba(224, 124, 90, 0.3);
+}
+
+.pcImg {
+  width: 100%;
+  height: 220px;
+  position: relative;
+  background: #1e1e1e;
+  overflow: hidden;
+}
+
+.pcBody {
+  padding: 1.8rem;
+}
+
+.pcTitle {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.pcDesc {
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.pcLink {
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* Contact */
+.cg {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.cc {
+  background: var(--card);
+  padding: 2rem;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: all 0.35s;
+}
+
+.cc:hover {
+  border-color: rgba(224, 124, 90, 0.3);
+}
+
+.ci {
+  display: block;
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.ccA,
+.ccP {
+  font-family: var(--font-crimson), 'Crimson Pro', serif;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: left;
+    padding: 4rem 1.5rem 3rem;
+    gap: 2.5rem;
+    min-height: auto;
+  }
+  .photoSide {
+    justify-content: flex-start;
+  }
+  .h1,
+  .h1Last {
+    font-size: 4.5rem;
+  }
+  .cg {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 3rem 1.25rem 2.5rem;
+  }
+  .h1,
+  .h1Last {
+    font-size: 3.2rem;
+  }
+  .sec {
+    padding: 3rem 1.25rem;
+  }
+  .secTitle {
+    font-size: 2.5rem;
+  }
+  .stats {
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .cg {
+    grid-template-columns: 1fr;
+  }
+}

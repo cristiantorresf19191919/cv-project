@@ -1,0 +1,202 @@
+/* Shared footer - themed via CSS variables */
+.footer {
+  --footer-accent: #6366f1;
+  --footer-text: #f8f9fa;
+  --footer-muted: rgba(255, 255, 255, 0.4);
+  --footer-border: rgba(255, 255, 255, 0.1);
+
+  margin-top: 4rem;
+  padding: 2.5rem 2rem 2rem;
+  border-top: 1px solid var(--footer-border);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.footerLight {
+  --footer-text: #1a1a2e;
+  --footer-muted: rgba(0, 0, 0, 0.4);
+  --footer-border: rgba(0, 0, 0, 0.1);
+}
+
+/* ── Social icon row ───────────────────────────────── */
+.socials {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--footer-border);
+  color: var(--footer-muted);
+  transition: color 0.25s, border-color 0.25s, transform 0.25s, background 0.25s;
+  text-decoration: none;
+}
+
+.socialLink svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.socialLink:hover {
+  color: var(--footer-accent);
+  border-color: var(--footer-accent);
+  transform: translateY(-2px);
+  background: color-mix(in srgb, var(--footer-accent) 10%, transparent);
+}
+
+/* ── Featured Repos ────────────────────────────────── */
+.reposSection {
+  width: 100%;
+  max-width: 720px;
+  margin-top: 0.5rem;
+}
+
+.reposLabel {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--footer-muted);
+  margin-bottom: 0.75rem;
+}
+
+.reposGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.repoCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 10px;
+  border: 1px solid var(--footer-border);
+  text-decoration: none;
+  text-align: left;
+  transition: border-color 0.25s, transform 0.25s, background 0.25s;
+}
+
+.repoCard:hover {
+  border-color: var(--footer-accent);
+  transform: translateY(-2px);
+  background: color-mix(in srgb, var(--footer-accent) 6%, transparent);
+}
+
+.repoName {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--footer-accent);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.repoIcon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.repoDesc {
+  font-size: 0.68rem;
+  color: var(--footer-muted);
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.repoLang {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.62rem;
+  color: var(--footer-muted);
+  opacity: 0.8;
+  margin-top: 0.15rem;
+}
+
+.repoLangDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--footer-accent);
+  flex-shrink: 0;
+}
+
+/* ── Text ──────────────────────────────────────────── */
+.copyright {
+  font-size: 0.8rem;
+  color: var(--footer-muted);
+  letter-spacing: 0.3px;
+}
+
+.credit {
+  font-size: 0.7rem;
+  color: var(--footer-muted);
+  opacity: 0.7;
+}
+
+/* ── Back to top ───────────────────────────────────── */
+.backToTop {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--footer-border);
+  background: transparent;
+  color: var(--footer-muted);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: color 0.25s, border-color 0.25s, transform 0.25s, background 0.25s;
+}
+
+.backToTop:hover {
+  color: var(--footer-accent);
+  border-color: var(--footer-accent);
+  transform: translateY(-2px);
+  background: color-mix(in srgb, var(--footer-accent) 8%, transparent);
+}
+
+.backToTop svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* ── Responsive ────────────────────────────────────── */
+@media (max-width: 768px) {
+  .reposGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    padding: 2rem 1.5rem 1.5rem;
+    gap: 1rem;
+  }
+
+  .reposGrid {
+    grid-template-columns: 1fr;
+  }
+}

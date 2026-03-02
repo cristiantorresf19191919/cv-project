@@ -51,3 +51,28 @@ export async function getStorage(): Promise<FirebaseStorage | null> {
   storage = getSt(firebaseApp);
   return storage;
 }
+
+export interface ContactSubmission {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  createdAt: { seconds: number; nanoseconds: number };
+}
+
+export async function submitContactMessage(data: Omit<ContactSubmission, 'createdAt'>): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const db = await getFirestore();
+    if (!db) return { ok: false, error: 'Firebase not configured' };
+
+    const { collection, addDoc, serverTimestamp } = await import('firebase/firestore');
+    await addDoc(collection(db, 'contacts'), {
+      ...data,
+      createdAt: serverTimestamp(),
+    });
+    return { ok: true };
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : 'Failed to send message';
+    return { ok: false, error: msg };
+  }
+}

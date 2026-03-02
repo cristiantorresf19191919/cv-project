@@ -7,6 +7,7 @@ import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
 import SectionHeader from '@/components/shared/SectionHeader';
 import ContactForm from '@/components/shared/ContactForm';
+import Footer from '@/components/shared/Footer';
 import s from '@/styles/arctic.module.css';
 import { parseBold } from '@/utils/parseBold';
 import { useSkillHighlight } from '@/context/SkillHighlightContext';
@@ -217,6 +218,7 @@ export default function ArcticMinimal() {
           <ContactForm />
         </StaggerChildren>
       </div>
+      <Footer />
     </div>
   );
 }

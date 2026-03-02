@@ -16,6 +16,8 @@ const KEY_MAP: Record<string, TemplateName> = {
   '8': 'mono',
   '9': 'ember',
   '0': 'midnight',
+  '-': 'serene',
+  '=': 'horizon',
 };
 
 export default function KeyboardNav() {
