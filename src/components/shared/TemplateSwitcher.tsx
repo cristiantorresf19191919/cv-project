@@ -56,6 +56,12 @@ export default function TemplateSwitcher() {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
+  const [isMac, setIsMac] = useState(false);
+
+  useEffect(() => {
+    setIsMac(/Mac|iPhone/.test(navigator.userAgent));
+  }, []);
+
   const isDarkNav = current !== 'arctic' && current !== 'edit' && current !== 'exec' && current !== 'mono' && current !== 'serene';
   const currentTemplate = TEMPLATE_LIST.find((t) => t.name === current);
   const grouped = groupByCategory(TEMPLATE_LIST);
@@ -214,7 +220,7 @@ export default function TemplateSwitcher() {
         title="Press Cmd+K to open command palette"
       >
         <span className={styles.kbdLabel} style={{ letterSpacing: '0.3px' }}>
-          {typeof navigator !== 'undefined' && /Mac|iPhone/.test(navigator.userAgent) ? '⌘K' : 'Ctrl+K'}
+          {isMac ? '⌘K' : 'Ctrl+K'}
         </span>
       </div>
     </div>

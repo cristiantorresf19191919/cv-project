@@ -1,12 +1,12 @@
 /* Contact form - uses CSS variables for template-specific theming */
 .wrapper {
   margin-top: 2.5rem;
-  --form-accent: #6366f1;
-  --form-bg: rgba(255, 255, 255, 0.05);
+  --form-accent: #d4af37;
+  --form-bg: rgba(255, 255, 255, 0.07);
   --form-border: rgba(255, 255, 255, 0.12);
   --form-text: #f8f9fa;
-  --form-placeholder: rgba(255, 255, 255, 0.4);
-  --form-label: rgba(255, 255, 255, 0.7);
+  --form-placeholder: rgba(255, 255, 255, 0.45);
+  --form-label: rgba(255, 255, 255, 0.75);
 }
 
 .wrapperLight {
@@ -35,7 +35,7 @@
 }
 
 .label {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.5px;
   color: var(--form-label);
@@ -43,13 +43,13 @@
 
 .input,
 .textarea {
-  padding: 0.85rem 1.1rem;
+  padding: 0.9rem 1.1rem;
   border-radius: 12px;
   border: 1px solid var(--form-border);
   background: var(--form-bg);
   color: var(--form-text);
   font-size: 0.95rem;
-  transition: border-color 0.25s, box-shadow 0.25s;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
 }
 
 .input::placeholder,
@@ -61,7 +61,8 @@
 .textarea:focus {
   outline: none;
   border-color: var(--form-accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--form-accent) 20%, transparent);
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
 }
 
 .textarea {
@@ -78,17 +79,19 @@
   padding: 0.9rem 2.2rem;
   border-radius: 12px;
   border: none;
-  background: var(--form-accent);
-  color: #fff;
-  font-weight: 600;
+  background: linear-gradient(135deg, #d4af37, #f0d780, #d4af37);
+  color: #0d1117;
+  font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: transform 0.2s, opacity 0.2s, filter 0.2s;
+  transition: transform 0.2s, opacity 0.2s, filter 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
 }
 
 .submit:hover:not(:disabled) {
   filter: brightness(1.1);
   transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
 }
 
 .submit:disabled {

@@ -56,18 +56,18 @@ export default function Home() {
       <VisitorPulse />
       <AnalyticsBadge />
       <EasterEgg />
-      <div style={{ paddingTop: '58px', minHeight: '100vh' }}>
+      <div style={{ paddingTop: '58px', minHeight: '100vh', overflow: 'hidden' }}>
         <AnimatePresence mode="wait">
           {!isTransitioning && (
             <motion.div
               key={current}
               data-pdf-target
-              initial={{ opacity: 0, scale: 0.97, y: 20, filter: 'blur(12px)' }}
-              animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, scale: 0.97, y: -10, filter: 'blur(8px)' }}
+              initial={{ opacity: 0, x: '40%', scale: 0.98, filter: 'blur(4px)' }}
+              animate={{ opacity: 1, x: '0%', scale: 1, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, x: '-25%', scale: 0.98, filter: 'blur(3px)' }}
               transition={{
-                duration: 0.5,
-                ease: [0.22, 1, 0.36, 1] as const,
+                duration: 0.35,
+                ease: [0.16, 1, 0.3, 1] as const,
               }}
             >
               <ActiveTemplate />
