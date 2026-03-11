@@ -85,6 +85,27 @@ export const THEMES: Record<TemplateName, ThemeConfig> = {
     accent: '#e07c5a',
     labelColor: 'rgba(255,255,255,0.35)',
   },
+  aurora: {
+    bg: '#050d18',
+    navBg: 'rgba(5,13,24,0.92)',
+    navText: 'rgba(255,255,255,0.45)',
+    accent: '#22d3a7',
+    labelColor: 'rgba(34,211,167,0.35)',
+  },
+  paper: {
+    bg: '#f5f0e8',
+    navBg: 'rgba(245,240,232,0.94)',
+    navText: '#8b7355',
+    accent: '#b45309',
+    labelColor: 'rgba(0,0,0,0.3)',
+  },
+  retro: {
+    bg: '#1a0a2e',
+    navBg: 'rgba(26,10,46,0.92)',
+    navText: 'rgba(255,255,255,0.45)',
+    accent: '#ff6ec7',
+    labelColor: 'rgba(255,110,199,0.35)',
+  },
 };
 
 const DARK: TemplateCategory = 'dark';
@@ -104,4 +125,7 @@ export const TEMPLATE_LIST: TemplateInfo[] = [
   { name: 'midnight', label: 'Midnight Portfolio', dotColor: '#06b6d4', desc: 'Three-column deep space design', shortcut: '0', category: DARK },
   { name: 'serene', label: 'Serene Bento', dotColor: '#5a7c59', desc: 'Light bento-grid with sage & cream', shortcut: '-', category: LIGHT },
   { name: 'horizon', label: 'Horizon', dotColor: '#e07c5a', desc: 'Bold minimal with strong typography', shortcut: '=', category: DARK },
+  { name: 'aurora', label: 'Aurora Borealis', dotColor: '#22d3a7', desc: 'Animated northern lights gradients', shortcut: 'a', category: SPECIAL },
+  { name: 'paper', label: 'Paper Craft', dotColor: '#b45309', desc: 'Tactile layered paper aesthetic', shortcut: 'p', category: LIGHT },
+  { name: 'retro', label: 'Retrowave', dotColor: '#ff6ec7', desc: '80s synthwave sunset & chrome', shortcut: 'r', category: SPECIAL },
 ];

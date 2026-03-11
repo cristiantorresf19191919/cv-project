@@ -17,6 +17,9 @@ import DarkEmber from '@/components/templates/DarkEmber';
 import MidnightPortfolio from '@/components/templates/MidnightPortfolio';
 import SereneBento from '@/components/templates/SereneBento';
 import Horizon from '@/components/templates/Horizon';
+import AuroraBorealis from '@/components/templates/AuroraBorealis';
+import PaperCraft from '@/components/templates/PaperCraft';
+import Retrowave from '@/components/templates/Retrowave';
 import CommandPalette from '@/components/shared/CommandPalette';
 import FloatingActions from '@/components/shared/FloatingActions';
 import LiveAvailability from '@/components/shared/LiveAvailability';
@@ -39,6 +42,9 @@ const templateMap: Record<TemplateName, ComponentType> = {
   midnight: MidnightPortfolio,
   serene: SereneBento,
   horizon: Horizon,
+  aurora: AuroraBorealis,
+  paper: PaperCraft,
+  retro: Retrowave,
 };
 
 export default function Home() {
