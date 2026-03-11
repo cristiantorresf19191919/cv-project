@@ -20,6 +20,9 @@ import Horizon from '@/components/templates/Horizon';
 import AuroraBorealis from '@/components/templates/AuroraBorealis';
 import PaperCraft from '@/components/templates/PaperCraft';
 import Retrowave from '@/components/templates/Retrowave';
+import Blueprint from '@/components/templates/Blueprint';
+import Brutalist from '@/components/templates/Brutalist';
+import CosmicDust from '@/components/templates/CosmicDust';
 import CommandPalette from '@/components/shared/CommandPalette';
 import FloatingActions from '@/components/shared/FloatingActions';
 import LiveAvailability from '@/components/shared/LiveAvailability';
@@ -45,6 +48,9 @@ const templateMap: Record<TemplateName, ComponentType> = {
   aurora: AuroraBorealis,
   paper: PaperCraft,
   retro: Retrowave,
+  blueprint: Blueprint,
+  brutal: Brutalist,
+  cosmic: CosmicDust,
 };
 
 export default function Home() {

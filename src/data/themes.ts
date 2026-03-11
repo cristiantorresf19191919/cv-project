@@ -106,6 +106,27 @@ export const THEMES: Record<TemplateName, ThemeConfig> = {
     accent: '#ff6ec7',
     labelColor: 'rgba(255,110,199,0.35)',
   },
+  blueprint: {
+    bg: '#0a1628',
+    navBg: 'rgba(10,22,40,0.92)',
+    navText: 'rgba(255,255,255,0.45)',
+    accent: '#4fc3f7',
+    labelColor: 'rgba(79,195,247,0.35)',
+  },
+  brutal: {
+    bg: '#f0ece4',
+    navBg: 'rgba(240,236,228,0.94)',
+    navText: '#888',
+    accent: '#ef4444',
+    labelColor: 'rgba(0,0,0,0.3)',
+  },
+  cosmic: {
+    bg: '#070510',
+    navBg: 'rgba(7,5,16,0.92)',
+    navText: 'rgba(255,255,255,0.45)',
+    accent: '#c084fc',
+    labelColor: 'rgba(192,132,252,0.35)',
+  },
 };
 
 const DARK: TemplateCategory = 'dark';
@@ -128,4 +149,7 @@ export const TEMPLATE_LIST: TemplateInfo[] = [
   { name: 'aurora', label: 'Aurora Borealis', dotColor: '#22d3a7', desc: 'Animated northern lights gradients', shortcut: 'a', category: SPECIAL },
   { name: 'paper', label: 'Paper Craft', dotColor: '#b45309', desc: 'Tactile layered paper aesthetic', shortcut: 'p', category: LIGHT },
   { name: 'retro', label: 'Retrowave', dotColor: '#ff6ec7', desc: '80s synthwave sunset & chrome', shortcut: 'r', category: SPECIAL },
+  { name: 'blueprint', label: 'Blueprint', dotColor: '#4fc3f7', desc: 'Engineering schematic with grid lines', shortcut: 'b', category: DARK },
+  { name: 'brutal', label: 'Brutalist', dotColor: '#ef4444', desc: 'Raw concrete web brutalism', shortcut: 'u', category: LIGHT },
+  { name: 'cosmic', label: 'Cosmic Dust', dotColor: '#c084fc', desc: 'Deep space starfield & nebula', shortcut: 'c', category: SPECIAL },
 ];
