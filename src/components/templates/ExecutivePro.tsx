@@ -222,7 +222,7 @@ export default function ExecutivePro() {
 
           {/* CTA Buttons */}
           <div className={s.sidebarCta}>
-            <a href={`mailto:${data.email}`} className={s.ctaPrimary}>
+            <a href="#contact" className={s.ctaPrimary}>
               ✉️ {t.getInTouch}
             </a>
             <a
@@ -341,17 +341,6 @@ export default function ExecutivePro() {
                       rel="noopener noreferrer"
                       className={s.projectCard}
                     >
-                      <div className={s.projectImage}>
-                        {project.image && (
-                          <Image
-                            src={project.image}
-                            alt={project.title}
-                            fill
-                            style={{ objectFit: 'cover' }}
-                            sizes="220px"
-                          />
-                        )}
-                      </div>
                       <div className={s.projectBody}>
                         <h3 className={s.projectTitle}>{project.title}</h3>
                         <p className={s.projectDesc}>{project.desc}</p>
@@ -425,7 +414,7 @@ export default function ExecutivePro() {
 
           {/* Contact Form */}
           <AnimatedSection>
-            <div className={s.eduSection}>
+            <div id="contact" className={s.eduSection}>
               <div className={s.secHeader}>
                 <div className={s.secTag}>{t.contactTag}</div>
                 <h2 className={s.secTitle}>{t.getInTouch}</h2>

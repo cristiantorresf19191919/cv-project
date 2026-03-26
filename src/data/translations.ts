@@ -51,6 +51,23 @@ export interface Translations {
   scrollToTop: string;
   sendEmail: string;
   readingTime: string;
+  // Contact form
+  formName: string;
+  formNamePlaceholder: string;
+  formEmail: string;
+  formEmailPlaceholder: string;
+  formSubject: string;
+  formSubjectPlaceholder: string;
+  formMessage: string;
+  formMessagePlaceholder: string;
+  formSend: string;
+  formSending: string;
+  formSuccess: string;
+  formErrorRequired: string;
+  formErrorConfig: string;
+  formErrorGeneric: string;
+  formTitle: string;
+  formSubtitle: string;
 }
 
 export const translations: Record<Lang, Translations> = {
@@ -99,6 +116,22 @@ export const translations: Record<Lang, Translations> = {
     scrollToTop: 'Scroll to Top',
     sendEmail: 'Send Email',
     readingTime: 'min read',
+    formName: 'Name',
+    formNamePlaceholder: 'Your name',
+    formEmail: 'Email',
+    formEmailPlaceholder: 'you@example.com',
+    formSubject: 'Subject',
+    formSubjectPlaceholder: "What's this about?",
+    formMessage: 'Message',
+    formMessagePlaceholder: 'Your message...',
+    formSend: 'Send Message',
+    formSending: 'Sending...',
+    formSuccess: "Message sent successfully. I'll get back to you soon.",
+    formErrorRequired: 'Please fill in name, email, and message.',
+    formErrorConfig: 'Contact form is not configured. Please configure Firebase.',
+    formErrorGeneric: 'Failed to send. Please try again.',
+    formTitle: 'Send me a message',
+    formSubtitle: "I'd love to hear from you. Fill out the form below and I'll respond as soon as possible.",
   },
   es: {
     summary: 'Resumen',
@@ -145,5 +178,21 @@ export const translations: Record<Lang, Translations> = {
     scrollToTop: 'Ir al Inicio',
     sendEmail: 'Enviar Email',
     readingTime: 'min de lectura',
+    formName: 'Nombre',
+    formNamePlaceholder: 'Tu nombre',
+    formEmail: 'Correo electr\u00F3nico',
+    formEmailPlaceholder: 'tu@ejemplo.com',
+    formSubject: 'Asunto',
+    formSubjectPlaceholder: '\u00BFDe qu\u00E9 se trata?',
+    formMessage: 'Mensaje',
+    formMessagePlaceholder: 'Tu mensaje...',
+    formSend: 'Enviar Mensaje',
+    formSending: 'Enviando...',
+    formSuccess: 'Mensaje enviado exitosamente. Te responder\u00E9 pronto.',
+    formErrorRequired: 'Por favor completa nombre, correo y mensaje.',
+    formErrorConfig: 'El formulario de contacto no est\u00E1 configurado. Por favor configura Firebase.',
+    formErrorGeneric: 'Error al enviar. Por favor int\u00E9ntalo de nuevo.',
+    formTitle: 'Env\u00EDame un mensaje',
+    formSubtitle: 'Me encantar\u00EDa saber de ti. Completa el formulario y te responder\u00E9 lo antes posible.',
   },
 };

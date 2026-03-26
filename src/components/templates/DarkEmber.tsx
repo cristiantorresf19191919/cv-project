@@ -185,7 +185,7 @@ export default function DarkEmber() {
           </motion.p>
 
           <motion.div variants={fadeUp} className={s.heroBtns}>
-            <a href={`mailto:${data.email}`} className={s.btnPrimary}>
+            <a href="#contact" className={s.btnPrimary}>
               {t.getInTouch}
             </a>
             <a
@@ -416,17 +416,6 @@ export default function DarkEmber() {
                 rel="noopener noreferrer"
                 className={s.projectCard}
               >
-                <div className={s.projectImg}>
-                  {project.image && (
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      sizes="600px"
-                    />
-                  )}
-                </div>
                 <div className={s.projectBody}>
                   <h3 className={s.projectTitle}>{project.title}</h3>
                   <p className={s.projectDesc}>{project.desc}</p>
@@ -447,7 +436,7 @@ export default function DarkEmber() {
 
       {/* ── Contact Detail Cards ────────────────────── */}
       <AnimatedSection direction="up" delay={0.1}>
-        <div className={s.contactDetailGrid}>
+        <div id="contact" className={s.contactDetailGrid}>
           <div
             className={s.contactDetailCard}
             onClick={() => copy(data.email, 'email')}
@@ -495,7 +484,7 @@ export default function DarkEmber() {
           <h2 className={s.contactTitle}>{t.contact}</h2>
           <p className={s.contactDesc}>{data.tagline}</p>
           <div className={s.contactLinks}>
-            <a href={`mailto:${data.email}`} className={s.contactBtnFill}>
+            <a href="#contact" className={s.contactBtnFill}>
               {t.getInTouch}
             </a>
             <a

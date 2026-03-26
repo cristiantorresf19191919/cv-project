@@ -73,7 +73,7 @@ export default function SereneBento() {
             ))}
           </motion.div>
           <motion.div variants={heroItem} className={s.btns}>
-            <a href={`mailto:${data.email}`} className={s.b1}>Contact</a>
+            <a href="#contact" className={s.b1}>Contact</a>
             <a href={`https://${data.github}`} target="_blank" rel="noopener noreferrer" className={s.b2}>GitHub</a>
           </motion.div>
         </motion.div>
@@ -153,11 +153,6 @@ export default function SereneBento() {
                 rel="noopener noreferrer"
                 className={s.pc}
               >
-                <div className={s.pcImg}>
-                  {project.image && (
-                    <Image src={project.image} alt={project.title} fill style={{ objectFit: 'cover' }} sizes="560px" />
-                  )}
-                </div>
                 <div className={s.pcBody}>
                   <h3 className={s.pcTitle}>{project.title}</h3>
                   <p className={s.pcDesc}>{project.desc}</p>
@@ -174,7 +169,7 @@ export default function SereneBento() {
         </div>
       )}
 
-      <div className={s.sec}>
+      <div id="contact" className={s.sec}>
         <SectionHeader tag="Contact" title="Reach Out" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         <StaggerChildren className={s.cg} stagger={0.06}>
           <motion.a variants={staggerItem} whileHover={contactHover} href={`mailto:${data.email}`} className={s.cc}>

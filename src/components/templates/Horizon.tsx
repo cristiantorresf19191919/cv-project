@@ -75,7 +75,7 @@ export default function Horizon() {
             ))}
           </motion.div>
           <motion.div variants={heroItem} className={s.btns}>
-            <a href={`mailto:${data.email}`} className={s.b1}>Get in touch</a>
+            <a href="#contact" className={s.b1}>Get in touch</a>
             <a href={`https://${data.github}`} target="_blank" rel="noopener noreferrer" className={s.b2}>GitHub</a>
           </motion.div>
         </motion.div>
@@ -156,11 +156,6 @@ export default function Horizon() {
                 rel="noopener noreferrer"
                 className={s.pc}
               >
-                <div className={s.pcImg}>
-                  {project.image && (
-                    <Image src={project.image} alt={project.title} fill style={{ objectFit: 'cover' }} sizes="600px" />
-                  )}
-                </div>
                 <div className={s.pcBody}>
                   <h3 className={s.pcTitle}>{project.title}</h3>
                   <p className={s.pcDesc}>{project.desc}</p>
@@ -177,7 +172,7 @@ export default function Horizon() {
         </div>
       )}
 
-      <div className={s.sec}>
+      <div id="contact" className={s.sec}>
         <div className={s.secRule} />
         <SectionHeader tag="Contact" title="Connect" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         <StaggerChildren className={s.cg} stagger={0.05}>

@@ -1,55 +1,129 @@
 /* Contact form - uses CSS variables for template-specific theming */
 .wrapper {
   margin-top: 2.5rem;
+  grid-column: 1 / -1;
   --form-accent: #d4af37;
-  --form-bg: rgba(255, 255, 255, 0.07);
-  --form-border: rgba(255, 255, 255, 0.12);
+  --form-bg: rgba(255, 255, 255, 0.04);
+  --form-border: rgba(255, 255, 255, 0.1);
   --form-text: #f8f9fa;
-  --form-placeholder: rgba(255, 255, 255, 0.45);
-  --form-label: rgba(255, 255, 255, 0.75);
+  --form-placeholder: rgba(255, 255, 255, 0.35);
+  --form-label: rgba(255, 255, 255, 0.7);
+  --form-card-bg: rgba(255, 255, 255, 0.06);
+  --form-header-text: #ffffff;
+  --form-subtitle-text: rgba(255, 255, 255, 0.55);
+  background: var(--form-card-bg);
+  border: 1px solid var(--form-border);
+  border-radius: 24px;
+  padding: 2.5rem;
+  backdrop-filter: blur(20px);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.wrapper:hover {
+  border-color: color-mix(in srgb, var(--form-accent) 30%, transparent);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
 }
 
 .wrapperLight {
-  --form-bg: rgba(0, 0, 0, 0.03);
-  --form-border: rgba(0, 0, 0, 0.1);
+  --form-bg: rgba(0, 0, 0, 0.02);
+  --form-border: rgba(0, 0, 0, 0.08);
   --form-text: #1a1a2e;
-  --form-placeholder: rgba(0, 0, 0, 0.4);
-  --form-label: rgba(0, 0, 0, 0.6);
+  --form-placeholder: rgba(0, 0, 0, 0.35);
+  --form-label: rgba(0, 0, 0, 0.55);
+  --form-card-bg: rgba(0, 0, 0, 0.02);
+  --form-header-text: #1a1a2e;
+  --form-subtitle-text: rgba(0, 0, 0, 0.5);
 }
 
+/* Form header */
+.formHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.formIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--form-accent) 20%, transparent), color-mix(in srgb, var(--form-accent) 8%, transparent));
+  border: 1px solid color-mix(in srgb, var(--form-accent) 25%, transparent);
+  margin-bottom: 1rem;
+}
+
+.formIcon svg {
+  width: 26px;
+  height: 26px;
+  color: var(--form-accent);
+}
+
+.formTitle {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--form-header-text);
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.formSubtitle {
+  font-size: 0.9rem;
+  color: var(--form-subtitle-text);
+  margin: 0;
+  max-width: 420px;
+  margin-inline: auto;
+  line-height: 1.5;
+}
+
+/* Form grid */
 .form {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
-  max-width: 640px;
 }
 
+/* Field */
 .field {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  position: relative;
+  transition: transform 0.2s;
 }
 
 .fieldFull {
   grid-column: 1 / -1;
 }
 
-.label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  color: var(--form-label);
+.fieldFocused {
+  transform: translateY(-1px);
 }
 
+.label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--form-label);
+  transition: color 0.25s;
+}
+
+.fieldFocused .label {
+  color: var(--form-accent);
+}
+
+/* Inputs */
 .input,
 .textarea {
-  padding: 0.9rem 1.1rem;
-  border-radius: 12px;
-  border: 1px solid var(--form-border);
+  padding: 0.85rem 1.1rem;
+  border-radius: 14px;
+  border: 1.5px solid var(--form-border);
   background: var(--form-bg);
   color: var(--form-text);
   font-size: 0.95rem;
-  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+  font-family: inherit;
 }
 
 .input::placeholder,
@@ -61,37 +135,51 @@
 .textarea:focus {
   outline: none;
   border-color: var(--form-accent);
-  background: rgba(255, 255, 255, 0.09);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+  background: color-mix(in srgb, var(--form-accent) 5%, var(--form-bg));
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--form-accent) 12%, transparent),
+    0 4px 12px color-mix(in srgb, var(--form-accent) 8%, transparent);
 }
 
 .textarea {
   min-height: 140px;
   resize: vertical;
+  line-height: 1.6;
 }
 
+/* Submit */
 .submitWrap {
   grid-column: 1 / -1;
   margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
 }
 
 .submit {
-  padding: 0.9rem 2.2rem;
-  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 2.5rem;
+  border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #d4af37, #f0d780, #d4af37);
+  background: linear-gradient(135deg, var(--form-accent), color-mix(in srgb, var(--form-accent) 70%, #fff));
   color: #0d1117;
   font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
   transition: transform 0.2s, opacity 0.2s, filter 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--form-accent) 25%, transparent);
+  font-family: inherit;
 }
 
 .submit:hover:not(:disabled) {
   filter: brightness(1.1);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
+  box-shadow: 0 8px 30px color-mix(in srgb, var(--form-accent) 35%, transparent);
+}
+
+.submit:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .submit:disabled {
@@ -99,27 +187,62 @@
   cursor: not-allowed;
 }
 
+.submitIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.submitSpinner {
+  width: 18px;
+  height: 18px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Feedback */
 .feedback {
   grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   padding: 1rem 1.2rem;
-  border-radius: 12px;
+  border-radius: 14px;
   font-size: 0.9rem;
 }
 
+.feedbackIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
 .feedbackSuccess {
-  background: color-mix(in srgb, #22c55e 15%, transparent);
-  border: 1px solid color-mix(in srgb, #22c55e 40%, transparent);
+  background: color-mix(in srgb, #22c55e 12%, transparent);
+  border: 1px solid color-mix(in srgb, #22c55e 30%, transparent);
   color: #22c55e;
 }
 
 .feedbackError {
-  background: color-mix(in srgb, #ef4444 15%, transparent);
-  border: 1px solid color-mix(in srgb, #ef4444 40%, transparent);
+  background: color-mix(in srgb, #ef4444 12%, transparent);
+  border: 1px solid color-mix(in srgb, #ef4444 30%, transparent);
   color: #ef4444;
 }
 
 @media (max-width: 600px) {
+  .wrapper {
+    padding: 1.5rem;
+    border-radius: 18px;
+  }
+
   .form {
     grid-template-columns: 1fr;
+  }
+
+  .formTitle {
+    font-size: 1.15rem;
   }
 }

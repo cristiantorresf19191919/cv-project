@@ -397,17 +397,6 @@ export default function MidnightPortfolio() {
                     rel="noopener noreferrer"
                     className={s.projectCard}
                   >
-                    <div className={s.projectImg}>
-                      {project.image && (
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          style={{ objectFit: 'cover' }}
-                          sizes="400px"
-                        />
-                      )}
-                    </div>
                     <div className={s.projectBody}>
                       <h3 className={s.projectTitle}>{project.title}</h3>
                       <p className={s.projectDesc}>{project.desc}</p>
@@ -454,7 +443,7 @@ export default function MidnightPortfolio() {
           )}
 
           {/* Contact Form */}
-          <div className={s.section} style={{ marginTop: '2rem' }}>
+          <div id="contact" className={s.section} style={{ marginTop: '2rem' }}>
             <AnimatedSection direction="up">
               <div className={s.sectionLabel}>{t.contact}</div>
               <h2 className={s.sectionTitle}>{t.getInTouch}</h2>

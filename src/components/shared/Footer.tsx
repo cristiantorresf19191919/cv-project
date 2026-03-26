@@ -11,12 +11,12 @@ import styles from '@/styles/footer.module.css';
 const DARK_TEMPLATES = new Set(['noir', 'term', 'neon', 'ember', 'midnight', 'horizon', 'glass']);
 
 const FEATURED_REPOS = [
-  { name: 'cv-project', desc: 'Dynamic portfolio with 12 themes', lang: 'Next.js' },
-  { name: 'AuraSpa', desc: 'Spa management platform', lang: 'TypeScript' },
-  { name: 'agendalo', desc: 'Smart scheduling system', lang: 'TypeScript' },
-  { name: 'nestjs-admin', desc: 'NestJS admin dashboard', lang: 'TypeScript' },
-  { name: 'AspNetMicroservices', desc: 'Microservices architecture', lang: 'C#' },
-  { name: 'doctorily', desc: 'Healthcare management app', lang: 'Vue' },
+  { name: 'cv-project', desc: 'Dynamic portfolio with 18 themes & i18n', lang: 'Next.js' },
+  { name: 'AuraSpa', desc: 'Spa management platform with real-time booking', lang: 'TypeScript' },
+  { name: 'agendalo', desc: 'Smart scheduling with drag-and-drop', lang: 'TypeScript' },
+  { name: 'AspNetMicroservices', desc: 'Microservices with CQRS & event sourcing', lang: 'C#' },
+  { name: 'nestjs-admin', desc: 'NestJS admin dashboard & API', lang: 'TypeScript' },
+  { name: 'kotlin-spring-microservices', desc: 'Kotlin Spring Boot microservices', lang: 'Kotlin' },
 ];
 
 const GITHUB_BASE = 'https://github.com/cristiantorresf19191919';

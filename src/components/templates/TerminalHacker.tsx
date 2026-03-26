@@ -74,7 +74,7 @@ export default function TerminalHacker() {
           <motion.div variants={terminalLine} className={s.sub}>{data.tagline}</motion.div>
           <motion.p variants={terminalLine} className={s.desc}>{data.desc}</motion.p>
           <motion.div variants={terminalLine} className={s.btns}>
-            <a href={`mailto:${data.email}`} className={s.b1}>Get In Touch</a>
+            <a href="#contact" className={s.b1}>Get In Touch</a>
             <a href={`https://${data.github}`} target="_blank" rel="noopener noreferrer" className={s.b2}>View GitHub</a>
           </motion.div>
           <motion.div variants={terminalLine} className={s.stats}>
@@ -167,11 +167,6 @@ export default function TerminalHacker() {
                 rel="noopener noreferrer"
                 className={s.pc}
               >
-                <div className={s.pcImg}>
-                  {project.image && (
-                    <Image src={project.image} alt={project.title} fill style={{ objectFit: 'cover' }} sizes="600px" />
-                  )}
-                </div>
                 <div className={s.pcBody}>
                   <h3 className={s.pcTitle}>{project.title}</h3>
                   <p className={s.pcDesc}>{project.desc}</p>
@@ -191,7 +186,7 @@ export default function TerminalHacker() {
       )}
 
       {/* Contact */}
-      <div className={s.sec}>
+      <div id="contact" className={s.sec}>
         <SectionHeader tag="Get In Touch" title="Let's Work Together" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         <StaggerChildren className={s.cg} stagger={0.08}>
           <motion.div variants={staggerItem} whileHover={contactHover}

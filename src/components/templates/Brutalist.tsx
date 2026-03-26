@@ -19,6 +19,7 @@ import { EmailIcon, PhoneIcon, GithubIcon, LocationIcon } from '@/components/sha
 const CORE_SKILLS = new Set([
   'React', 'Next.js', 'TypeScript', 'Node.js', 'GraphQL',
   'Kotlin', 'Spring Boot', 'PostgreSQL', 'Redis',
+  'Azure Service Bus', 'Azure Pipelines', 'Terraform', 'CQRS',
   'Jest', 'React Testing Library', 'Playwright',
 ]);
 
@@ -72,7 +73,7 @@ export default function Brutalist() {
             <motion.div variants={heroItem} className={s.sub}>{data.tagline}</motion.div>
             <motion.p variants={heroItem} className={s.desc}>{data.desc}</motion.p>
             <motion.div variants={heroItem} className={s.btns}>
-              <a href={`mailto:${data.email}`} className={s.b1}>Contact</a>
+              <a href="#contact" className={s.b1}>Contact</a>
               <a href={`https://${data.github}`} target="_blank" rel="noopener noreferrer" className={s.b2}>GitHub</a>
             </motion.div>
             <motion.div variants={heroItem} className={s.stats}>
@@ -164,9 +165,6 @@ export default function Brutalist() {
                 rel="noopener noreferrer"
                 className={s.pc}
               >
-                <div className={s.pcImg}>
-                  {project.image && <Image src={project.image} alt={project.title} fill style={{ objectFit: 'cover' }} sizes="600px" />}
-                </div>
                 <div className={s.pcBody}>
                   <h3 className={s.pcTitle}>{project.title}</h3>
                   <p className={s.pcDesc}>{project.desc}</p>
@@ -184,7 +182,7 @@ export default function Brutalist() {
       )}
 
       {/* Contact */}
-      <div className={s.sec}>
+      <div id="contact" className={s.sec}>
         <SectionHeader tag="Reach" title="Contact" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         <StaggerChildren className={s.cg} stagger={0.06}>
           <motion.div variants={staggerItem} whileHover={contactHover}

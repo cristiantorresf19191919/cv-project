@@ -360,17 +360,6 @@ export default function MonochromeSplit() {
                     rel="noopener noreferrer"
                     className={s.projectCard}
                   >
-                    <div className={s.projectImage}>
-                      {project.image && (
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          style={{ objectFit: 'cover' }}
-                          sizes="200px"
-                        />
-                      )}
-                    </div>
                     <div className={s.projectBody}>
                       <h3 className={s.projectTitle}>{project.title}</h3>
                       <p className={s.projectDesc}>{project.desc}</p>
@@ -443,7 +432,7 @@ export default function MonochromeSplit() {
           </div>
 
           {/* Contact */}
-          <div className={s.section}>
+          <div id="contact" className={s.section}>
             <AnimatedSection direction="up" delay={0.1}>
               <div className={s.sectionHeader}>
                 <span className={s.sectionTag}>{t.contactTag}</span>
@@ -477,7 +466,7 @@ export default function MonochromeSplit() {
               </div>
 
               <div className={s.contactCTA}>
-                <a href={`mailto:${data.email}`} className={s.btnPrimary}>{t.getInTouch}</a>
+                <a href="#contact" className={s.btnPrimary}>{t.getInTouch}</a>
                 <a href={`https://${data.github}`} target="_blank" rel="noopener noreferrer" className={s.btnSecondary}>{t.viewGithub}</a>
               </div>
               <ContactForm />
