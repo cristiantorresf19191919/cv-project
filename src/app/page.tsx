@@ -29,6 +29,20 @@ import LiveAvailability from '@/components/shared/LiveAvailability';
 import VisitorPulse from '@/components/shared/VisitorPulse';
 import AnalyticsBadge from '@/components/shared/AnalyticsBadge';
 import EasterEgg from '@/components/shared/EasterEgg';
+// New feature components
+import Toast from '@/components/shared/Toast';
+import TLDRSummary from '@/components/shared/TLDRSummary';
+import CalendarCTA from '@/components/shared/CalendarCTA';
+import SkillsMatrix from '@/components/shared/SkillsMatrix';
+import SectionIndicator from '@/components/shared/SectionIndicator';
+import KeyboardShortcutsOverlay from '@/components/shared/KeyboardShortcutsOverlay';
+import IntroAnimation from '@/components/shared/IntroAnimation';
+import TransitionLoader from '@/components/shared/TransitionLoader';
+import MobileBottomSheet from '@/components/shared/MobileBottomSheet';
+import FocusMode from '@/components/shared/FocusMode';
+import QRShareCard from '@/components/shared/QRShareCard';
+import TemplateCompare from '@/components/shared/TemplateCompare';
+import AchievementBadges from '@/components/shared/AchievementBadges';
 import { TemplateName } from '@/types/templates';
 import { ComponentType } from 'react';
 
@@ -59,6 +73,7 @@ export default function Home() {
 
   return (
     <>
+      <IntroAnimation />
       <ScrollProgress />
       <TemplateSwitcher />
       <KeyboardNav />
@@ -68,6 +83,15 @@ export default function Home() {
       <VisitorPulse />
       <AnalyticsBadge />
       <EasterEgg />
+      <SectionIndicator />
+      <KeyboardShortcutsOverlay />
+      <TransitionLoader />
+      <MobileBottomSheet />
+      <FocusMode />
+      <QRShareCard />
+      <TemplateCompare />
+      <AchievementBadges />
+      <Toast />
       <div style={{ paddingTop: '58px', minHeight: '100vh', overflow: 'hidden' }}>
         <AnimatePresence mode="wait">
           {!isTransitioning && (
@@ -82,7 +106,10 @@ export default function Home() {
                 ease: [0.16, 1, 0.3, 1] as const,
               }}
             >
+              <TLDRSummary />
               <ActiveTemplate />
+              <SkillsMatrix />
+              <CalendarCTA />
             </motion.div>
           )}
         </AnimatePresence>

@@ -2,23 +2,27 @@ import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 
 /* ══════════════════════════════════════════════════════════
-   Beautiful template-to-PDF capture
+   Beautiful template-to-PDF capture — v2
    ──────────────────────────────────────────────────────────
-   1. Finds the template via [data-pdf-target]
-   2. Hides UI chrome, footer, interactive elements
-   3. Fixes html2canvas limitations:
-      – background-clip:text  → solid color fallback
-      – backdrop-filter:blur  → opaque background fallback
-      – CSS animations        → frozen
-      – viewport min-heights  → removed
-   4. Waits for fonts + images to fully load
-   5. Captures at 2× with html2canvas (PNG quality)
-   6. Slices into A4 pages with template background
-   7. Restores every inline style change
+   Handles all 18 templates with consistent high-quality output.
+
+   Key fixes for html2canvas limitations:
+   • background-clip:text   → solid accent color fallback
+   • backdrop-filter:blur   → opaque background fallback
+   • CSS animations         → frozen
+   • CSS transitions        → frozen
+   • viewport min-heights   → removed (no excess whitespace)
+   • CSS mask/mask-image    → removed (prevents blank overlays)
+   • body grain overlay     → hidden
+   • filter effects         → simplified for capture
+   • Controlled width       → 1100px for optimal A4 text size
+   • PDF margins            → clean breathing room
    ══════════════════════════════════════════════════════════ */
 
 const A4_W = 210; // mm
 const A4_H = 297; // mm
+const CAPTURE_W = 1100; // px — optimal for A4 readability
+const PDF_MARGIN = 0; // mm — edge-to-edge to preserve template design
 
 export async function captureTemplatePDF(filename: string): Promise<void> {
   /* ── 1. Locate template ──────────────────────────────── */
@@ -30,7 +34,7 @@ export async function captureTemplatePDF(filename: string): Promise<void> {
   /* ── 2. Save scroll & go to top ──────────────────────── */
   const savedScroll = window.scrollY;
   window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
-  await sleep(150);
+  await sleep(200);
 
   /* ── 3. Style-override tracker (restores in finally) ─── */
   const saved = new Map<HTMLElement, string>();
@@ -41,7 +45,12 @@ export async function captureTemplatePDF(filename: string): Promise<void> {
   const hide = (el: HTMLElement) => set(el, 'display', 'none');
 
   try {
-    /* ── 4. Hide UI chrome outside template ──────────── */
+    /* ── 4. Hide body grain texture overlay ──────────── */
+    const bodyAfterBlocker = document.createElement('style');
+    bodyAfterBlocker.textContent = 'body::after { display: none !important; }';
+    document.head.appendChild(bodyAfterBlocker);
+
+    /* ── 5. Hide UI chrome outside template ──────────── */
     qsa(
       '[class*="switcher"],[class*="Switcher"],' +
       '[class*="scrollProgress"],[class*="ScrollProgress"],' +
@@ -51,32 +60,45 @@ export async function captureTemplatePDF(filename: string): Promise<void> {
       '[class*="visitorPulse"],[class*="VisitorPulse"],' +
       '[class*="analyticsBadge"],[class*="AnalyticsBadge"],' +
       '[class*="easterEgg"],[class*="EasterEgg"],' +
-      '[class*="commandPalette"],[class*="CommandPalette"]'
+      '[class*="commandPalette"],[class*="CommandPalette"],' +
+      '[class*="sectionIndicator"],[class*="SectionIndicator"],' +
+      '[class*="mobileBottom"],[class*="MobileBottom"],' +
+      '[class*="toast"],[class*="Toast"],' +
+      '[class*="introAnim"],[class*="IntroAnim"],' +
+      '[class*="focusMode"],[class*="FocusMode"]'
     ).forEach(el => { if (!tpl.contains(el)) hide(el); });
 
-    /* ── 5. Hide footer + interactive elements ───────── */
+    /* ── 6. Hide footer + interactive elements ───────── */
     tpl.querySelectorAll<HTMLElement>(
       'footer, [data-pdf-hide]'
     ).forEach(hide);
 
-    /* ── 6. Remove wrapper padding (switcher offset) ─── */
+    /* ── 7. Remove wrapper padding (switcher offset) ─── */
     const parent = wrapper.parentElement;
     if (parent) set(parent, 'padding-top', '0px');
 
-    /* ── 7. Neutralise framer-motion transforms ──────── */
+    /* ── 8. Neutralise framer-motion transforms ──────── */
     set(wrapper, 'transform', 'none');
     set(wrapper, 'filter', 'none');
 
-    /* ── 8. Freeze CSS animations & transitions ──────── */
+    /* ── 9. Set controlled capture width ─────────────── */
+    set(wrapper, 'width', `${CAPTURE_W}px`);
+    set(wrapper, 'max-width', `${CAPTURE_W}px`);
+    set(wrapper, 'margin', '0 auto');
+
+    /* ── 10. Freeze animations & transitions ─────────── */
     const allEls = tpl.querySelectorAll<HTMLElement>('*');
     allEls.forEach(el => {
       const cs = getComputedStyle(el);
       if (cs.animationName && cs.animationName !== 'none') {
         set(el, 'animation', 'none');
       }
+      if (cs.transition && cs.transition !== 'all 0s ease 0s' && cs.transition !== 'none 0s ease 0s') {
+        set(el, 'transition', 'none');
+      }
     });
 
-    /* ── 9. Remove viewport-relative min-heights ─────── */
+    /* ── 11. Remove viewport-relative min-heights ────── */
     set(tpl, 'min-height', 'auto');
     allEls.forEach(el => {
       const mh = getComputedStyle(el).minHeight;
@@ -85,25 +107,31 @@ export async function captureTemplatePDF(filename: string): Promise<void> {
       }
     });
 
-    /* ── 10. Fix background-clip:text ────────────────── */
+    /* ── 12. Fix background-clip:text ────────────────── */
     fixGradientText(tpl, set);
 
-    /* ── 11. Fix backdrop-filter ─────────────────────── */
+    /* ── 13. Fix backdrop-filter ─────────────────────── */
     fixBackdropFilter(tpl, set);
 
-    /* ── 12. Wait for fonts & images ─────────────────── */
+    /* ── 14. Fix CSS masks (gradient borders etc.) ────── */
+    fixCSSMasks(tpl, set);
+
+    /* ── 15. Simplify filter effects for capture ─────── */
+    fixFilterEffects(tpl, set);
+
+    /* ── 16. Wait for fonts & images ─────────────────── */
     await Promise.all([
       document.fonts.ready,
       loadAllImages(tpl),
     ]);
 
-    /* ── 13. Resolve background ──────────────────────── */
-    const bg = getComputedStyle(tpl).backgroundColor || '#000';
+    /* ── 17. Resolve background ──────────────────────── */
+    const bg = resolveBackground(tpl);
 
-    /* ── 14. Let reflow settle ───────────────────────── */
-    await sleep(400);
+    /* ── 18. Let reflow settle at new width ──────────── */
+    await sleep(500);
 
-    /* ── 15. Capture ─────────────────────────────────── */
+    /* ── 19. Capture ─────────────────────────────────── */
     const canvas = await html2canvas(tpl, {
       scale: 2,
       useCORS: true,
@@ -117,14 +145,20 @@ export async function captureTemplatePDF(filename: string): Promise<void> {
       scrollY: 0,
     });
 
-    /* ── 16. Build multi-page A4 PDF ─────────────────── */
-    const pxPerMm = canvas.width / A4_W;
-    const pgH = Math.floor(A4_H * pxPerMm);
+    /* ── 20. Build multi-page A4 PDF ─────────────────── */
+    const usableW = A4_W - PDF_MARGIN * 2;
+    const usableH = A4_H - PDF_MARGIN * 2;
+    const pxPerMm = canvas.width / usableW;
+    const pgH = Math.floor(usableH * pxPerMm);
     const pages = Math.ceil(canvas.height / pgH);
     const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
 
     for (let i = 0; i < pages; i++) {
       if (i > 0) pdf.addPage();
+
+      // Fill page with background color
+      pdf.setFillColor(bg);
+      pdf.rect(0, 0, A4_W, A4_H, 'F');
 
       const sy = i * pgH;
       const sh = Math.min(pgH, canvas.height - sy);
@@ -134,16 +168,27 @@ export async function captureTemplatePDF(filename: string): Promise<void> {
       pc.height = pgH;
 
       const ctx = pc.getContext('2d')!;
+      // Fill with bg for last page (may be shorter)
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, pc.width, pc.height);
       ctx.drawImage(canvas, 0, sy, canvas.width, sh, 0, 0, canvas.width, sh);
 
-      pdf.addImage(pc.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, A4_W, A4_H);
+      pdf.addImage(
+        pc.toDataURL('image/jpeg', 0.95),
+        'JPEG',
+        PDF_MARGIN,
+        PDF_MARGIN,
+        usableW,
+        usableH,
+      );
     }
 
     pdf.save(filename);
+
+    // Cleanup injected style
+    bodyAfterBlocker.remove();
   } finally {
-    /* ── 17. Restore every modified element ──────────── */
+    /* ── 21. Restore every modified element ──────────── */
     saved.forEach((css, el) => { el.style.cssText = css; });
     window.scrollTo({ top: savedScroll, behavior: 'instant' as ScrollBehavior });
   }
@@ -162,9 +207,28 @@ function qsa(sel: string): HTMLElement[] {
 }
 
 /**
+ * Resolve the template's background color for PDF page fills.
+ * Falls back through computed backgroundColor → CSS var → black.
+ */
+function resolveBackground(el: HTMLElement): string {
+  const cs = getComputedStyle(el);
+  const bg = cs.backgroundColor;
+  // If it's a real color (not transparent)
+  if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+    return bg;
+  }
+  // Some templates use CSS gradient backgrounds — extract dominant color
+  const bgImage = cs.backgroundImage;
+  if (bgImage && bgImage !== 'none') {
+    const colorMatch = bgImage.match(/rgb[a]?\([^)]+\)/);
+    if (colorMatch) return colorMatch[0];
+  }
+  return '#000000';
+}
+
+/**
  * html2canvas cannot render `-webkit-background-clip: text`.
- * Detect all gradient-clipped text and replace with a solid
- * color that matches the template's accent palette.
+ * Replace gradient text with template accent color.
  */
 function fixGradientText(
   root: HTMLElement,
@@ -172,23 +236,23 @@ function fixGradientText(
 ) {
   root.querySelectorAll<HTMLElement>('*').forEach(el => {
     const cs = getComputedStyle(el);
-
     const clip =
       cs.getPropertyValue('-webkit-background-clip') ||
       cs.getPropertyValue('background-clip');
     const fill = cs.getPropertyValue('-webkit-text-fill-color');
 
     const isClipped = clip === 'text';
-    const isTransparent =
-      fill === 'transparent' ||
-      fill === 'rgba(0, 0, 0, 0)';
+    const isTransparent = fill === 'transparent' || fill === 'rgba(0, 0, 0, 0)';
 
     if (!isClipped && !isTransparent) return;
 
-    // Pick the best fallback color
     const accent = resolveAccentColor(root);
     const bgLum = backgroundLightness(el);
-    const fallback = accent || (bgLum < 0.5 ? '#f0f0f0' : '#1a1a1a');
+    // Use white for large headings on dark bg, accent for smaller text
+    const isHeading = el.tagName.match(/^H[1-3]$/);
+    const fallback = bgLum < 0.5
+      ? (isHeading ? '#f0f0f0' : (accent || '#d0d0d0'))
+      : (isHeading ? '#1a1a1a' : (accent || '#333'));
 
     set(el, '-webkit-text-fill-color', 'unset');
     set(el, '-webkit-background-clip', 'unset');
@@ -199,9 +263,7 @@ function fixGradientText(
 }
 
 /**
- * html2canvas ignores `backdrop-filter`. Bump any semi-transparent
- * backgrounds with backdrop-filter to ≥ 0.92 opacity so cards/panels
- * remain visible instead of becoming see-through.
+ * html2canvas ignores `backdrop-filter`. Make backgrounds opaque.
  */
 function fixBackdropFilter(
   root: HTMLElement,
@@ -209,7 +271,6 @@ function fixBackdropFilter(
 ) {
   root.querySelectorAll<HTMLElement>('*').forEach(el => {
     const cs = getComputedStyle(el);
-
     const bf =
       cs.getPropertyValue('backdrop-filter') ||
       cs.getPropertyValue('-webkit-backdrop-filter');
@@ -218,45 +279,76 @@ function fixBackdropFilter(
     const bg = cs.backgroundColor;
     if (!bg || bg === 'transparent' || bg === 'rgba(0, 0, 0, 0)') return;
 
-    const m = bg.match(
-      /rgba?\(\s*(\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\s*\)/,
-    );
+    const m = bg.match(/rgba?\(\s*(\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\s*\)/);
     if (!m) return;
 
     const [, r, g, b, aStr] = m;
     const alpha = aStr !== undefined ? parseFloat(aStr) : 1;
     if (alpha < 0.88) {
-      set(el, 'background-color', `rgba(${r}, ${g}, ${b}, 0.92)`);
+      set(el, 'background-color', `rgba(${r}, ${g}, ${b}, 0.94)`);
     }
   });
 }
 
 /**
- * Resolve the template's accent color from CSS custom properties.
- * Templates use either `--a` or `--accent`.
+ * CSS mask/mask-image is NOT supported by html2canvas.
+ * Remove masks to prevent invisible pseudo-elements
+ * (used for gradient border effects in templates like Noir).
  */
-function resolveAccentColor(root: HTMLElement): string | null {
-  const cs = getComputedStyle(root);
-  const a = cs.getPropertyValue('--a').trim();
-  if (a) return a;
-  const accent = cs.getPropertyValue('--accent').trim();
-  if (accent) return accent;
-  return null;
+function fixCSSMasks(
+  root: HTMLElement,
+  set: (el: HTMLElement, p: string, v: string) => void,
+) {
+  root.querySelectorAll<HTMLElement>('*').forEach(el => {
+    const cs = getComputedStyle(el);
+    const mask = cs.getPropertyValue('-webkit-mask-image') ||
+      cs.getPropertyValue('mask-image') ||
+      cs.getPropertyValue('-webkit-mask') ||
+      cs.getPropertyValue('mask');
+
+    if (mask && mask !== 'none') {
+      set(el, '-webkit-mask', 'none');
+      set(el, 'mask', 'none');
+      set(el, '-webkit-mask-image', 'none');
+      set(el, 'mask-image', 'none');
+    }
+  });
 }
 
 /**
- * Walk up the DOM to estimate whether the background behind
- * an element is light (→ 1) or dark (→ 0).
+ * Simplify complex CSS filter effects that html2canvas
+ * may render incorrectly (e.g. heavy blurs, saturate).
  */
+function fixFilterEffects(
+  root: HTMLElement,
+  set: (el: HTMLElement, p: string, v: string) => void,
+) {
+  root.querySelectorAll<HTMLElement>('*').forEach(el => {
+    const cs = getComputedStyle(el);
+    const filter = cs.filter;
+    if (!filter || filter === 'none') return;
+    // Keep simple filters, remove complex ones
+    if (filter.includes('blur(') && !filter.includes('blur(0')) {
+      const simplified = filter.replace(/blur\([^)]+\)/g, 'blur(0px)');
+      set(el, 'filter', simplified);
+    }
+  });
+}
+
+function resolveAccentColor(root: HTMLElement): string | null {
+  const cs = getComputedStyle(root);
+  return cs.getPropertyValue('--a').trim() ||
+    cs.getPropertyValue('--accent').trim() ||
+    null;
+}
+
 function backgroundLightness(el: HTMLElement): number {
   let cur: HTMLElement | null = el;
   while (cur) {
     const bg = getComputedStyle(cur).backgroundColor;
     const m = bg?.match(/rgba?\(\s*(\d+),\s*(\d+),\s*(\d+)/);
     if (m) {
-      const lum =
-        (0.299 * Number(m[1]) + 0.587 * Number(m[2]) + 0.114 * Number(m[3])) /
-        255;
+      const lum = (0.299 * Number(m[1]) + 0.587 * Number(m[2]) + 0.114 * Number(m[3])) / 255;
       if (lum > 0.01) return lum;
     }
     cur = cur.parentElement;
@@ -264,9 +356,6 @@ function backgroundLightness(el: HTMLElement): number {
   return 0;
 }
 
-/**
- * Wait for every `<img>` inside root to finish loading.
- */
 async function loadAllImages(root: HTMLElement): Promise<void> {
   const imgs = root.querySelectorAll<HTMLImageElement>('img');
   await Promise.all(

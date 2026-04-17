@@ -5,6 +5,8 @@ import { useTemplate } from '@/context/TemplateContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { THEMES, TEMPLATE_LIST } from '@/data/themes';
 import { TemplateName, TemplateInfo, TemplateCategory } from '@/types/templates';
+import ColorCustomizer from '@/components/shared/ColorCustomizer';
+import ContentDensityToggle from '@/components/shared/ContentDensityToggle';
 import styles from '@/styles/switcher.module.css';
 
 function CodeIcon({ className }: { className?: string }) {
@@ -212,6 +214,14 @@ export default function TemplateSwitcher() {
         <MonitorIcon className={styles.kbdIcon} />
         <span className={styles.kbdLabel}>switch</span>
       </div>
+
+      <div className={styles.divider} />
+
+      <ContentDensityToggle />
+
+      <div className={styles.divider} />
+
+      <ColorCustomizer />
 
       <div className={styles.divider} />
 

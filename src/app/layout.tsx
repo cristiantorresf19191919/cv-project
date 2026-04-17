@@ -14,6 +14,9 @@ import { ContentProvider } from '@/context/ContentContext';
 import { TemplateProvider } from '@/context/TemplateContext';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { SkillHighlightProvider } from '@/context/SkillHighlightContext';
+import { ToastProvider } from '@/context/ToastContext';
+import { DensityProvider } from '@/context/DensityContext';
+import { ProjectModalProvider } from '@/components/shared/ProjectModal';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -96,7 +99,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     title: 'Cristian Torres - Full Stack Developer',
     description:
-      'React & Next.js specialist with 5+ years shipping production web products. 12 stunning portfolio templates.',
+      'React & Next.js specialist with 5+ years shipping production web products. 18 stunning portfolio templates.',
     siteName: 'Cristian Torres Portfolio',
     images: [
       {
@@ -168,7 +171,15 @@ export default function RootLayout({
         <LanguageProvider>
           <ContentProvider>
             <SkillHighlightProvider>
-              <TemplateProvider>{children}</TemplateProvider>
+              <TemplateProvider>
+                <ToastProvider>
+                  <DensityProvider>
+                    <ProjectModalProvider>
+                      {children}
+                    </ProjectModalProvider>
+                  </DensityProvider>
+                </ToastProvider>
+              </TemplateProvider>
             </SkillHighlightProvider>
           </ContentProvider>
         </LanguageProvider>
