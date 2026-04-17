@@ -72,7 +72,7 @@ export default function ReactionBar({ sectionId }: ReactionBarProps) {
   const totalReactions = Object.values(counts).reduce((a, b) => a + b, 0);
 
   return (
-    <div className={styles.bar} style={{ ['--reaction-accent' as string]: accent }}>
+    <div className={styles.bar} style={{ ['--reaction-accent' as string]: accent }} data-pdf-hide>
       {REACTIONS.map(({ type, emoji, label }) => {
         const count = counts[type];
         const isAnimating = animating === type;

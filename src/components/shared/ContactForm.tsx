@@ -61,6 +61,7 @@ export default function ContactForm() {
       variants={staggerItem}
       className={`${styles.wrapper} ${isDark ? '' : styles.wrapperLight}`}
       style={{ ['--form-accent' as string]: theme.accent }}
+      data-pdf-hide
     >
       <div className={styles.formHeader}>
         <div className={styles.formIcon}>
