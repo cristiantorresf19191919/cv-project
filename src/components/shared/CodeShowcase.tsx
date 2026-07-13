@@ -18,13 +18,15 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import Image from 'next/image';
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion';
+import { useContent } from '@/context/ContentContext';
 import { CODE_SNIPPETS, CodeSnippet, SnippetLang } from '@/data/codeSnippets';
 import { tokenizeLine, sliceTokens, CodeToken, TokenKind } from '@/utils/tokenizeCode';
 import s from '@/styles/code-showcase.module.css';
 
 const ENTER = [0.22, 1, 0.36, 1] as const;
-const HOLD_MS = 3800;
+const HOLD_MS = 3200;
 
 const KIND_CLASS: Record<TokenKind, string> = {
   plain: '',
@@ -47,14 +49,14 @@ function delayFor(code: string, pos: number): number {
     const lineEnd = pos - 1;
     const lineStart = code.lastIndexOf('\n', lineEnd - 1) + 1;
     const finished = code.slice(lineStart, lineEnd).trim();
-    if (finished === '') return rand(520, 820); // section break
-    if (/^[}\])]+[,;)]?$/.test(finished)) return rand(420, 680); // block closed
-    if (finished.startsWith('//')) return rand(240, 420); // note written
-    return rand(150, 290);
+    if (finished === '') return rand(260, 410); // section break
+    if (/^[}\])]+[,;)]?$/.test(finished)) return rand(210, 340); // block closed
+    if (finished.startsWith('//')) return rand(120, 210); // note written
+    return rand(75, 145);
   }
-  if (prev === '{') return rand(60, 140);
-  if (Math.random() < 0.03) return rand(200, 400); // brief hesitation
-  return rand(14, 34);
+  if (prev === '{') return rand(30, 70);
+  if (Math.random() < 0.03) return rand(100, 200); // brief hesitation
+  return rand(7, 17);
 }
 
 function renderTokens(tokens: CodeToken[]) {
@@ -71,6 +73,7 @@ function renderTokens(tokens: CodeToken[]) {
 
 export default function CodeShowcase({ className }: { className?: string }) {
   const reduce = useReducedMotion();
+  const { photoUrl } = useContent();
   const wrapRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   const inView = useInView(wrapRef, { amount: 0.2 });
@@ -81,6 +84,18 @@ export default function CodeShowcase({ className }: { className?: string }) {
   const [snippet, setSnippet] = useState<CodeSnippet>(CODE_SNIPPETS.react[0]);
   const [run, setRun] = useState(0);
   const [pos, setPos] = useState(0);
+
+  // Randomize the opening language/snippet right after mount, before any
+  // typing starts — post-hydration, so SSR markup still matches.
+  useEffect(() => {
+    const lang: SnippetLang = Math.random() < 0.5 ? 'react' : 'kotlin';
+    const pool = CODE_SNIPPETS[lang];
+    const i = Math.floor(Math.random() * pool.length);
+    lastIdxRef.current[lang] = i;
+    setSnippet(pool[i]);
+    setPos(0);
+    setRun((r) => r + 1);
+  }, []);
 
   const lines = useMemo(() => snippet.code.split('\n'), [snippet]);
   const tokenLines = useMemo(() => lines.map(tokenizeLine), [lines]);
@@ -207,7 +222,7 @@ export default function CodeShowcase({ className }: { className?: string }) {
                   ? sliceTokens(tokenLines[i], typedChars)
                   : tokenLines[i];
                 return (
-                  <div key={i} className={s.codeLine}>
+                  <div key={i} className={`${s.codeLine} ${isCurrent && typing ? s.codeLineActive : ''}`}>
                     <span className={s.lineNo}>{i + 1}</span>
                     <span className={s.lineCode}>
                       {tokens.length > 0 ? renderTokens(tokens) : isCurrent ? null : ' '}
@@ -239,6 +254,17 @@ export default function CodeShowcase({ className }: { className?: string }) {
             </motion.span>
           </AnimatePresence>
         </div>
+      </div>
+
+      {/* Facecam — the author "streaming" the session, layered above the IDE */}
+      <div className={s.cam}>
+        <div className={s.camRing}>
+          <Image src={photoUrl} alt="" fill sizes="140px" className="profile-photo" />
+        </div>
+        <span className={s.camLive}>
+          <span className={s.camLiveDot} />
+          LIVE
+        </span>
       </div>
     </div>
   );

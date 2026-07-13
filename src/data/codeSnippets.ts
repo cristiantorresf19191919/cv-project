@@ -117,6 +117,70 @@ export function useSearch(query: string, delay = 250) {
   return state;
 }`,
   },
+  {
+    tab: 'ContactForm.tsx',
+    lang: 'react',
+    badge: 'React 19 · useActionState',
+    code: `'use client';
+
+import { useActionState } from 'react';
+import { sendMessage } from '@/app/actions';
+
+type FormState = { ok: boolean; error?: string };
+
+export function ContactForm() {
+  const [state, action, pending] = useActionState(
+    async (_prev: FormState, form: FormData) => {
+      const res = await sendMessage(form);
+      return res.ok
+        ? { ok: true }
+        : { ok: false, error: res.message };
+    },
+    { ok: false }
+  );
+
+  return (
+    <form action={action}>
+      <input name="email" type="email" required />
+      <textarea name="body" minLength={20} required />
+      <button disabled={pending}>
+        {pending ? 'Sending…' : 'Send'}
+      </button>
+      {state.error && <p role="alert">{state.error}</p>}
+    </form>
+  );
+}`,
+  },
+  {
+    tab: 'createStore.ts',
+    lang: 'react',
+    badge: 'React · useSyncExternalStore',
+    code: `type Listener = () => void;
+
+export function createStore<T>(initial: T) {
+  let state = initial;
+  const listeners = new Set<Listener>();
+
+  const subscribe = (fn: Listener) => {
+    listeners.add(fn);
+    return () => listeners.delete(fn);
+  };
+
+  const setState = (update: (prev: T) => T) => {
+    state = update(state);
+    listeners.forEach((fn) => fn());
+  };
+
+  const useStore = <S,>(selector: (s: T) => S): S =>
+    useSyncExternalStore(
+      subscribe,
+      () => selector(state),
+      () => selector(initial) // SSR snapshot
+    );
+
+  return { useStore, setState, getState: () => state };
+}`,
+  },
 ];
 
 const KOTLIN_SNIPPETS: CodeSnippet[] = [
@@ -197,6 +261,58 @@ class QuoteStreamController(
             }
             .catch { emit(SyncEvent.Failed(it)) }
             .flowOn(Dispatchers.IO)
+}`,
+  },
+  {
+    tab: 'VehicleAggregator.kt',
+    lang: 'kotlin',
+    badge: 'Kotlin · structured concurrency',
+    code: `@Component
+class VehicleDetailAggregator(
+    private val pricing: PricingClient,
+    private val specs: SpecsClient,
+    private val media: MediaClient,
+) {
+    suspend fun load(vin: Vin): VehicleDetail =
+        coroutineScope {
+            val price = async { pricing.quote(vin) }
+            val spec = async { specs.byVin(vin) }
+            val photos = async {
+                runCatching { media.gallery(vin) }
+                    .getOrDefault(Gallery.EMPTY)
+            }
+
+            VehicleDetail(
+                vin = vin,
+                price = price.await(),
+                spec = spec.await(),
+                gallery = photos.await(),
+            )
+        }
+}`,
+  },
+  {
+    tab: 'OrderConsumer.kt',
+    lang: 'kotlin',
+    badge: 'Spring Kafka · coroutines',
+    code: `@Component
+class OrderEventsConsumer(
+    private val handler: OrderEventHandler,
+    private val meter: MeterRegistry,
+) {
+    @KafkaListener(topics = ["orders.v1"], groupId = "billing")
+    suspend fun onEvent(record: ConsumerRecord<String, ByteArray>) {
+        val event = OrderEvent.parseFrom(record.value())
+
+        withTimeout(5_000) {
+            when (event.type) {
+                CREATED -> handler.reserve(event)
+                CANCELLED -> handler.release(event)
+                else -> meter.counter("orders.skipped")
+                    .increment()
+            }
+        }
+    }
 }`,
   },
 ];
