@@ -8,6 +8,7 @@ import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildre
 import SectionHeader from '@/components/shared/SectionHeader';
 import ContactForm from '@/components/shared/ContactForm';
 import ReactionBar from '@/components/shared/ReactionBar';
+import CodeShowcase from '@/components/shared/CodeShowcase';
 import s from '@/styles/horizon.module.css';
 
 const heroContainer = {
@@ -49,6 +50,11 @@ export default function Horizon() {
   return (
     <div className={s.template}>
       <div className={s.hero}>
+        <div className={s.heroAtmos} aria-hidden="true">
+          <div className={s.heroGlow} />
+          <div className={s.heroHorizon} />
+          <div className={s.heroGrain} />
+        </div>
         <motion.div initial="hidden" animate="visible" variants={heroContainer} className={s.heroContent}>
           <motion.div variants={heroItem} className={s.heroLine} />
           <motion.span variants={heroItem} className={s.heroTag}>{data.title}</motion.span>
@@ -75,8 +81,8 @@ export default function Horizon() {
             ))}
           </motion.div>
           <motion.div variants={heroItem} className={s.btns}>
-            <a href="#contact" className={s.b1}>Get in touch</a>
-            <a href={`https://${data.github}`} target="_blank" rel="noopener noreferrer" className={s.b2}>GitHub</a>
+            <a href="#contact" className={s.b1}>Get in touch <span className={s.arrow} aria-hidden="true">→</span></a>
+            <a href={`https://${data.github}`} target="_blank" rel="noopener noreferrer" className={s.b2}>GitHub <span className={s.arrow} aria-hidden="true">→</span></a>
           </motion.div>
         </motion.div>
         <motion.div initial="hidden" animate="visible" variants={photoReveal} className={s.photoSide}>
@@ -87,6 +93,7 @@ export default function Horizon() {
       </div>
 
       <div className={s.sec}>
+        <span className={s.secNum} aria-hidden="true">01</span>
         <div className={s.secRule} />
         <SectionHeader tag="Skills" title="Expertise" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         <StaggerChildren className={s.sg} stagger={0.06}>
@@ -109,7 +116,15 @@ export default function Horizon() {
         </StaggerChildren>
       </div>
 
+      <div className={s.sec} data-code-showcase>
+        <span className={s.secNum} aria-hidden="true">02</span>
+        <div className={s.secRule} />
+        <SectionHeader tag="Live" title="Code in Motion" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
+        <CodeShowcase />
+      </div>
+
       <div className={s.sec}>
+        <span className={s.secNum} aria-hidden="true">03</span>
         <div className={s.secRule} />
         <SectionHeader tag="Career" title="Experience" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         <div className={s.tl}>
@@ -143,6 +158,7 @@ export default function Horizon() {
 
       {data.projects.length > 0 && (
         <div className={s.sec}>
+          <span className={s.secNum} aria-hidden="true">04</span>
           <div className={s.secRule} />
           <SectionHeader tag="Work" title="Projects" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
           <StaggerChildren className={s.pg}>
@@ -164,7 +180,7 @@ export default function Horizon() {
                       <span key={j} className={s.ttg}>{t}</span>
                     ))}
                   </div>
-                  <span className={s.pcLink}>View project</span>
+                  <span className={s.pcLink}>View project <span className={s.arrow} aria-hidden="true">→</span></span>
                 </div>
               </motion.a>
             ))}
@@ -173,18 +189,22 @@ export default function Horizon() {
       )}
 
       <div id="contact" className={s.sec}>
+        <span className={s.secNum} aria-hidden="true">05</span>
         <div className={s.secRule} />
         <SectionHeader tag="Contact" title="Connect" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         <StaggerChildren className={s.cg} stagger={0.05}>
           <motion.a variants={staggerItem} whileHover={contactHover} href={`mailto:${data.email}`} className={s.cc}>
+            <span className={s.ccArrow} aria-hidden="true">→</span>
             <span className={s.ci}>Email</span>
             <span className={s.ccA}>{data.email}</span>
           </motion.a>
           <motion.a variants={staggerItem} whileHover={contactHover} href={`tel:+57${data.phone.replace(/\D/g, '').slice(2)}`} className={s.cc}>
+            <span className={s.ccArrow} aria-hidden="true">→</span>
             <span className={s.ci}>Phone</span>
             <span className={s.ccA}>{data.phone}</span>
           </motion.a>
           <motion.a variants={staggerItem} whileHover={contactHover} href={`https://${data.github}`} target="_blank" rel="noopener noreferrer" className={s.cc}>
+            <span className={s.ccArrow} aria-hidden="true">→</span>
             <span className={s.ci}>GitHub</span>
             <span className={s.ccA}>{data.github}</span>
           </motion.a>

@@ -8,6 +8,7 @@ import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildre
 import SectionHeader from '@/components/shared/SectionHeader';
 import ContactForm from '@/components/shared/ContactForm';
 import ReactionBar from '@/components/shared/ReactionBar';
+import CodeShowcase from '@/components/shared/CodeShowcase';
 import s from '@/styles/serene.module.css';
 
 const heroContainer = {
@@ -51,6 +52,7 @@ export default function SereneBento() {
   return (
     <div className={s.template}>
       <div className={s.hero}>
+        <div className={s.heroOrb} aria-hidden="true" />
         <motion.div initial="hidden" animate="visible" variants={heroContainer} className={s.heroContent}>
           <motion.span variants={heroItem} className={s.heroTag}>{data.title}</motion.span>
           <motion.h1 variants={heroItem} className={s.h1}>
@@ -78,6 +80,7 @@ export default function SereneBento() {
           </motion.div>
         </motion.div>
         <motion.div initial="hidden" animate="visible" variants={photoReveal} className={s.photoBento}>
+          <div className={s.photoArc} aria-hidden="true" />
           <div className={s.photoFrame}>
             <div className={s.photoInner}>
               <Image src={photoUrl} alt={data.name} fill sizes="380px" className="profile-photo" priority />
@@ -106,6 +109,11 @@ export default function SereneBento() {
             </motion.div>
           ))}
         </StaggerChildren>
+      </div>
+
+      <div className={s.sec} data-code-showcase>
+        <SectionHeader tag="Live" title="Code in Motion" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
+        <CodeShowcase />
       </div>
 
       <div className={s.sec}>

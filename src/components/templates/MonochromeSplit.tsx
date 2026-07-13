@@ -10,9 +10,9 @@ import AnimatedCounter from '@/components/shared/AnimatedCounter';
 import ContactForm from '@/components/shared/ContactForm';
 import ReactionBar from '@/components/shared/ReactionBar';
 import Footer from '@/components/shared/Footer';
+import CodeShowcase from '@/components/shared/CodeShowcase';
 import { parseBold } from '@/utils/parseBold';
 import { useSkillHighlight } from '@/context/SkillHighlightContext';
-import { getTechColor } from '@/utils/techBrandColors';
 import { useCopyToClipboard } from '@/utils/contactActions';
 import { EmailIcon, PhoneIcon, GithubIcon, LocationIcon } from '@/components/shared/ContactIcons';
 import s from '@/styles/monochrome.module.css';
@@ -114,6 +114,12 @@ export default function MonochromeSplit() {
           animate="visible"
           variants={panelWipe}
         >
+          {/* Top colophon / meta */}
+          <div className={s.leftMeta}>
+            <span>Portfolio</span>
+            <span>&copy;{new Date().getFullYear()}</span>
+          </div>
+
           {/* Photo */}
           <motion.div variants={photoReveal} className={s.photoWrap}>
             <Image
@@ -185,15 +191,44 @@ export default function MonochromeSplit() {
                 @
               </a>
             </div>
+
+            {/* Bottom colophon */}
+            <div className={s.colophon}>
+              {data.name} {data.last} / {data.loc}
+              <br />
+              Set in Bebas Neue &amp; Space Mono
+            </div>
           </motion.div>
         </motion.aside>
 
         {/* ── WHITE RIGHT PANEL ── */}
         <main className={s.panelRight}>
+          {/* Structural grid rules */}
+          <div className={s.gridOverlay} aria-hidden="true" />
+
+          {/* Running colophon marquee */}
+          <div className={s.metaBar} aria-hidden="true">
+            <div className={s.metaTrack}>
+              {[0, 1].map((k) => (
+                <span key={k} className={s.metaGroup}>
+                  <span>{data.title}</span>
+                  <span className={s.metaSep}>/</span>
+                  <span>{data.loc}</span>
+                  <span className={s.metaSep}>/</span>
+                  <span>Portfolio {new Date().getFullYear()}</span>
+                  <span className={s.metaSep}>/</span>
+                  <span>Black &amp; White Edition</span>
+                  <span className={s.metaSep}>/</span>
+                </span>
+              ))}
+            </div>
+          </div>
+
           {/* About */}
           <div className={s.section}>
             <AnimatedSection direction="right" delay={0.2}>
               <div className={s.sectionHeader}>
+                <span className={s.sectionIndex}>01</span>
                 <span className={s.sectionTag}>{t.about}</span>
                 <h2 className={s.sectionTitle}>{t.profile}</h2>
               </div>
@@ -227,6 +262,7 @@ export default function MonochromeSplit() {
           <div className={s.section}>
             <AnimatedSection direction="up" delay={0.1}>
               <div className={s.sectionHeader}>
+                <span className={s.sectionIndex}>02</span>
                 <span className={s.sectionTag}>{t.experienceTag}</span>
                 <h2 className={s.sectionTitle}>{t.experience}</h2>
               </div>
@@ -244,6 +280,7 @@ export default function MonochromeSplit() {
                   viewport={{ once: true, amount: 0.15 }}
                   transition={{ delay: i * 0.15 }}
                 >
+                  <span className={s.timelineIndex}>{String(i + 1).padStart(2, '0')}</span>
                   <div className={s.timelineDot} />
                   <div className={s.timelineDate}>{exp.dt}</div>
                   <div className={s.timelineRole}>{exp.t}</div>
@@ -269,6 +306,7 @@ export default function MonochromeSplit() {
           <div className={s.section}>
             <AnimatedSection direction="up" delay={0.1}>
               <div className={s.sectionHeader}>
+                <span className={s.sectionIndex}>03</span>
                 <span className={s.sectionTag}>{t.skillsTag}</span>
                 <h2 className={s.sectionTitle}>{t.skills}</h2>
               </div>
@@ -292,7 +330,7 @@ export default function MonochromeSplit() {
                         className={`${s.skillTag} ${activeSkill === tag ? s.skillTagActive : ''}`}
                         onMouseEnter={() => setActiveSkill(tag)}
                         onMouseLeave={() => setActiveSkill(null)}
-                        style={activeSkill === tag ? { backgroundColor: getTechColor(tag) || '#000', color: '#fff', borderColor: getTechColor(tag) || '#000' } : undefined}
+                        style={activeSkill === tag ? { backgroundColor: '#000', color: '#fff', borderColor: '#000' } : undefined}
                       >
                         {tag}
                       </span>
@@ -303,11 +341,25 @@ export default function MonochromeSplit() {
             </StaggerChildren>
           </div>
 
+          {/* Live Coding */}
+          <div className={s.section} data-code-showcase>
+            <AnimatedSection direction="up" delay={0.1}>
+              <div className={s.sectionHeader}>
+                <span className={s.sectionIndex}>04</span>
+                <span className={s.sectionTag}>{t.liveCodingTag}</span>
+                <h2 className={s.sectionTitle}>{t.liveCoding}</h2>
+              </div>
+              <hr className={s.accentLine} />
+            </AnimatedSection>
+            <CodeShowcase />
+          </div>
+
           {/* Testimonials */}
           {data.testimonials && data.testimonials.length > 0 && (
             <div className={s.section}>
               <AnimatedSection direction="up" delay={0.1}>
                 <div className={s.sectionHeader}>
+                  <span className={s.sectionIndex}>05</span>
                   <span className={s.sectionTag}>{t.testimonialsTag}</span>
                   <h2 className={s.sectionTitle}>{t.testimonials}</h2>
                 </div>
@@ -340,6 +392,7 @@ export default function MonochromeSplit() {
             <div className={s.section}>
               <AnimatedSection direction="right" delay={0.1}>
                 <div className={s.sectionHeader}>
+                  <span className={s.sectionIndex}>06</span>
                   <span className={s.sectionTag}>{t.projectsTag}</span>
                   <h2 className={s.sectionTitle}>{t.projects}</h2>
                 </div>
@@ -383,6 +436,7 @@ export default function MonochromeSplit() {
             <div className={s.section}>
               <AnimatedSection direction="up" delay={0.1}>
                 <div className={s.sectionHeader}>
+                  <span className={s.sectionIndex}>07</span>
                   <span className={s.sectionTag}>{t.educationTag}</span>
                   <h2 className={s.sectionTitle}>{t.education}</h2>
                 </div>
@@ -411,6 +465,7 @@ export default function MonochromeSplit() {
           <div className={s.section}>
             <AnimatedSection direction="up" delay={0.1}>
               <div className={s.sectionHeader}>
+                <span className={s.sectionIndex}>08</span>
                 <span className={s.sectionTag}>{t.passions}</span>
                 <h2 className={s.sectionTitle}>{t.interests}</h2>
               </div>
@@ -435,6 +490,7 @@ export default function MonochromeSplit() {
           <div id="contact" className={s.section}>
             <AnimatedSection direction="up" delay={0.1}>
               <div className={s.sectionHeader}>
+                <span className={s.sectionIndex}>09</span>
                 <span className={s.sectionTag}>{t.contactTag}</span>
                 <h2 className={s.sectionTitle}>{t.contact}</h2>
               </div>

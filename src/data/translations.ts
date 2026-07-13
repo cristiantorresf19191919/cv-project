@@ -23,6 +23,8 @@ export interface Translations {
   testimonials: string;
   testimonialsTag: string;
   educationTag: string;
+  liveCoding: string;
+  liveCodingTag: string;
   availableForHire: string;
   openToWork: string;
   // Buttons
@@ -93,6 +95,8 @@ export const translations: Record<Lang, Translations> = {
     testimonials: 'What People Say',
     testimonialsTag: 'Testimonials',
     educationTag: 'Learning',
+    liveCoding: 'Inside My Editor',
+    liveCodingTag: 'Live Coding',
     availableForHire: 'Available for Hire',
     openToWork: 'Open to Work',
     getInTouch: 'Get In Touch',
@@ -155,6 +159,8 @@ export const translations: Record<Lang, Translations> = {
     testimonials: 'Lo Que Dicen',
     testimonialsTag: 'Testimonios',
     educationTag: 'Aprendizaje',
+    liveCoding: 'Dentro de Mi Editor',
+    liveCodingTag: 'Código en Vivo',
     availableForHire: 'Disponible para Contratar',
     openToWork: 'Abierto a Oportunidades',
     getInTouch: 'Contactar',

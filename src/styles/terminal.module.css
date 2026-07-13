@@ -44,9 +44,9 @@
   width: 8px;
   height: 15px;
   background: #00ff41;
-  animation: blink 1s step-end infinite;
   vertical-align: middle;
   margin-left: 3px;
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
 }
 
 @keyframes blink {
@@ -187,8 +187,9 @@
 }
 
 .sc {
+  position: relative;
   background: rgba(0, 255, 65, 0.02);
-  padding: 1.3rem;
+  padding: 2.5rem 1.3rem 1.3rem;
   border: 1px solid rgba(0, 255, 65, 0.12);
   box-shadow: inset 0 1px 0 rgba(0, 255, 65, 0.04);
   transition: all 0.3s;
@@ -278,11 +279,12 @@
 
 .tcUl {
   list-style: none;
+  counter-reset: ln;
 }
 
 .tcLi {
   display: grid;
-  grid-template-columns: 1.2rem 1fr;
+  grid-template-columns: 2.8rem 1fr;
   gap: 0 0.5rem;
   align-items: start;
   color: #66ff99;
@@ -293,10 +295,13 @@
 }
 
 .tcLi::before {
-  content: '>';
-  color: #00ff41;
+  content: counter(ln, decimal-leading-zero) ' >';
+  counter-increment: ln;
+  color: #2f7a41;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
   line-height: 1.7;
-  justify-self: center;
+  justify-self: end;
 }
 
 .tt {
@@ -307,9 +312,31 @@
 }
 
 .ttg {
-  padding: 0.2rem 0.45rem;
-  border: 1px solid rgba(0, 255, 65, 0.2);
+  padding: 0.2rem 0.15rem;
   font-size: 0.66rem;
+  color: #00ff41;
+  letter-spacing: 0.02em;
+  transition: text-shadow 0.2s ease, color 0.2s ease;
+}
+
+.ttg::before {
+  content: '[';
+  color: #2f7a41;
+  margin-right: 1px;
+}
+
+.ttg::after {
+  content: ']';
+  color: #2f7a41;
+  margin-left: 1px;
+}
+
+.ttg:hover {
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.55);
+}
+
+.ttg:hover::before,
+.ttg:hover::after {
   color: #00ff41;
 }
 
@@ -452,4 +479,215 @@
   .h1 { font-size: 1.5rem; }
   .sg { grid-template-columns: 1fr; }
   .sc:first-child { grid-column: span 1; }
+}
+
+/* ============================================================
+   ADDITIVE POLISH — CRT atmosphere & phosphor terminal chrome
+   ============================================================ */
+
+/* CRT screen vignette + faint top phosphor bloom (behind content) */
+.template::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(0, 255, 65, 0.04), transparent 45%),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.45) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Scoped green selection + terminal scrollbar (template only, no globals) */
+.template ::selection {
+  background: rgba(0, 255, 65, 0.28);
+  color: #eafff0;
+  text-shadow: none;
+}
+.template::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.template::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+.template::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 65, 0.22);
+  border: 2px solid #0a0a0a;
+}
+.template::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 65, 0.4);
+}
+
+/* $ whoami command line above the hero name */
+.cmd {
+  font-size: 0.82rem;
+  color: #66ff99;
+  opacity: 0.85;
+  margin-bottom: 0.45rem;
+}
+.cmdPrompt {
+  color: #00ff41;
+  margin-right: 0.4rem;
+  text-shadow: 0 0 6px rgba(0, 255, 65, 0.45);
+}
+
+/* Big phosphor block cursor after the hero name */
+.cursorBlock {
+  display: inline-block;
+  width: 0.55rem;
+  height: 1.5rem;
+  margin-left: 0.5rem;
+  background: #00ff41;
+  vertical-align: -0.2rem;
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.55);
+}
+
+/* Phosphor glow on key headings */
+.scH3,
+.tcH3,
+.pcTitle {
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.28);
+}
+.ccH3 {
+  text-shadow: 0 0 6px rgba(0, 255, 65, 0.22);
+}
+.sc:hover .scH3 {
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
+}
+
+/* Skill cards -> mini terminal windows (title bar + traffic-light dots) */
+.sc::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1.9rem;
+  background: rgba(0, 255, 65, 0.04);
+  border-bottom: 1px solid rgba(0, 255, 65, 0.12);
+  pointer-events: none;
+}
+.sc::after {
+  content: '';
+  position: absolute;
+  top: 0.72rem;
+  left: 1.3rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff5f56;
+  box-shadow: 13px 0 0 #ffbd2e, 26px 0 0 #27c93f;
+}
+.sc:hover::before {
+  background: rgba(0, 255, 65, 0.07);
+}
+
+/* Skill tags -> #hashtag tokens with hover glow */
+.tg::before {
+  content: '#';
+  opacity: 0.5;
+  margin-right: 1px;
+}
+.tg:hover {
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.35);
+}
+
+/* Terminal window chrome bar (experience + project cards) */
+.winBar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  background: rgba(0, 255, 65, 0.045);
+  border-bottom: 1px solid rgba(0, 255, 65, 0.14);
+}
+.tcBar {
+  margin: -1.3rem -1.3rem 1.1rem;
+}
+.dots {
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ff5f56;
+  box-shadow: 15px 0 0 #ffbd2e, 30px 0 0 #27c93f;
+  margin-right: 30px;
+}
+.winTitle {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.03em;
+  color: #4f9a63;
+}
+
+/* Button phosphor glow on hover */
+.b1:hover,
+.b2:hover {
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+}
+
+/* Contact card border-glow on hover */
+.cc {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.cc:hover {
+  border-color: rgba(0, 255, 65, 0.45);
+  box-shadow: 0 0 16px rgba(0, 255, 65, 0.1);
+}
+.ccA:hover {
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.45);
+}
+
+/* Project "> View Project" link -> underline sweep + glow */
+.pcLink {
+  position: relative;
+  display: inline-block;
+}
+.pcLink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;
+  background: #00ff41;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+.pc:hover .pcTitle {
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
+}
+.pc:hover .pcLink {
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
+}
+.pc:hover .pcLink::after {
+  transform: scaleX(1);
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
+}
+
+/* Motion-only CRT effects (reduced-motion safe) */
+@media (prefers-reduced-motion: no-preference) {
+  .cursor,
+  .cursorBlock {
+    animation: blink 1s step-end infinite;
+  }
+  .template::before {
+    animation: crtFlicker 7s steps(40) infinite;
+  }
+}
+
+@keyframes crtFlicker {
+  0%, 100% { opacity: 1; }
+  47% { opacity: 1; }
+  48% { opacity: 0.86; }
+  49% { opacity: 1; }
+  83% { opacity: 1; }
+  84% { opacity: 0.9; }
+  85% { opacity: 1; }
+}
+
+@media (max-width: 968px) {
+  .cursorBlock { height: 1.1rem; margin-left: 0.35rem; }
+  .cmd { font-size: 0.78rem; }
 }

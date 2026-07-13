@@ -9,6 +9,7 @@ import SectionHeader from '@/components/shared/SectionHeader';
 import ContactForm from '@/components/shared/ContactForm';
 import ReactionBar from '@/components/shared/ReactionBar';
 import Footer from '@/components/shared/Footer';
+import CodeShowcase from '@/components/shared/CodeShowcase';
 import s from '@/styles/neon.module.css';
 import { parseBold } from '@/utils/parseBold';
 import { useSkillHighlight } from '@/context/SkillHighlightContext';
@@ -68,7 +69,8 @@ export default function NeonCyber() {
         <motion.div initial="hidden" animate="visible" variants={heroContainer}>
           <motion.div variants={heroItem} className={s.heroTag}>{data.title}</motion.div>
           <motion.h1 variants={heroItem} className={s.h1}>
-            {data.name}<br />{data.last}
+            <span className={s.glitch} data-text={data.name}>{data.name}</span>
+            <span className={s.glitch} data-text={data.last}>{data.last}</span>
           </motion.h1>
           <motion.div variants={heroItem} className={s.sub}>{data.tagline}</motion.div>
           <motion.p variants={heroItem} className={s.desc}>{data.desc}</motion.p>
@@ -122,6 +124,12 @@ export default function NeonCyber() {
             </motion.div>
           ))}
         </StaggerChildren>
+      </div>
+
+      {/* Live Coding */}
+      <div className={s.sec} data-code-showcase>
+        <SectionHeader tag="Live Coding" title="Inside My Editor" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
+        <CodeShowcase />
       </div>
 
       {/* Experience */}

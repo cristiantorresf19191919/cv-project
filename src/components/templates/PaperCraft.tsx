@@ -9,6 +9,7 @@ import SectionHeader from '@/components/shared/SectionHeader';
 import ContactForm from '@/components/shared/ContactForm';
 import ReactionBar from '@/components/shared/ReactionBar';
 import Footer from '@/components/shared/Footer';
+import CodeShowcase from '@/components/shared/CodeShowcase';
 import s from '@/styles/paper.module.css';
 import { parseBold } from '@/utils/parseBold';
 import { useSkillHighlight } from '@/context/SkillHighlightContext';
@@ -124,6 +125,12 @@ export default function PaperCraft() {
             </motion.div>
           ))}
         </StaggerChildren>
+      </div>
+
+      {/* Live Coding */}
+      <div className={s.sec} data-code-showcase>
+        <SectionHeader tag="Workshop" title="Live Coding" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
+        <CodeShowcase />
       </div>
 
       {/* Experience — stacked paper pages */}

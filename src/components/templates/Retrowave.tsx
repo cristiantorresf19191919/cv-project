@@ -9,6 +9,7 @@ import SectionHeader from '@/components/shared/SectionHeader';
 import ContactForm from '@/components/shared/ContactForm';
 import ReactionBar from '@/components/shared/ReactionBar';
 import Footer from '@/components/shared/Footer';
+import CodeShowcase from '@/components/shared/CodeShowcase';
 import s from '@/styles/retro.module.css';
 import { parseBold } from '@/utils/parseBold';
 import { useSkillHighlight } from '@/context/SkillHighlightContext';
@@ -129,6 +130,15 @@ export default function Retrowave() {
             </motion.div>
           ))}
         </StaggerChildren>
+      </div>
+
+      {/* Divider */}
+      <div className={s.divider}><div className={s.dividerLine} /></div>
+
+      {/* Live Coding */}
+      <div className={s.sec} data-code-showcase>
+        <SectionHeader tag="Uplink" title="Live Coding" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
+        <CodeShowcase />
       </div>
 
       {/* Divider */}

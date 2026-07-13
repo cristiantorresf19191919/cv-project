@@ -9,6 +9,7 @@ import SectionHeader from '@/components/shared/SectionHeader';
 import ContactForm from '@/components/shared/ContactForm';
 import ReactionBar from '@/components/shared/ReactionBar';
 import Footer from '@/components/shared/Footer';
+import CodeShowcase from '@/components/shared/CodeShowcase';
 import s from '@/styles/glass.module.css';
 import { parseBold } from '@/utils/parseBold';
 import { useSkillHighlight } from '@/context/SkillHighlightContext';
@@ -65,6 +66,13 @@ export default function Glassmorphism() {
 
   return (
     <div className={s.template}>
+      <div className={s.aurora} aria-hidden="true">
+        <span className={`${s.orb} ${s.orbA}`} />
+        <span className={`${s.orb} ${s.orbB}`} />
+        <span className={`${s.orb} ${s.orbC}`} />
+        <span className={`${s.orb} ${s.orbD}`} />
+        <span className={s.grain} />
+      </div>
       <div className={s.hero}>
         <motion.div initial="hidden" animate="visible" variants={heroContainer}>
           <motion.div variants={heroItem} className={s.heroTag}>{data.title}</motion.div>
@@ -125,6 +133,12 @@ export default function Glassmorphism() {
             </motion.div>
           ))}
         </StaggerChildren>
+      </div>
+
+      {/* Live Coding */}
+      <div className={s.sec} data-code-showcase>
+        <SectionHeader tag="Live Coding" title="Inside My Editor" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
+        <CodeShowcase />
       </div>
 
       {/* Experience */}

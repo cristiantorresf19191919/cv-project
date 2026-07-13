@@ -9,6 +9,7 @@ import SectionHeader from '@/components/shared/SectionHeader';
 import ContactForm from '@/components/shared/ContactForm';
 import ReactionBar from '@/components/shared/ReactionBar';
 import Footer from '@/components/shared/Footer';
+import CodeShowcase from '@/components/shared/CodeShowcase';
 import s from '@/styles/terminal.module.css';
 import { parseBold } from '@/utils/parseBold';
 import { useSkillHighlight } from '@/context/SkillHighlightContext';
@@ -68,8 +69,11 @@ export default function TerminalHacker() {
             $ cat ./portfolio.txt<span className={s.cursor} />
           </motion.div>
           <motion.div variants={terminalLine} className={s.heroTag}>{data.title}</motion.div>
+          <motion.div variants={terminalLine} className={s.cmd}>
+            <span className={s.cmdPrompt}>$</span> whoami
+          </motion.div>
           <motion.h1 variants={terminalLine} className={s.h1}>
-            {data.name}<br />{data.last}
+            {data.name}<br />{data.last}<span className={s.cursorBlock} aria-hidden="true" />
           </motion.h1>
           <motion.div variants={terminalLine} className={s.sub}>{data.tagline}</motion.div>
           <motion.p variants={terminalLine} className={s.desc}>{data.desc}</motion.p>
@@ -124,6 +128,12 @@ export default function TerminalHacker() {
         </StaggerChildren>
       </div>
 
+      {/* Live Coding */}
+      <div className={s.sec} data-code-showcase>
+        <SectionHeader tag="Live Coding" title="Inside My Editor" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
+        <CodeShowcase />
+      </div>
+
       {/* Experience */}
       <div className={s.sec}>
         <SectionHeader tag="Career Journey" title="Professional Experience" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
@@ -131,6 +141,10 @@ export default function TerminalHacker() {
           <AnimatedSection key={i} direction="left" delay={i * 0.1} scale>
             <div className={s.ti}>
               <div className={`${s.tc} ${activeSkill && !exp.tech.includes(activeSkill) ? s.tcDimmed : ''} ${activeSkill && exp.tech.includes(activeSkill) ? s.tcHighlighted : ''}`}>
+                <div className={`${s.winBar} ${s.tcBar}`} aria-hidden="true">
+                  <span className={s.dots} />
+                  <span className={s.winTitle}>~/experience/{exp.co.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}.log</span>
+                </div>
                 <h3 className={s.tcH3}>{exp.t}</h3>
                 <div className={s.co}>{exp.co}</div>
                 <div className={s.dt}>{exp.dt}</div>
@@ -167,6 +181,10 @@ export default function TerminalHacker() {
                 rel="noopener noreferrer"
                 className={s.pc}
               >
+                <div className={s.winBar} aria-hidden="true">
+                  <span className={s.dots} />
+                  <span className={s.winTitle}>~/projects/{project.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}</span>
+                </div>
                 <div className={s.pcBody}>
                   <h3 className={s.pcTitle}>{project.title}</h3>
                   <p className={s.pcDesc}>{project.desc}</p>

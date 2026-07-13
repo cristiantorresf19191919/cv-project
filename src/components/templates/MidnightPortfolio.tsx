@@ -11,6 +11,7 @@ import AnimatedCounter from '@/components/shared/AnimatedCounter';
 import ContactForm from '@/components/shared/ContactForm';
 import ReactionBar from '@/components/shared/ReactionBar';
 import Footer from '@/components/shared/Footer';
+import CodeShowcase from '@/components/shared/CodeShowcase';
 import { parseBold } from '@/utils/parseBold';
 import { useSkillHighlight } from '@/context/SkillHighlightContext';
 import { getTechColor } from '@/utils/techBrandColors';
@@ -143,10 +144,16 @@ export default function MidnightPortfolio() {
           </div>
 
           {/* Name & title */}
+          <div className={s.railOverline}>
+            <span className={s.railStar}>✦</span> Midnight&nbsp;Portfolio
+          </div>
           <div className={s.sidebarName}>
             {data.name} {data.last}
           </div>
           <div className={s.sidebarTitle}>{data.title}</div>
+          <div className={s.railCoord}>
+            <span className={s.railCoordDot} /> SYS · ONLINE · 06
+          </div>
 
           {/* Availability Badge */}
           {data.availability === 'open' && (
@@ -310,6 +317,15 @@ export default function MidnightPortfolio() {
                 <AnimatedSkillBar key={skill.name} skill={skill} index={i} />
               ))}
             </div>
+          </div>
+
+          {/* Live Coding */}
+          <div className={s.section} data-code-showcase>
+            <AnimatedSection direction="up">
+              <div className={s.sectionLabel}>{t.liveCodingTag}</div>
+              <h2 className={s.sectionTitle}>{t.liveCoding}</h2>
+            </AnimatedSection>
+            <CodeShowcase />
           </div>
 
           {/* Experience */}
@@ -487,6 +503,12 @@ export default function MidnightPortfolio() {
                   {tag}
                 </motion.div>
               ))}
+          </div>
+
+          {/* Decorative star-chart / coordinate console footer */}
+          <div className={s.railChart}>
+            <span className={s.railChartTick}>{'// STARMAP'}</span>
+            <span className={s.railChartCoord}>40.71°N · 74.00°W</span>
           </div>
         </motion.aside>
       </div>

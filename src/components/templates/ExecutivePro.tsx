@@ -10,6 +10,7 @@ import AnimatedCounter from '@/components/shared/AnimatedCounter';
 import ContactForm from '@/components/shared/ContactForm';
 import ReactionBar from '@/components/shared/ReactionBar';
 import Footer from '@/components/shared/Footer';
+import CodeShowcase from '@/components/shared/CodeShowcase';
 import { parseBold } from '@/utils/parseBold';
 import { useSkillHighlight } from '@/context/SkillHighlightContext';
 import { getTechColor } from '@/utils/techBrandColors';
@@ -273,6 +274,17 @@ export default function ExecutivePro() {
                   </motion.div>
                 ))}
               </div>
+            </div>
+          </AnimatedSection>
+
+          {/* Live Coding */}
+          <AnimatedSection>
+            <div className={s.summarySection} data-code-showcase>
+              <div className={s.secHeader}>
+                <div className={s.secTag}>{t.liveCodingTag}</div>
+                <h2 className={s.secTitle}>{t.liveCoding}</h2>
+              </div>
+              <CodeShowcase />
             </div>
           </AnimatedSection>
 

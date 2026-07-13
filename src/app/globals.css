@@ -98,6 +98,7 @@ button:focus-visible {
   [class*="StatusBadge"],
   [class*="commandPalette"],
   [class*="CommandPalette"],
+  [data-code-showcase],
   footer {
     display: none !important;
   }

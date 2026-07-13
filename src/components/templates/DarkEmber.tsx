@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
-import { useRef } from 'react';
+import { useRef, type CSSProperties } from 'react';
 import { useContent } from '@/context/ContentContext';
 import { useLanguage } from '@/context/LanguageContext';
 import AnimatedSection from '@/components/shared/AnimatedSection';
@@ -11,6 +11,7 @@ import AnimatedCounter from '@/components/shared/AnimatedCounter';
 import ContactForm from '@/components/shared/ContactForm';
 import ReactionBar from '@/components/shared/ReactionBar';
 import Footer from '@/components/shared/Footer';
+import CodeShowcase from '@/components/shared/CodeShowcase';
 import s from '@/styles/ember.module.css';
 import { parseBold } from '@/utils/parseBold';
 import { useSkillHighlight } from '@/context/SkillHighlightContext';
@@ -73,6 +74,23 @@ const cardHover = {
   scale: 1.02,
   transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
 };
+
+/* ── Rising ember sparks (decorative, reduced-motion safe) ─ */
+
+const emberSparks = [
+  { x: '6%', s: '3px', t: '7s', d: '0s', drift: '24px' },
+  { x: '14%', s: '2px', t: '9s', d: '1.5s', drift: '-18px' },
+  { x: '22%', s: '4px', t: '6.5s', d: '3s', drift: '30px' },
+  { x: '31%', s: '2px', t: '8.5s', d: '0.8s', drift: '-26px' },
+  { x: '40%', s: '3px', t: '7.8s', d: '2.2s', drift: '16px' },
+  { x: '48%', s: '2px', t: '9.5s', d: '4s', drift: '-20px' },
+  { x: '57%', s: '4px', t: '6.8s', d: '1.2s', drift: '28px' },
+  { x: '65%', s: '3px', t: '8.2s', d: '3.4s', drift: '-30px' },
+  { x: '73%', s: '2px', t: '7.4s', d: '0.4s', drift: '22px' },
+  { x: '81%', s: '3px', t: '9.2s', d: '2.6s', drift: '-16px' },
+  { x: '89%', s: '2px', t: '6.6s', d: '1.8s', drift: '26px' },
+  { x: '94%', s: '3px', t: '8.8s', d: '3.8s', drift: '-24px' },
+];
 
 /* ── Skill bar data ───────────────────────────────────── */
 
@@ -151,6 +169,28 @@ export default function DarkEmber() {
 
   return (
     <div className={s.template}>
+      {/* ── Ember atmosphere (deep glow + rising sparks) ─ */}
+      <div className={s.emberAtmosphere} aria-hidden="true">
+        <div className={s.emberGlow} />
+        <div className={s.emberGlowLow} />
+        <div className={s.emberNoise} />
+        <div className={s.sparks}>
+          {emberSparks.map((sp, i) => (
+            <span
+              key={i}
+              className={s.spark}
+              style={{
+                '--x': sp.x,
+                '--s': sp.s,
+                '--t': sp.t,
+                '--d': sp.d,
+                '--drift': sp.drift,
+              } as CSSProperties}
+            />
+          ))}
+        </div>
+      </div>
+
       {/* ── Hero ─────────────────────────────────────── */}
       <section className={s.hero}>
         <motion.div
@@ -290,6 +330,19 @@ export default function DarkEmber() {
               />
             ))}
           </div>
+        </AnimatedSection>
+      </section>
+
+      {/* ── Live Coding ──────────────────────────────── */}
+      <section className={s.section} data-code-showcase>
+        <AnimatedSection>
+          <div className={s.sectionHeader}>
+            <div className={s.sectionTag}>{t.liveCodingTag}</div>
+            <h2 className={s.sectionTitle}>{t.liveCoding}</h2>
+          </div>
+        </AnimatedSection>
+        <AnimatedSection delay={0.1}>
+          <CodeShowcase />
         </AnimatedSection>
       </section>
 

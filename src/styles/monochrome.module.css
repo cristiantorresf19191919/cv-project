@@ -1,11 +1,12 @@
 /* ─────────────────────────────────────────────
-   MonochromeSplit — Bold B&W Creative CV
+   MonochromeSplit — Swiss / Brutalist Editorial
+   Pure black & white. Type + grid ARE the design.
    ───────────────────────────────────────────── */
 
 .template {
   font-family: var(--font-outfit), 'Outfit', sans-serif;
   background: #fff;
-  color: #111;
+  color: #000;
   min-height: 100vh;
 }
 
@@ -13,9 +14,12 @@
 .split {
   display: flex;
   min-height: 100vh;
+  position: relative;
 }
 
-/* ── Black left panel ── */
+/* ═══════════════════════════════════════════════
+   BLACK LEFT PANEL
+   ═══════════════════════════════════════════════ */
 .panelLeft {
   width: 35%;
   background: #000;
@@ -25,54 +29,90 @@
   height: calc(100vh - 58px);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 2.5rem 1.5rem 2rem;
+  align-items: stretch;
+  padding: 2rem 1.6rem;
   overflow-y: auto;
   scrollbar-width: none;
+  isolation: isolate;
+  border-right: 1px solid #000;
 }
 
 .panelLeft::-webkit-scrollbar {
   display: none;
 }
 
-/* ── White right panel ── */
-.panelRight {
-  width: 65%;
-  background: #fff;
-  padding: 3rem 3.5rem 4rem;
-  min-height: 100vh;
+/* Fine halftone dot texture for print feel */
+.panelLeft::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.11) 1px, transparent 1.4px);
+  background-size: 9px 9px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
 }
 
-/* ── Photo ── */
+.panelLeft > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Top colophon / meta bar ── */
+.leftMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  padding-bottom: 0.7rem;
+  margin-bottom: 1.4rem;
+  flex-shrink: 0;
+}
+
+/* ── Photo — stark square frame ── */
 .photoWrap {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 0;
   overflow: hidden;
   position: relative;
-  border: 3px solid rgba(255, 255, 255, 0.15);
+  border: 2px solid #fff;
+  box-shadow: 8px 8px 0 rgba(255, 255, 255, 0.14);
   flex-shrink: 0;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.4rem;
 }
 
 .photoWrap :global(.profile-photo) {
-  filter: grayscale(100%);
+  filter: grayscale(100%) contrast(1.15);
   object-fit: cover;
+  transition: filter 0.5s ease;
 }
 
-/* ── Availability Badge ── */
+.photoWrap:hover :global(.profile-photo) {
+  filter: grayscale(100%) contrast(1.5);
+}
+
+/* ── Availability Badge — monochrome ── */
 .availBadge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.35rem 0.9rem;
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: 100px;
-  color: #10b981;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  align-self: flex-start;
+  padding: 0.35rem 0.75rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 0;
+  color: #fff;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   flex-shrink: 0;
 }
 
@@ -80,61 +120,66 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #10b981;
-  animation: availPulseMono 2s ease-in-out infinite;
+  background: #fff;
   flex-shrink: 0;
 }
 
-@keyframes availPulseMono {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-  50% { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+@media (prefers-reduced-motion: no-preference) {
+  .availDot {
+    animation: availPulseMono 2s ease-in-out infinite;
+  }
 }
 
-/* ── Vertical name ── */
+@keyframes availPulseMono {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }
+  50% { box-shadow: 0 0 0 5px rgba(255, 255, 255, 0); }
+}
+
+/* ── Vertical name — oversized display ── */
 .verticalName {
   writing-mode: vertical-rl;
   text-orientation: mixed;
   transform: rotate(180deg);
   font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
-  font-size: 5.5rem;
-  font-weight: 700;
-  letter-spacing: 6px;
+  font-size: 6.2rem;
+  font-weight: 400;
+  letter-spacing: 4px;
   text-transform: uppercase;
   color: #fff;
-  line-height: 1;
-  margin: 1rem 0;
+  line-height: 0.9;
+  margin: 1.2rem 0;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
   user-select: none;
-  opacity: 0.92;
+  opacity: 1;
 }
 
 /* ── Profile info (left panel) ── */
 .profileInfo {
   width: 100%;
   margin-top: auto;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .profileTitle {
-  font-family: var(--font-syne), 'Syne', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 3px;
-  color: #e11d48;
-  margin-bottom: 0.4rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
 }
 
 .profileTagline {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: rgba(255, 255, 255, 0.55);
   line-height: 1.7;
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
 }
 
 .contactRow {
@@ -142,308 +187,511 @@
   align-items: center;
   gap: 0.6rem;
   margin-bottom: 0.55rem;
-  font-size: 0.75rem;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.68rem;
   color: rgba(255, 255, 255, 0.65);
 }
 
 .contactRow span:first-child {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   width: 18px;
   text-align: center;
   flex-shrink: 0;
+  filter: grayscale(1);
 }
 
 .contactRow a {
   color: rgba(255, 255, 255, 0.65);
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color 0.25s, text-decoration-color 0.25s;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
 }
 
 .contactRow a:hover {
-  color: #e11d48;
+  color: #fff;
+  text-decoration-color: #fff;
 }
 
-/* ── Social icons (left panel) ── */
+/* ── Social icons (left panel) — square, invert on hover ── */
 .socials {
   display: flex;
-  gap: 0.6rem;
-  margin-top: 1.2rem;
-  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+  justify-content: flex-start;
 }
 
 .socialBtn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  width: 38px;
+  height: 38px;
+  border-radius: 0;
+  border: 1px solid rgba(255, 255, 255, 0.4);
   background: transparent;
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.85rem;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 1px;
   text-decoration: none;
-  transition: all 0.3s;
+  transition: background 0.25s, color 0.25s, transform 0.25s, border-color 0.25s;
   cursor: pointer;
 }
 
 .socialBtn:hover {
-  background: #e11d48;
-  border-color: #e11d48;
-  transform: translateY(-2px);
+  background: #fff;
+  border-color: #fff;
+  color: #000;
+  transform: translate(-2px, -2px);
 }
 
-/* ── Section (right panel) ── */
+/* ── Bottom colophon ── */
+.colophon {
+  margin-top: 1.1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.54rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.9;
+}
+
+/* ═══════════════════════════════════════════════
+   WHITE RIGHT PANEL
+   ═══════════════════════════════════════════════ */
+.panelRight {
+  width: 65%;
+  background: #fff;
+  padding: 3rem 3.5rem 4rem;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Thin structural grid rules */
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent,
+    transparent calc(25% - 1px),
+    #efefef calc(25% - 1px),
+    #efefef 25%
+  );
+}
+
+/* ── Running colophon / marquee ── */
+.metaBar {
+  position: relative;
+  z-index: 1;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  overflow: hidden;
+  margin-bottom: 3rem;
+  padding: 0.55rem 0;
+  white-space: nowrap;
+}
+
+.metaTrack {
+  display: inline-flex;
+  white-space: nowrap;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #000;
+  will-change: transform;
+}
+
+.metaGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.6rem;
+  padding-right: 1.6rem;
+}
+
+.metaSep {
+  color: #bbb;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .metaTrack {
+    animation: marqueeMono 30s linear infinite;
+  }
+}
+
+@keyframes marqueeMono {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── Section ── */
 .section {
-  margin-bottom: 3.5rem;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 4rem;
 }
 
+/* ── Section header — numbered editorial ── */
 .sectionHeader {
-  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1.25rem;
+  align-items: end;
+  border-bottom: 2px solid #000;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.sectionIndex {
+  grid-row: 1 / 3;
+  align-self: center;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 2.6rem;
+  line-height: 1;
+  letter-spacing: -1px;
+  color: transparent;
+  -webkit-text-stroke: 1.5px #000;
+  text-stroke: 1.5px #000;
 }
 
 .sectionTag {
-  font-size: 0.62rem;
+  grid-column: 2;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.6rem;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: #e11d48;
-  font-weight: 600;
-  display: block;
-  margin-bottom: 0.35rem;
+  color: #000;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.sectionTag::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #000;
+  display: inline-block;
 }
 
 .sectionTitle {
-  font-family: var(--font-syne), 'Syne', sans-serif;
-  font-size: 2.2rem;
-  font-weight: 800;
+  grid-column: 2;
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 3.6rem;
+  font-weight: 400;
   color: #000;
-  letter-spacing: -1px;
-  line-height: 1.15;
+  letter-spacing: 1px;
+  line-height: 0.92;
+  text-transform: uppercase;
 }
 
-/* ── About / description ── */
+/* ── Accent line — secondary hairline rule ── */
+.accentLine {
+  width: 100%;
+  height: 1px;
+  background: #ddd;
+  margin-bottom: 1.75rem;
+  border: none;
+}
+
+/* ── About / description — with drop cap ── */
 .aboutText {
-  font-size: 0.92rem;
-  color: #444;
-  line-height: 1.95;
-  max-width: 90%;
+  font-size: 1rem;
+  color: #1a1a1a;
+  line-height: 1.9;
+  max-width: 62ch;
 }
 
-/* ── Stats row ── */
+.aboutText::first-letter {
+  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-size: 3.6rem;
+  font-weight: 700;
+  float: left;
+  line-height: 0.72;
+  margin: 0.12rem 0.55rem 0 0;
+  color: #000;
+}
+
+/* ── Stats row — editorial ledger ── */
 .statsRow {
   display: flex;
-  gap: 2.5rem;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #eee;
+  gap: 0;
+  margin-top: 2.2rem;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
 }
 
 .statItem {
-  text-align: center;
+  flex: 1;
+  text-align: left;
+  padding: 1.1rem 1.2rem;
+  border-right: 1px solid #ddd;
+}
+
+.statItem:last-child {
+  border-right: none;
 }
 
 .statNum {
   font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
-  font-size: 2.8rem;
-  font-weight: 700;
+  font-size: 3.8rem;
+  font-weight: 400;
   color: #000;
-  line-height: 1;
+  line-height: 0.85;
 }
 
 .statLabel {
-  font-size: 0.62rem;
-  color: #999;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.58rem;
+  color: #777;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin-top: 0.2rem;
+  margin-top: 0.4rem;
 }
 
-/* ── Experience timeline ── */
+/* ── Experience timeline — hairline editorial blocks ── */
 .timeline {
   position: relative;
-  padding-left: 2rem;
+  padding-left: 0;
 }
 
 .timeline::before {
-  content: '';
-  position: absolute;
-  left: 6px;
-  top: 8px;
-  bottom: 8px;
-  width: 1px;
-  background: #e2e2e2;
+  display: none;
 }
 
 .timelineItem {
   position: relative;
-  margin-bottom: 2.2rem;
-  padding: 1.2rem 1.2rem 0.8rem;
-  background: #fafafa;
-  border: 1px solid #eee;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-  transition: opacity 0.35s, border-color 0.35s, box-shadow 0.35s;
+  margin-bottom: 0;
+  padding: 1.6rem 0 1.6rem 3.9rem;
+  background: transparent;
+  border: none;
+  border-top: 1px solid #000;
+  border-radius: 0;
+  box-shadow: none;
+  transition: background 0.35s, padding-left 0.35s, opacity 0.35s;
 }
 
 .timelineItem:last-child {
+  border-bottom: 1px solid #000;
   margin-bottom: 0;
 }
 
+.timelineItem:hover {
+  background: #f6f6f6;
+  padding-left: 4.3rem;
+}
+
 .timelineDimmed {
-  opacity: 0.25;
+  opacity: 0.28;
 }
 
 .timelineHighlighted {
-  border-color: #000 !important;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  background: #f2f2f2;
+  box-shadow: inset 5px 0 0 #000;
+  padding-left: 4.3rem;
+}
+
+/* Hanging index number */
+.timelineIndex {
+  position: absolute;
+  left: 0;
+  top: 1.6rem;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.5px;
+  color: #000;
 }
 
 .timelineDot {
-  position: absolute;
-  left: -2rem;
-  top: 6px;
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  background: #000;
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 1px #000;
-  z-index: 1;
+  display: none;
 }
 
 .timelineDate {
-  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-  font-size: 0.68rem;
-  color: #aaa;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.64rem;
+  color: #888;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 400;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
 }
 
 .timelineRole {
-  font-family: var(--font-syne), 'Syne', sans-serif;
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   color: #000;
-  margin-bottom: 0.15rem;
+  line-height: 1;
+  margin-bottom: 0.2rem;
 }
 
 .timelineCompany {
-  font-size: 0.82rem;
-  color: #e11d48;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: #000;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.7rem;
 }
 
 .timelineDesc {
-  font-size: 0.82rem;
-  color: #555;
+  font-size: 0.86rem;
+  color: #444;
   line-height: 1.8;
   margin-bottom: 0.7rem;
+  max-width: 60ch;
 }
 
 .timelineList {
   list-style: none;
   padding: 0;
-  margin: 0 0 0.8rem;
+  margin: 0 0 0.9rem;
 }
 
 .timelineListItem {
   display: grid;
-  grid-template-columns: 1.2rem 1fr;
-  font-size: 0.78rem;
-  color: #555;
-  line-height: 1.8;
-  margin-bottom: 0.25rem;
+  grid-template-columns: 1.4rem 1fr;
+  font-size: 0.82rem;
+  color: #444;
+  line-height: 1.75;
+  margin-bottom: 0.3rem;
+  max-width: 60ch;
 }
 
 .timelineListItem::before {
-  content: '\2014';
-  color: #ccc;
+  content: '\2192';
+  color: #000;
+  font-weight: 700;
 }
 
 .timelineTech {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.3rem;
-  margin-top: 0.5rem;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
 }
 
+/* ── Tech tags — mono outlined chips ── */
 .techTag {
-  padding: 0.2rem 0.55rem;
-  background: #f5f5f5;
-  border: 1px solid #e5e5e5;
-  border-radius: 6px;
-  font-size: 0.68rem;
-  color: #333;
-  font-weight: 500;
+  padding: 0.22rem 0.55rem;
+  background: transparent;
+  border: 1px solid #000;
+  border-radius: 0;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: #000;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: background 0.2s, color 0.2s;
 }
 
-/* ── Skills ── */
+.techTag:hover {
+  background: #000;
+  color: #fff;
+}
+
+/* ── Skills — hard offset shadow cards ── */
 .skillsGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: 1.1rem;
 }
 
 .skillCard {
-  background: #fafafa;
-  border: 1px solid #eee;
-  border-radius: 10px;
-  padding: 1.4rem;
-  transition: all 0.35s;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 0;
+  padding: 1.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .skillCard:hover {
-  border-color: #ccc;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
-  transform: translateY(-3px);
+  border-color: #000;
+  box-shadow: 7px 7px 0 #000;
+  transform: translate(-3px, -3px);
 }
 
 .skillIco {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+  margin-bottom: 0.55rem;
+  filter: grayscale(1);
 }
 
 .skillTitle {
-  font-family: var(--font-syne), 'Syne', sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   color: #000;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.7rem;
+}
+
+.skillTitle::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background: #000;
+  transition: width 0.35s ease;
+}
+
+.skillCard:hover .skillTitle::after {
+  width: 100%;
 }
 
 .skillTags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.3rem;
+  gap: 0.35rem;
 }
 
 .skillTag {
-  padding: 0.2rem 0.5rem;
+  padding: 0.22rem 0.5rem;
   background: #fff;
-  border: 1px solid #e5e5e5;
-  border-radius: 6px;
-  font-size: 0.68rem;
-  color: #555;
+  border: 1px solid #000;
+  border-radius: 0;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   cursor: pointer;
-  transition: all 0.25s;
+  transition: background 0.2s, color 0.2s;
 }
 
 .skillTag:hover {
-  transform: scale(1.08);
-  border-color: #000;
+  background: #000;
+  color: #fff;
 }
 
 .skillTagActive {
-  color: #fff;
-  border-color: #000;
-  transform: scale(1.1);
-  font-weight: 600;
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+  font-weight: 700;
 }
 
-/* ── Testimonials ── */
+/* ── Testimonials — serif quote, invert on hover ── */
 .testimonialsGrid {
   display: grid;
   grid-template-columns: 1fr;
@@ -451,256 +699,335 @@
 }
 
 .testimonialCard {
-  background: #fafafa;
-  border: 1px solid #eee;
-  border-left: 3px solid #e11d48;
-  border-radius: 10px;
-  padding: 1.6rem;
-  transition: all 0.35s;
+  background: #fff;
+  border: 1px solid #000;
+  border-left: 6px solid #000;
+  border-radius: 0;
+  padding: 1.75rem;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .testimonialCard:hover {
-  border-color: #ccc;
-  border-left-color: #e11d48;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
-  transform: translateY(-3px);
+  background: #000;
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 #000;
+}
+
+.testimonialCard:hover .testimonialQuote,
+.testimonialCard:hover .testimonialName {
+  color: #fff;
+}
+
+.testimonialCard:hover .testimonialAuthor {
+  border-top-color: rgba(255, 255, 255, 0.3);
+}
+
+.testimonialCard:hover .testimonialRole {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .testimonialQuote {
-  font-family: var(--font-crimson), 'Crimson Pro', serif;
-  font-size: 1rem;
+  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-size: 1.3rem;
   font-style: italic;
-  color: #444;
-  line-height: 1.9;
-  margin-bottom: 1rem;
+  color: #000;
+  line-height: 1.55;
+  margin-bottom: 1.1rem;
+  transition: color 0.3s;
 }
 
 .testimonialAuthor {
-  border-top: 1px solid #eee;
-  padding-top: 0.7rem;
+  border-top: 1px solid #000;
+  padding-top: 0.75rem;
+  transition: border-color 0.3s;
 }
 
 .testimonialName {
-  font-family: var(--font-syne), 'Syne', sans-serif;
-  font-size: 0.88rem;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.78rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   color: #000;
+  transition: color 0.3s;
 }
 
 .testimonialRole {
-  font-size: 0.72rem;
-  color: #999;
-  margin-top: 0.1rem;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.64rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 0.2rem;
+  transition: color 0.3s;
 }
 
-/* ── Education ── */
+/* ── Education — invert on hover ── */
 .eduGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
+  gap: 1.1rem;
 }
 
 .eduCard {
-  background: #fafafa;
-  border: 1px solid #eee;
-  border-left: 3px solid #000;
-  border-radius: 10px;
-  padding: 1.4rem;
-  transition: all 0.35s;
+  background: #fff;
+  border: 1px solid #000;
+  border-left: 6px solid #000;
+  border-radius: 0;
+  padding: 1.5rem;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 .eduCard:hover {
-  border-color: #ccc;
-  border-left-color: #e11d48;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
-  transform: translateY(-2px);
+  background: #000;
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 #000;
+}
+
+.eduCard:hover .eduDegree,
+.eduCard:hover .eduSchool,
+.eduCard:hover .eduDate,
+.eduCard:hover .eduDesc {
+  color: #fff;
+}
+
+.eduCard:hover .eduSchool {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .eduDegree {
-  font-family: var(--font-syne), 'Syne', sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   color: #000;
-  margin-bottom: 0.2rem;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+  transition: color 0.3s;
 }
 
 .eduSchool {
-  font-size: 0.85rem;
-  color: #e11d48;
-  font-weight: 600;
-  margin-bottom: 0.15rem;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: #000;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.25rem;
+  transition: color 0.3s;
 }
 
 .eduDate {
-  font-size: 0.72rem;
-  color: #999;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.64rem;
+  color: #888;
+  letter-spacing: 1px;
+  transition: color 0.3s;
 }
 
 .eduDesc {
-  font-size: 0.78rem;
-  color: #555;
+  font-size: 0.8rem;
+  color: #444;
   line-height: 1.7;
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
+  transition: color 0.3s;
 }
 
-/* ── Projects ── */
+/* ── Projects — B&W framed, invert on hover ── */
 .projectsGrid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.2rem;
-  max-width: 700px;
+  max-width: 720px;
   margin: 0 auto;
 }
 
 .projectCard {
   display: flex;
-  background: #fafafa;
-  border: 1px solid #eee;
-  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 0;
   overflow: hidden;
   text-decoration: none;
-  transition: all 0.35s;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 .projectCard:hover {
-  border-color: #ccc;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  transform: translateY(-3px);
+  background: #000;
+  transform: translate(-4px, -4px);
+  box-shadow: 8px 8px 0 #000;
+}
+
+.projectCard:hover .projectTitle,
+.projectCard:hover .projectDesc {
+  color: #fff;
+}
+
+.projectCard:hover .projectLink {
+  color: #fff;
+}
+
+.projectCard:hover .techTag {
+  border-color: #fff;
+  color: #fff;
 }
 
 .projectImage {
-  width: 200px;
-  min-height: 140px;
+  width: 210px;
+  min-height: 150px;
   position: relative;
-  background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
+  background: #e8e8e8;
   flex-shrink: 0;
+  border-right: 1px solid #000;
+  filter: grayscale(100%) contrast(1.05);
+  transition: filter 0.4s ease;
+}
+
+.projectCard:hover .projectImage {
+  filter: grayscale(100%) contrast(1.45);
 }
 
 .projectBody {
-  padding: 1.4rem;
+  padding: 1.5rem;
   flex: 1;
 }
 
 .projectTitle {
-  font-family: var(--font-syne), 'Syne', sans-serif;
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   color: #000;
-  margin-bottom: 0.4rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s;
 }
 
 .projectDesc {
-  font-size: 0.8rem;
-  color: #666;
+  font-size: 0.84rem;
+  color: #444;
   line-height: 1.7;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.9rem;
+  transition: color 0.3s;
 }
 
 .projectLink {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #e11d48;
-  letter-spacing: 1px;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: #000;
+  letter-spacing: 2px;
   text-transform: uppercase;
   text-decoration: none;
+  transition: color 0.3s, letter-spacing 0.3s;
 }
 
-/* ── Interests grid ── */
+.projectCard:hover .projectLink {
+  letter-spacing: 3.5px;
+}
+
+/* ── Interests — solid black, invert on hover ── */
 .interestsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-  gap: 0.8rem;
+  gap: 0.7rem;
 }
 
 .interestCard {
   aspect-ratio: 1;
   background: #000;
   color: #fff;
-  border-radius: 10px;
+  border: 1px solid #000;
+  border-radius: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  transition: all 0.35s;
+  transition: background 0.25s, color 0.25s, transform 0.25s;
   cursor: default;
 }
 
 .interestCard:hover {
-  background: #e11d48;
-  transform: scale(1.06);
+  background: #fff;
+  color: #000;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 #000;
 }
 
 .interestIco {
   font-size: 1.5rem;
+  filter: grayscale(1);
 }
 
 .interestLabel {
-  font-size: 0.58rem;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.54rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  font-weight: 600;
-  opacity: 0.85;
+  font-weight: 700;
 }
 
-/* ── Contact CTA (right panel bottom) ── */
+/* ── Contact CTA — hard-edged block buttons ── */
 .contactCTA {
   display: flex;
-  gap: 0.8rem;
-  margin-top: 1.5rem;
+  gap: 0.9rem;
+  margin-top: 1.75rem;
 }
 
 .btnPrimary {
-  padding: 0.75rem 1.8rem;
+  position: relative;
+  padding: 0.95rem 2.1rem;
   background: #000;
   color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 0.82rem;
+  border: 2px solid #000;
+  border-radius: 0;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.3s;
-  letter-spacing: 0.5px;
+  transition: background 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+  letter-spacing: 2px;
 }
 
 .btnPrimary:hover {
-  background: #e11d48;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(225, 29, 72, 0.2);
+  background: #fff;
+  color: #000;
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0 #000;
 }
 
 .btnSecondary {
-  padding: 0.75rem 1.8rem;
-  background: transparent;
+  padding: 0.95rem 2.1rem;
+  background: #fff;
   color: #000;
-  border: 1.5px solid #ddd;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.82rem;
+  border: 2px solid #000;
+  border-radius: 0;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.3s;
+  transition: background 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+  letter-spacing: 2px;
 }
 
 .btnSecondary:hover {
-  border-color: #000;
-  color: #000;
+  background: #000;
+  color: #fff;
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0 #000;
 }
 
-/* ── Red accent line divider ── */
-.accentLine {
-  width: 40px;
-  height: 2px;
-  background: #e11d48;
-  margin-bottom: 1.5rem;
-  border: none;
-}
-
-/* ── Contact grid (right panel) — bento layout ── */
+/* ── Contact grid — bento, invert on hover ── */
 .contactGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -713,48 +1040,53 @@
 }
 
 .contactCard {
-  background: #fafafa;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  padding: 1.2rem;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 0;
+  padding: 1.3rem;
   text-align: center;
-  transition: all 0.3s;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 .contactCard:hover {
-  border-color: #000;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  background: #000;
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0 #000;
+}
+
+.contactCard:hover .contactCardIco,
+.contactCard:hover .contactCardLabel,
+.contactCard:hover .contactCardValue {
+  color: #fff;
 }
 
 .contactCardIco {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 0.5rem;
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 0.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #000;
+  transition: color 0.3s;
 }
 
 .contactCardLabel {
-  font-family: var(--font-syne), 'Syne', sans-serif;
-  font-size: 0.72rem;
-  color: #999;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.62rem;
+  color: #888;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.3rem;
+  transition: color 0.3s;
 }
 
 .contactCardValue {
-  font-size: 0.8rem;
-  color: #111;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: #000;
   text-decoration: none;
-}
-
-.contactCardValue:hover {
-  color: #e11d48;
+  transition: color 0.3s;
 }
 
 /* ────────────────────────────────────────────
@@ -770,11 +1102,15 @@
   }
 
   .verticalName {
-    font-size: 4rem;
+    font-size: 4.6rem;
   }
 
   .sectionTitle {
-    font-size: 1.8rem;
+    font-size: 3rem;
+  }
+
+  .sectionIndex {
+    font-size: 2.2rem;
   }
 
   .contactGrid {
@@ -800,19 +1136,36 @@
     position: relative;
     top: auto;
     height: auto;
-    padding: 2.5rem 1.5rem 2rem;
+    padding: 2rem 1.5rem;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+    border-right: none;
+    border-bottom: 1px solid #000;
   }
 
   .verticalName {
     writing-mode: horizontal-tb;
     transform: none;
-    font-size: 3rem;
-    letter-spacing: 4px;
-    margin: 0.5rem 0;
+    font-size: 4rem;
+    letter-spacing: 3px;
+    margin: 0.8rem 0;
     flex: none;
     text-align: center;
+    line-height: 0.9;
+  }
+
+  .photoWrap {
+    width: 160px;
+    aspect-ratio: 1;
+    margin: 0 auto 1.4rem;
+  }
+
+  .availBadge {
+    align-self: center;
+  }
+
+  .socials {
+    justify-content: center;
   }
 
   .panelRight {
@@ -820,15 +1173,17 @@
     padding: 2rem 1.5rem 3rem;
   }
 
-  .photoWrap {
-    width: 140px;
-    height: 140px;
+  .gridOverlay {
+    display: none;
   }
 
   .statsRow {
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
+  }
+
+  .statItem {
+    flex: 1 0 40%;
+    border-bottom: 1px solid #ddd;
   }
 
   .skillsGrid {
@@ -841,7 +1196,9 @@
 
   .projectImage {
     width: 100%;
-    min-height: 160px;
+    min-height: 170px;
+    border-right: none;
+    border-bottom: 1px solid #000;
   }
 
   .interestsGrid {
@@ -849,11 +1206,11 @@
   }
 
   .sectionTitle {
-    font-size: 1.6rem;
+    font-size: 2.6rem;
   }
 
   .statNum {
-    font-size: 2.2rem;
+    font-size: 3rem;
   }
 
   .contactGrid {
@@ -867,12 +1224,16 @@
 
 @media (max-width: 480px) {
   .verticalName {
-    font-size: 2.2rem;
+    font-size: 3rem;
     letter-spacing: 2px;
   }
 
   .sectionTitle {
-    font-size: 1.4rem;
+    font-size: 2.1rem;
+  }
+
+  .sectionIndex {
+    font-size: 1.8rem;
   }
 
   .panelRight {
@@ -895,5 +1256,14 @@
 
   .aboutText {
     max-width: 100%;
+  }
+
+  .timelineItem {
+    padding-left: 2.8rem;
+  }
+
+  .timelineItem:hover,
+  .timelineHighlighted {
+    padding-left: 3rem;
   }
 }

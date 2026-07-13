@@ -9,6 +9,7 @@ import SectionHeader from '@/components/shared/SectionHeader';
 import ContactForm from '@/components/shared/ContactForm';
 import ReactionBar from '@/components/shared/ReactionBar';
 import Footer from '@/components/shared/Footer';
+import CodeShowcase from '@/components/shared/CodeShowcase';
 import s from '@/styles/editorial.module.css';
 import { parseBold } from '@/utils/parseBold';
 import { useSkillHighlight } from '@/context/SkillHighlightContext';
@@ -105,8 +106,17 @@ export default function EditorialLuxe() {
         </motion.div>
       </div>
 
+      {/* Editorial pull-quote */}
+      <AnimatedSection>
+        <figure className={s.pullQuote}>
+          <p className={s.pullQuoteText}>{data.tagline}</p>
+          <figcaption className={s.pullQuoteCite}>{data.name} {data.last}</figcaption>
+        </figure>
+      </AnimatedSection>
+
       {/* Skills */}
       <div className={s.sec}>
+        <div className={s.folio}>01 — Expertise</div>
         <SectionHeader tag="My Arsenal" title="Technical Expertise" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         <StaggerChildren className={s.sg} stagger={0.1}>
           {data.skills.map((skill, i) => (
@@ -131,8 +141,16 @@ export default function EditorialLuxe() {
         </StaggerChildren>
       </div>
 
+      {/* Live Coding */}
+      <div className={s.sec} data-code-showcase>
+        <div className={s.folio}>02 — Live Session</div>
+        <SectionHeader tag="Live Coding" title="Inside My Editor" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
+        <CodeShowcase />
+      </div>
+
       {/* Experience */}
       <div className={s.sec}>
+        <div className={s.folio}>03 — Career</div>
         <SectionHeader tag="Career Journey" title="Professional Experience" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         {data.exp.map((exp, i) => (
           <AnimatedSection key={i} direction="right" delay={i * 0.12} scale>
@@ -162,6 +180,7 @@ export default function EditorialLuxe() {
       {/* Portfolio */}
       {data.projects.length > 0 && (
         <div className={s.sec}>
+          <div className={s.folio}>04 — Works</div>
           <SectionHeader tag="Portfolio" title="Featured Projects" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
           <StaggerChildren className={s.pg}>
             {data.projects.map((project, i) => (
@@ -194,6 +213,7 @@ export default function EditorialLuxe() {
 
       {/* Contact */}
       <div id="contact" className={s.sec}>
+        <div className={s.folio}>05 — Contact</div>
         <SectionHeader tag="Get In Touch" title="Let&#39;s Work Together" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         <StaggerChildren className={s.cg} stagger={0.08}>
           <motion.div variants={staggerItem} whileHover={contactHover}
