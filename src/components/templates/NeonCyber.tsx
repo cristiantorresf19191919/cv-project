@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useContent } from '@/context/ContentContext';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
@@ -59,7 +58,7 @@ const contactHover = {
 };
 
 export default function NeonCyber() {
-  const { data, photoUrl } = useContent();
+  const { data } = useContent();
   const { activeSkill, setActiveSkill } = useSkillHighlight();
   const { copied, copy } = useCopyToClipboard();
 
@@ -93,10 +92,7 @@ export default function NeonCyber() {
           </motion.div>
         </motion.div>
         <motion.div initial="hidden" animate="visible" variants={neonPhotoReveal}>
-          <div className={s.photoWrap}>
-            <div className={s.neonGlow} />
-            <Image src={photoUrl} alt="Cristian Torres" fill sizes="360px" className="profile-photo" priority />
-          </div>
+          <CodeShowcase variant="hero" />
         </motion.div>
       </div>
 
@@ -124,12 +120,6 @@ export default function NeonCyber() {
             </motion.div>
           ))}
         </StaggerChildren>
-      </div>
-
-      {/* Live Coding */}
-      <div className={s.sec} data-code-showcase>
-        <SectionHeader tag="Live Coding" title="Inside My Editor" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
-        <CodeShowcase />
       </div>
 
       {/* Experience */}

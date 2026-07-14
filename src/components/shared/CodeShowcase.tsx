@@ -37,7 +37,15 @@ const KIND_CLASS: Record<TokenKind, string> = {
   type: s.synType,
   number: s.synNum,
   fn: s.synFn,
+  prop: s.synProp,
 };
+
+const POOLS: SnippetLang[] = ['react', 'kotlin', 'infra'];
+const CHIPS: { lang: SnippetLang; label: string }[] = [
+  { lang: 'react', label: 'TSX' },
+  { lang: 'kotlin', label: 'KT' },
+  { lang: 'infra', label: 'OPS' },
+];
 
 const rand = (lo: number, hi: number) => lo + Math.random() * (hi - lo);
 
@@ -71,24 +79,30 @@ function renderTokens(tokens: CodeToken[]) {
   );
 }
 
-export default function CodeShowcase({ className }: { className?: string }) {
+interface CodeShowcaseProps {
+  className?: string;
+  /** `hero` = compact fit for a hero photo slot; `section` = full-width card */
+  variant?: 'section' | 'hero';
+}
+
+export default function CodeShowcase({ className, variant = 'section' }: CodeShowcaseProps) {
   const reduce = useReducedMotion();
   const { photoUrl } = useContent();
   const wrapRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   const inView = useInView(wrapRef, { amount: 0.2 });
   const hoverRef = useRef(false);
-  const lastIdxRef = useRef<Record<SnippetLang, number>>({ react: 0, kotlin: -1 });
+  const lastIdxRef = useRef<Record<SnippetLang, number>>({ react: 0, kotlin: -1, infra: -1 });
 
   // Deterministic first snippet — SSR markup must match hydration.
   const [snippet, setSnippet] = useState<CodeSnippet>(CODE_SNIPPETS.react[0]);
   const [run, setRun] = useState(0);
   const [pos, setPos] = useState(0);
 
-  // Randomize the opening language/snippet right after mount, before any
+  // Randomize the opening pool/snippet right after mount, before any
   // typing starts — post-hydration, so SSR markup still matches.
   useEffect(() => {
-    const lang: SnippetLang = Math.random() < 0.5 ? 'react' : 'kotlin';
+    const lang = POOLS[Math.floor(Math.random() * POOLS.length)];
     const pool = CODE_SNIPPETS[lang];
     const i = Math.floor(Math.random() * pool.length);
     lastIdxRef.current[lang] = i;
@@ -121,9 +135,10 @@ export default function CodeShowcase({ className }: { className?: string }) {
   }
   const curCol = Math.min(pos - lineStarts[curLine], lines[curLine]?.length ?? 0) + 1;
 
-  /** Random snippet from the opposite pool, never repeating that pool's last pick. */
+  /** Random snippet from a different pool, never repeating that pool's last pick. */
   const pickNext = useCallback((cur: CodeSnippet): CodeSnippet => {
-    const lang: SnippetLang = cur.lang === 'react' ? 'kotlin' : 'react';
+    const others = POOLS.filter((p) => p !== cur.lang);
+    const lang = others[Math.floor(Math.random() * others.length)];
     const pool = CODE_SNIPPETS[lang];
     let i = Math.floor(Math.random() * pool.length);
     if (pool.length > 1 && i === lastIdxRef.current[lang]) {
@@ -169,7 +184,7 @@ export default function CodeShowcase({ className }: { className?: string }) {
   return (
     <div
       ref={wrapRef}
-      className={`${s.wrap} ${className ?? ''}`}
+      className={`${s.wrap} ${variant === 'hero' ? s.wrapHero : ''} ${className ?? ''}`}
       onMouseEnter={() => (hoverRef.current = true)}
       onMouseLeave={() => (hoverRef.current = false)}
       aria-hidden
@@ -194,12 +209,14 @@ export default function CodeShowcase({ className }: { className?: string }) {
             </motion.span>
           </AnimatePresence>
           <span className={s.langChips}>
-            <span className={`${s.langChip} ${snippet.lang === 'react' ? s.langChipActive : ''}`}>
-              TSX
-            </span>
-            <span className={`${s.langChip} ${snippet.lang === 'kotlin' ? s.langChipActive : ''}`}>
-              KT
-            </span>
+            {CHIPS.map((chip) => (
+              <span
+                key={chip.lang}
+                className={`${s.langChip} ${snippet.lang === chip.lang ? s.langChipActive : ''}`}
+              >
+                {chip.label}
+              </span>
+            ))}
           </span>
         </div>
 

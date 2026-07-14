@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useContent } from '@/context/ContentContext';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
@@ -45,7 +44,7 @@ const contactHover = {
 };
 
 export default function Horizon() {
-  const { data, photoUrl } = useContent();
+  const { data } = useContent();
 
   return (
     <div className={s.template}>
@@ -86,9 +85,7 @@ export default function Horizon() {
           </motion.div>
         </motion.div>
         <motion.div initial="hidden" animate="visible" variants={photoReveal} className={s.photoSide}>
-          <div className={s.photoFrame}>
-            <Image src={photoUrl} alt={data.name} fill sizes="420px" className="profile-photo" priority />
-          </div>
+          <CodeShowcase variant="hero" />
         </motion.div>
       </div>
 
@@ -116,15 +113,8 @@ export default function Horizon() {
         </StaggerChildren>
       </div>
 
-      <div className={s.sec} data-code-showcase>
-        <span className={s.secNum} aria-hidden="true">02</span>
-        <div className={s.secRule} />
-        <SectionHeader tag="Live" title="Code in Motion" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
-        <CodeShowcase />
-      </div>
-
       <div className={s.sec}>
-        <span className={s.secNum} aria-hidden="true">03</span>
+        <span className={s.secNum} aria-hidden="true">02</span>
         <div className={s.secRule} />
         <SectionHeader tag="Career" title="Experience" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         <div className={s.tl}>
@@ -158,7 +148,7 @@ export default function Horizon() {
 
       {data.projects.length > 0 && (
         <div className={s.sec}>
-          <span className={s.secNum} aria-hidden="true">04</span>
+          <span className={s.secNum} aria-hidden="true">03</span>
           <div className={s.secRule} />
           <SectionHeader tag="Work" title="Projects" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
           <StaggerChildren className={s.pg}>
@@ -189,7 +179,7 @@ export default function Horizon() {
       )}
 
       <div id="contact" className={s.sec}>
-        <span className={s.secNum} aria-hidden="true">05</span>
+        <span className={s.secNum} aria-hidden="true">04</span>
         <div className={s.secRule} />
         <SectionHeader tag="Contact" title="Connect" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         <StaggerChildren className={s.cg} stagger={0.05}>

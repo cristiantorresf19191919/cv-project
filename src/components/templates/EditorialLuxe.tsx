@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useContent } from '@/context/ContentContext';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
@@ -58,7 +57,7 @@ const contactHover = {
 };
 
 export default function EditorialLuxe() {
-  const { data, photoUrl } = useContent();
+  const { data } = useContent();
   const { activeSkill, setActiveSkill } = useSkillHighlight();
   const { copied, copy } = useCopyToClipboard();
 
@@ -72,10 +71,7 @@ export default function EditorialLuxe() {
           animate="visible"
           variants={photoReveal}
         >
-          <div className={s.photoWrap}>
-            <Image src={photoUrl} alt="Cristian Torres" fill sizes="400px" className="profile-photo" priority />
-          </div>
-          <div className={s.photoAccent} />
+          <CodeShowcase variant="hero" />
         </motion.div>
 
         <motion.div initial="hidden" animate="visible" variants={heroContainer}>
@@ -141,16 +137,9 @@ export default function EditorialLuxe() {
         </StaggerChildren>
       </div>
 
-      {/* Live Coding */}
-      <div className={s.sec} data-code-showcase>
-        <div className={s.folio}>02 — Live Session</div>
-        <SectionHeader tag="Live Coding" title="Inside My Editor" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
-        <CodeShowcase />
-      </div>
-
       {/* Experience */}
       <div className={s.sec}>
-        <div className={s.folio}>03 — Career</div>
+        <div className={s.folio}>02 — Career</div>
         <SectionHeader tag="Career Journey" title="Professional Experience" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         {data.exp.map((exp, i) => (
           <AnimatedSection key={i} direction="right" delay={i * 0.12} scale>
@@ -180,7 +169,7 @@ export default function EditorialLuxe() {
       {/* Portfolio */}
       {data.projects.length > 0 && (
         <div className={s.sec}>
-          <div className={s.folio}>04 — Works</div>
+          <div className={s.folio}>03 — Works</div>
           <SectionHeader tag="Portfolio" title="Featured Projects" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
           <StaggerChildren className={s.pg}>
             {data.projects.map((project, i) => (
@@ -213,7 +202,7 @@ export default function EditorialLuxe() {
 
       {/* Contact */}
       <div id="contact" className={s.sec}>
-        <div className={s.folio}>05 — Contact</div>
+        <div className={s.folio}>04 — Contact</div>
         <SectionHeader tag="Get In Touch" title="Let&#39;s Work Together" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
         <StaggerChildren className={s.cg} stagger={0.08}>
           <motion.div variants={staggerItem} whileHover={contactHover}

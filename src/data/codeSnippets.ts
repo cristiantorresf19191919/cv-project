@@ -11,7 +11,7 @@
  *  - blank lines / lone `}` act as "breath points" for the typing engine
  */
 
-export type SnippetLang = 'react' | 'kotlin';
+export type SnippetLang = 'react' | 'kotlin' | 'infra';
 
 export interface CodeSnippet {
   /** File name shown in the editor tab */
@@ -181,6 +181,88 @@ export function createStore<T>(initial: T) {
   return { useStore, setState, getState: () => state };
 }`,
   },
+  {
+    tab: 'middleware.ts',
+    lang: 'react',
+    badge: 'Next.js · edge middleware',
+    code: `import { NextResponse, type NextRequest } from 'next/server';
+
+export function middleware(req: NextRequest) {
+  const session = req.cookies.get('__session')?.value;
+  const { pathname } = req.nextUrl;
+
+  if (pathname.startsWith('/admin') && !session) {
+    const login = new URL('/login', req.url);
+    login.searchParams.set('next', pathname);
+    return NextResponse.redirect(login);
+  }
+
+  const res = NextResponse.next();
+  res.headers.set('x-request-id', crypto.randomUUID());
+  return res;
+}
+
+export const config = {
+  matcher: ['/admin/:path*', '/api/:path*'],
+};`,
+  },
+  {
+    tab: 'useFavorite.ts',
+    lang: 'react',
+    badge: 'React Query · optimistic',
+    code: `export function useToggleFavorite(vin: string) {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => api.toggleFavorite(vin),
+
+    onMutate: async () => {
+      await qc.cancelQueries({ queryKey: ['vehicle', vin] });
+      const prev = qc.getQueryData<Vehicle>(['vehicle', vin]);
+      qc.setQueryData<Vehicle>(['vehicle', vin], (v) =>
+        v && { ...v, favorite: !v.favorite }
+      );
+      return { prev }; // rollback context
+    },
+
+    onError: (_err, _vars, ctx) =>
+      qc.setQueryData(['vehicle', vin], ctx?.prev),
+
+    onSettled: () =>
+      qc.invalidateQueries({ queryKey: ['vehicle', vin] }),
+  });
+}`,
+  },
+  {
+    tab: 'eventBus.ts',
+    lang: 'react',
+    badge: 'TypeScript · typed events',
+    code: `type Events = {
+  'cart:add': { sku: string; qty: number };
+  'toast:show': { text: string; tone: 'info' | 'error' };
+};
+
+const bus = new EventTarget();
+
+export function emit<K extends keyof Events>(
+  type: K,
+  detail: Events[K]
+) {
+  bus.dispatchEvent(new CustomEvent(type, { detail }));
+}
+
+export function useBusEvent<K extends keyof Events>(
+  type: K,
+  handler: (detail: Events[K]) => void
+) {
+  useEffect(() => {
+    const on = (e: Event) =>
+      handler((e as CustomEvent<Events[K]>).detail);
+    bus.addEventListener(type, on);
+    return () => bus.removeEventListener(type, on);
+  }, [type, handler]);
+}`,
+  },
 ];
 
 const KOTLIN_SNIPPETS: CodeSnippet[] = [
@@ -315,9 +397,236 @@ class OrderEventsConsumer(
     }
 }`,
   },
+  {
+    tab: 'QuoteRepository.kt',
+    lang: 'kotlin',
+    badge: 'Spring R2DBC · Reactor',
+    code: `@Repository
+class QuoteRepository(private val db: DatabaseClient) {
+
+    fun findFresh(vin: Vin, ttl: Duration): Mono<Quote> =
+        db.sql(
+            """
+            SELECT * FROM quotes
+            WHERE vin = :vin AND created_at > :cutoff
+            ORDER BY created_at DESC LIMIT 1
+            """
+        )
+            .bind("vin", vin.value)
+            .bind("cutoff", Instant.now().minus(ttl))
+            .map { row -> row.toQuote() }
+            .one()
+            .timeout(Duration.ofMillis(400))
+
+    fun upsert(quote: Quote): Mono<Quote> =
+        db.sql(UPSERT_QUOTE)
+            .bindProperties(quote)
+            .fetch()
+            .rowsUpdated()
+            .thenReturn(quote)
+}`,
+  },
+  {
+    tab: 'WalletService.kt',
+    lang: 'kotlin',
+    badge: 'Reactor · transactional',
+    code: `@Service
+class WalletService(
+    private val wallets: WalletRepository,
+    private val ledger: LedgerRepository,
+    private val tx: TransactionalOperator,
+) {
+    fun charge(cmd: ChargeCmd): Mono<Receipt> =
+        wallets.findForUpdate(cmd.walletId)
+            .filter { it.balance >= cmd.amount }
+            .switchIfEmpty(insufficientFunds(cmd))
+            .flatMap { wallet ->
+                wallets.debit(wallet.id, cmd.amount)
+                    .then(ledger.append(cmd.toEntry()))
+                    .thenReturn(Receipt.of(wallet, cmd))
+            }
+            .\`as\`(tx::transactional)
+            .retryWhen(optimisticLockRetry())
+}`,
+  },
+  {
+    tab: 'OutboxPublisher.kt',
+    lang: 'kotlin',
+    badge: 'Kotlin · outbox pattern',
+    code: `@Component
+class OutboxPublisher(
+    private val outbox: OutboxRepository,
+    private val bus: ServiceBusSender,
+) {
+    @Scheduled(fixedDelay = 2_000)
+    fun drain() = runBlocking {
+        outbox.lockBatch(size = 100)
+            .map { msg ->
+                async {
+                    runCatching { bus.publish(msg) }
+                        .onSuccess { outbox.markSent(msg.id) }
+                        .onFailure { outbox.backoff(msg.id) }
+                }
+            }
+            .awaitAll()
+    }
+}`,
+  },
+  {
+    tab: 'SessionState.kt',
+    lang: 'kotlin',
+    badge: 'Kotlin · sealed state machine',
+    code: `sealed interface SessionState {
+    data object Idle : SessionState
+    data class Charging(
+        val kw: Double,
+        val startedAt: Instant,
+    ) : SessionState
+    data class Faulted(val code: FaultCode) : SessionState
+}
+
+fun SessionState.next(event: ChargerEvent): SessionState =
+    when (this) {
+        is Idle -> when (event) {
+            is PlugIn -> Charging(event.kw, event.at)
+            else -> this
+        }
+        is Charging -> when (event) {
+            is Fault -> Faulted(event.code)
+            is Unplug -> Idle
+            is PowerChange -> copy(kw = event.kw)
+            else -> this
+        }
+        is Faulted -> if (event is Reset) Idle else this
+    }`,
+  },
+];
+
+const INFRA_SNIPPETS: CodeSnippet[] = [
+  {
+    tab: 'values.yaml',
+    lang: 'infra',
+    badge: 'Helm · production values',
+    code: `# charging-api — production values
+replicaCount: 3
+
+image:
+  repository: registry.io/driveway/charging-api
+  tag: "1.42.0"
+  pullPolicy: IfNotPresent
+
+resources:
+  requests: { cpu: 250m, memory: 512Mi }
+  limits: { cpu: "1", memory: 1Gi }
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 12
+  targetCPUUtilizationPercentage: 70
+
+livenessProbe:
+  httpGet: { path: /actuator/health, port: 8080 }
+  initialDelaySeconds: 20
+  periodSeconds: 10
+
+podDisruptionBudget:
+  minAvailable: 2`,
+  },
+  {
+    tab: 'deployment.yaml',
+    lang: 'infra',
+    badge: 'Helm · zero-downtime deploy',
+    code: `apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "app.fullname" . }}
+  labels: {{- include "app.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repo }}:{{ .Values.tag }}"
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-secrets
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080`,
+  },
+  {
+    tab: 'servicebus.tf',
+    lang: 'infra',
+    badge: 'Terraform · Azure Service Bus',
+    code: `resource "azurerm_servicebus_namespace" "events" {
+  name                = "driveway-events-\${var.env}"
+  location            = var.location
+  resource_group_name = var.rg_name
+  sku                 = "Premium"
+  capacity            = 2
+}
+
+resource "azurerm_servicebus_topic" "orders" {
+  name         = "orders-v1"
+  namespace_id = azurerm_servicebus_namespace.events.id
+
+  partitioning_enabled  = true
+  max_size_in_megabytes = 5120
+}
+
+resource "azurerm_servicebus_subscription" "billing" {
+  name     = "billing-service"
+  topic_id = azurerm_servicebus_topic.orders.id
+
+  max_delivery_count = 5
+  dead_lettering_on_message_expiration = true
+}`,
+  },
+  {
+    tab: 'aks.tf',
+    lang: 'infra',
+    badge: 'Terraform · AKS autoscaling',
+    code: `module "aks" {
+  source  = "Azure/aks/azurerm"
+  version = "~> 9.0"
+
+  cluster_name        = "driveway-\${var.env}"
+  resource_group_name = var.rg_name
+  kubernetes_version  = "1.30"
+
+  agents_pool_name    = "workers"
+  agents_size         = "Standard_D4s_v5"
+  agents_min_count    = 3
+  agents_max_count    = 10
+  enable_auto_scaling = true
+
+  network_plugin = "azure"
+  network_policy = "cilium"
+
+  tags = {
+    team = "carson"
+    cost = "platform"
+  }
+}
+
+output "kube_host" {
+  value     = module.aks.host
+  sensitive = true
+}`,
+  },
 ];
 
 export const CODE_SNIPPETS: Record<SnippetLang, CodeSnippet[]> = {
   react: REACT_SNIPPETS,
   kotlin: KOTLIN_SNIPPETS,
+  infra: INFRA_SNIPPETS,
 };

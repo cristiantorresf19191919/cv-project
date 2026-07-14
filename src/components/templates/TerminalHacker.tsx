@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useContent } from '@/context/ContentContext';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
@@ -57,7 +56,7 @@ const contactHover = {
 };
 
 export default function TerminalHacker() {
-  const { data, photoUrl } = useContent();
+  const { data } = useContent();
   const { activeSkill, setActiveSkill } = useSkillHighlight();
   const { copied, copy } = useCopyToClipboard();
 
@@ -96,9 +95,7 @@ export default function TerminalHacker() {
           </motion.div>
         </motion.div>
         <motion.div initial="hidden" animate="visible" variants={photoGlitch}>
-          <div className={s.photoWrap}>
-            <Image src={photoUrl} alt="Cristian Torres" fill sizes="240px" className="profile-photo" priority />
-          </div>
+          <CodeShowcase variant="hero" />
         </motion.div>
       </div>
 
@@ -126,12 +123,6 @@ export default function TerminalHacker() {
             </motion.div>
           ))}
         </StaggerChildren>
-      </div>
-
-      {/* Live Coding */}
-      <div className={s.sec} data-code-showcase>
-        <SectionHeader tag="Live Coding" title="Inside My Editor" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
-        <CodeShowcase />
       </div>
 
       {/* Experience */}

@@ -18,7 +18,8 @@ export type TokenKind =
   | 'keyword'
   | 'type'
   | 'number'
-  | 'fn';
+  | 'fn'
+  | 'prop';
 
 export interface CodeToken {
   text: string;
@@ -26,7 +27,7 @@ export interface CodeToken {
 }
 
 const TOKEN =
-  /(\/\/[^\n]*|#[^\n]*)|("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`)|(@[A-Za-z][A-Za-z0-9_]*)|\b(fun|val|var|class|object|interface|return|if|else|when|is|in|as|by|lazy|data|sealed|enum|suspend|override|private|internal|open|companion|init|repeat|it|out|inline|operator|typealias|lateinit|vararg|super|import|package|const|let|function|from|export|type|default|async|await|new|extends|implements|satisfies|keyof|typeof|readonly|of|do|for|while|switch|case|break|continue|try|catch|finally|throw|null|undefined|true|false|this)\b|\b([A-Z][A-Za-z0-9_]*)\b|\b(\d+(?:\.\d+)?L?)\b|\b([a-z_][A-Za-z0-9_]*)(?=\s*[({])/g;
+  /(\/\/[^\n]*|#[^\n]*)|("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`)|(@[A-Za-z][A-Za-z0-9_]*)|\b(fun|val|var|class|object|interface|return|if|else|when|is|in|as|by|lazy|sealed|enum|suspend|override|private|internal|open|companion|init|repeat|it|out|inline|operator|typealias|lateinit|vararg|super|import|package|const|let|function|from|export|type|default|async|await|new|extends|implements|satisfies|keyof|typeof|readonly|of|do|for|while|switch|case|break|continue|try|catch|finally|throw|null|undefined|true|false|this|resource|module|provider|variable|output|terraform|source|apiVersion|kind)\b|\b([A-Z][A-Za-z0-9_]*)\b|\b(\d+(?:\.\d+)?(?:Mi|Gi|m)?L?)\b|\b([a-z_][A-Za-z0-9_]*)(?=\s*[({])|([\w.-]+)(?=\s*[:=]\s)/g;
 
 /** Tokenize a single line of code into colored segments. */
 export function tokenizeLine(line: string): CodeToken[] {
@@ -35,7 +36,7 @@ export function tokenizeLine(line: string): CodeToken[] {
   for (const m of Array.from(line.matchAll(TOKEN))) {
     const at = m.index ?? 0;
     if (at > last) out.push({ text: line.slice(last, at), kind: 'plain' });
-    const [full, comment, str, anno, kw, type, num, fn] = m;
+    const [full, comment, str, anno, kw, type, num, fn, prop] = m;
     const kind: TokenKind = comment
       ? 'comment'
       : str
@@ -50,7 +51,9 @@ export function tokenizeLine(line: string): CodeToken[] {
                 ? 'number'
                 : fn
                   ? 'fn'
-                  : 'plain';
+                  : prop
+                    ? 'prop'
+                    : 'plain';
     out.push({ text: full, kind });
     last = at + full.length;
   }

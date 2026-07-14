@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useContent } from '@/context/ContentContext';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import StaggerChildren, { staggerItem } from '@/components/shared/StaggerChildren';
@@ -47,7 +46,7 @@ const contactHover = {
 };
 
 export default function SereneBento() {
-  const { data, photoUrl } = useContent();
+  const { data } = useContent();
 
   return (
     <div className={s.template}>
@@ -81,11 +80,7 @@ export default function SereneBento() {
         </motion.div>
         <motion.div initial="hidden" animate="visible" variants={photoReveal} className={s.photoBento}>
           <div className={s.photoArc} aria-hidden="true" />
-          <div className={s.photoFrame}>
-            <div className={s.photoInner}>
-              <Image src={photoUrl} alt={data.name} fill sizes="380px" className="profile-photo" priority />
-            </div>
-          </div>
+          <CodeShowcase variant="hero" />
         </motion.div>
       </div>
 
@@ -109,11 +104,6 @@ export default function SereneBento() {
             </motion.div>
           ))}
         </StaggerChildren>
-      </div>
-
-      <div className={s.sec} data-code-showcase>
-        <SectionHeader tag="Live" title="Code in Motion" tagClass={s.secTag} titleClass={s.secTitle} wrapperClass={s.secH} />
-        <CodeShowcase />
       </div>
 
       <div className={s.sec}>

@@ -185,6 +185,7 @@
 .synType    { color: #ffa657; }
 .synNum     { color: #79c0ff; }
 .synStr     { color: #a5d6ff; }
+.synProp    { color: #79c0ff; }
 .synComment { color: #8b949e; font-style: italic; }
 
 /* ── status bar ────────────────────────────────────────── */
@@ -237,6 +238,30 @@
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* ── hero variant — fills a hero photo slot ────────────── */
+.wrapHero {
+  max-width: 100%;
+  margin-bottom: 0;
+}
+
+.wrapHero .body {
+  height: 400px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  padding: 14px 16px 12px;
+}
+
+.wrapHero .cam {
+  width: 106px;
+  height: 106px;
+  right: -8px;
+  bottom: -16px;
+}
+
+.wrapHero .status {
+  padding-right: 118px;
 }
 
 /* ── facecam (author "streaming" over the IDE) ─────────── */

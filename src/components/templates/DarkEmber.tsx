@@ -1,7 +1,6 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import Image from 'next/image';
 import { useRef, type CSSProperties } from 'react';
 import { useContent } from '@/context/ContentContext';
 import { useLanguage } from '@/context/LanguageContext';
@@ -162,7 +161,7 @@ function LanguageBar({ name, pct, level }: { name: string; pct: number; level: s
 /* ── Main component ───────────────────────────────────── */
 
 export default function DarkEmber() {
-  const { data, photoUrl } = useContent();
+  const { data } = useContent();
   const { t } = useLanguage();
   const { activeSkill, setActiveSkill } = useSkillHighlight();
   const { copied, copy } = useCopyToClipboard();
@@ -259,17 +258,7 @@ export default function DarkEmber() {
         </motion.div>
 
         <motion.div initial="hidden" animate="visible" variants={slideFromRight}>
-          <div className={s.photoWrap}>
-            <Image
-              src={photoUrl}
-              alt={`${data.name} ${data.last}`}
-              fill
-              sizes="370px"
-              className="profile-photo"
-              priority
-            />
-            <div className={s.photoGlow} />
-          </div>
+          <CodeShowcase variant="hero" />
         </motion.div>
       </section>
 
@@ -330,19 +319,6 @@ export default function DarkEmber() {
               />
             ))}
           </div>
-        </AnimatedSection>
-      </section>
-
-      {/* ── Live Coding ──────────────────────────────── */}
-      <section className={s.section} data-code-showcase>
-        <AnimatedSection>
-          <div className={s.sectionHeader}>
-            <div className={s.sectionTag}>{t.liveCodingTag}</div>
-            <h2 className={s.sectionTitle}>{t.liveCoding}</h2>
-          </div>
-        </AnimatedSection>
-        <AnimatedSection delay={0.1}>
-          <CodeShowcase />
         </AnimatedSection>
       </section>
 
