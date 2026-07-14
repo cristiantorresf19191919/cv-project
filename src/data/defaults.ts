@@ -5,7 +5,7 @@ export const DEFAULT_DATA: PortfolioData = {
   last: "Torres",
   title: "Full Stack Developer",
   tagline: "I build React systems that scale to millions of users",
-  desc: "React & Next.js specialist with 5+ years shipping production web products at companies like Audi and Driveway.com. I've built design systems adopted by 12+ teams, reduced API latency by 40% through smart caching, and delivered enterprise-grade UI platforms from zero to launch. Expert in TypeScript, React Query, GraphQL, and micro-service architecture. Currently expanding into Kotlin + Spring Boot for full-stack versatility, with hands-on experience in Azure Service Bus, Terraform, and CQRS patterns.",
+  desc: "React & Next.js specialist with 5+ years shipping production web products at companies like Audi and Driveway.com. I've built design systems adopted by 12+ teams, reduced API latency by 40% through smart caching, and delivered enterprise-grade UI platforms from zero to launch. Expert in TypeScript, React Query, GraphQL, and micro-service architecture. These days I also ship reactive Kotlin microservices — Spring Boot WebFlux with Reactor and coroutines on Azure — with hands-on experience in Azure Service Bus, reactive MongoDB, Terraform, and CQRS patterns.",
   email: "cristian.torres19@hotmail.com",
   phone: "+57 323 799 2985",
   github: "github.com/cristiantorresf19191919",
@@ -26,12 +26,12 @@ export const DEFAULT_DATA: PortfolioData = {
     {
       ico: "\uD83D\uDE80",
       t: "Backend Development",
-      tags: ["Node.js", "Nest.js", "Express.js", "GraphQL", "REST APIs", "Kotlin", "Spring Boot", "Microservices", "CQRS"]
+      tags: ["Node.js", "Nest.js", "Express.js", "GraphQL", "REST APIs", "Kotlin", "Spring Boot", "Spring WebFlux", "Reactor", "Coroutines", "Microservices", "CQRS"]
     },
     {
       ico: "\uD83D\uDCBE",
       t: "Cloud & Infrastructure",
-      tags: ["Azure Service Bus", "Azure Pipelines", "Terraform", "PostgreSQL", "Redis", "Docker", "CI/CD", "Git", "Monorepo (Lerna)", "Changesets"]
+      tags: ["Azure Service Bus", "Azure Pipelines", "Terraform", "PostgreSQL", "MongoDB", "Redis", "Docker", "Datadog", "CI/CD", "Git", "Monorepo (Lerna)", "Changesets"]
     },
     {
       ico: "\uD83D\uDD27",
@@ -44,7 +44,7 @@ export const DEFAULT_DATA: PortfolioData = {
       t: "React Developer",
       co: "Driveway.com",
       dt: "Jan 2025 \u2014 Present",
-      d: "Building and refining screens in Next.js 13 (App Router) with TypeScript, focusing on performance and DX in a large-scale automotive platform.",
+      d: "Building screens in Next.js (App Router) with TypeScript and shipping reactive Kotlin microservices — Spring Boot WebFlux, Reactor, coroutines — across Driveway's large-scale automotive commerce platform on Azure.",
       a: [
         "**Managed server/cache state** with React Query (queries, mutations, optimistic updates) and lean local state",
         "**Wired Auth0** for secure login, RBAC, route guards, and session handling with middleware",
@@ -52,11 +52,11 @@ export const DEFAULT_DATA: PortfolioData = {
         "**Established a Material UI (MUI)-based Design System:** tokens, theming, dark mode, accessible components, Storybook docs",
         "**Managed a monorepo** (Lerna) to share UI packages, hooks, and configs, with versioning via Changesets",
         "**Improved Core Web Vitals** with image optimization, code-splitting, and caching",
-        "**Delivered backend stories** using Kotlin + Spring Boot in a microservice architecture, leveraging Azure Service Bus Topics & Subscriptions for inter-service communication and applying the CQRS pattern — Cron jobs for write operations and a GraphQL API service for reads",
-        "**Managed Azure Pipelines** for CI/CD deployments to production and maintained Terraform infrastructure-as-code files for cloud resource provisioning",
-        "**Integrated PostgreSQL** and third-party APIs within Kotlin microservices, ensuring reliable data persistence and external system connectivity"
+        "**Built reactive Kotlin microservices** with Spring Boot WebFlux, bridging Reactor and coroutines (kotlinx-coroutines-reactor), leveraging Azure Service Bus Topics & Subscriptions for inter-service messaging and applying CQRS — scheduled writers and a GraphQL read API",
+        "**Managed Azure Pipelines** CI/CD to production and maintained Terraform IaC for cloud resources — including Datadog dashboards, monitors, and alerts codified per service",
+        "**Persisted data reactively** with Spring Data reactive MongoDB and PostgreSQL across Kotlin microservices, securing APIs with OAuth2/JWT and integrating third-party systems through non-blocking clients"
       ],
-      tech: ["Next.js", "TypeScript", "React Query", "Auth0", "MUI", "Kotlin", "Spring Boot", "Azure Service Bus", "Azure Pipelines", "Terraform", "GraphQL", "CQRS", "Lerna"]
+      tech: ["Next.js", "TypeScript", "React Query", "Auth0", "MUI", "Kotlin", "Spring Boot", "WebFlux", "Reactor", "Coroutines", "MongoDB", "Azure Service Bus", "Azure Pipelines", "Terraform", "GraphQL", "CQRS", "Lerna"]
     },
     {
       t: "React & Node.js Developer",
@@ -166,7 +166,7 @@ export const DEFAULT_DATA_ES: PortfolioData = {
   last: "Torres",
   title: "Desarrollador Full Stack",
   tagline: "Construyo sistemas React que escalan a millones de usuarios",
-  desc: "Especialista en React y Next.js con m\u00E1s de 5 a\u00F1os lanzando productos web en producci\u00F3n en empresas como Audi y Driveway.com. He construido sistemas de dise\u00F1o adoptados por m\u00E1s de 12 equipos, reducido la latencia de API en un 40% mediante estrategias de cach\u00E9, y entregado plataformas UI empresariales desde cero. Experto en TypeScript, React Query, GraphQL y arquitectura de microservicios. Actualmente expandi\u00E9ndome en Kotlin + Spring Boot, con experiencia pr\u00E1ctica en Azure Service Bus, Terraform y patrones CQRS.",
+  desc: "Especialista en React y Next.js con m\u00E1s de 5 a\u00F1os lanzando productos web en producci\u00F3n en empresas como Audi y Driveway.com. He construido sistemas de dise\u00F1o adoptados por m\u00E1s de 12 equipos, reducido la latencia de API en un 40% mediante estrategias de cach\u00E9, y entregado plataformas UI empresariales desde cero. Experto en TypeScript, React Query, GraphQL y arquitectura de microservicios. Hoy tambi\u00E9n construyo microservicios reactivos en Kotlin \u2014 Spring Boot WebFlux con Reactor y corrutinas sobre Azure \u2014 con experiencia pr\u00E1ctica en Azure Service Bus, MongoDB reactivo, Terraform y patrones CQRS.",
   email: "cristian.torres19@hotmail.com",
   phone: "+57 323 799 2985",
   github: "github.com/cristiantorresf19191919",
@@ -187,12 +187,12 @@ export const DEFAULT_DATA_ES: PortfolioData = {
     {
       ico: "\uD83D\uDE80",
       t: "Desarrollo Backend",
-      tags: ["Node.js", "Nest.js", "Express.js", "GraphQL", "REST APIs", "Kotlin", "Spring Boot", "Microservicios", "CQRS"]
+      tags: ["Node.js", "Nest.js", "Express.js", "GraphQL", "REST APIs", "Kotlin", "Spring Boot", "Spring WebFlux", "Reactor", "Corrutinas", "Microservicios", "CQRS"]
     },
     {
       ico: "\uD83D\uDCBE",
       t: "Nube e Infraestructura",
-      tags: ["Azure Service Bus", "Azure Pipelines", "Terraform", "PostgreSQL", "Redis", "Docker", "CI/CD", "Git", "Monorepo (Lerna)", "Changesets"]
+      tags: ["Azure Service Bus", "Azure Pipelines", "Terraform", "PostgreSQL", "MongoDB", "Redis", "Docker", "Datadog", "CI/CD", "Git", "Monorepo (Lerna)", "Changesets"]
     },
     {
       ico: "\uD83D\uDD27",
@@ -205,7 +205,7 @@ export const DEFAULT_DATA_ES: PortfolioData = {
       t: "Desarrollador React",
       co: "Driveway.com",
       dt: "Ene 2025 \u2014 Presente",
-      d: "Construyendo y refinando pantallas en Next.js 13 (App Router) con TypeScript, enfocado en rendimiento y DX en una plataforma automotriz a gran escala.",
+      d: "Construyendo pantallas en Next.js (App Router) con TypeScript y microservicios reactivos en Kotlin — Spring Boot WebFlux, Reactor, corrutinas — en la plataforma de comercio automotriz a gran escala de Driveway sobre Azure.",
       a: [
         "**Gestion\u00E9 estado de servidor/cach\u00E9** con React Query (queries, mutations, actualizaciones optimistas) y estado local liviano",
         "**Implement\u00E9 Auth0** para login seguro, RBAC, protecci\u00F3n de rutas y manejo de sesiones con middleware",
@@ -213,11 +213,11 @@ export const DEFAULT_DATA_ES: PortfolioData = {
         "**Establec\u00ED un Design System basado en Material UI (MUI):** tokens, tematizaci\u00F3n, modo oscuro, componentes accesibles, documentaci\u00F3n en Storybook",
         "**Gestion\u00E9 un monorepo** (Lerna) para compartir paquetes UI, hooks y configuraciones, con versionamiento via Changesets",
         "**Mejor\u00E9 Core Web Vitals** con optimizaci\u00F3n de im\u00E1genes, code-splitting y cach\u00E9",
-        "**Entregu\u00E9 historias de backend** usando Kotlin + Spring Boot en arquitectura de microservicios, aprovechando Azure Service Bus Topics & Subscriptions para comunicaci\u00F3n entre servicios y aplicando el patr\u00F3n CQRS \u2014 Cron jobs para escritura y un servicio GraphQL API para lectura",
-        "**Gestion\u00E9 Azure Pipelines** para despliegues CI/CD a producci\u00F3n y mantuve archivos de infraestructura como c\u00F3digo con Terraform para aprovisionamiento de recursos en la nube",
-        "**Integr\u00E9 PostgreSQL** y APIs de terceros dentro de microservicios Kotlin, asegurando persistencia de datos confiable y conectividad con sistemas externos"
+        "**Constru\u00ED microservicios reactivos en Kotlin** con Spring Boot WebFlux, uniendo Reactor y corrutinas (kotlinx-coroutines-reactor), aprovechando Azure Service Bus Topics & Subscriptions para mensajer\u00EDa entre servicios y aplicando CQRS \u2014 escritores programados y un API GraphQL de lectura",
+        "**Gestion\u00E9 Azure Pipelines** CI/CD a producci\u00F3n y mantuve Terraform IaC para recursos en la nube \u2014 incluyendo dashboards, monitores y alertas de Datadog codificados por servicio",
+        "**Persist\u00ED datos reactivamente** con Spring Data MongoDB reactivo y PostgreSQL en microservicios Kotlin, asegurando APIs con OAuth2/JWT e integrando sistemas externos mediante clientes no bloqueantes"
       ],
-      tech: ["Next.js", "TypeScript", "React Query", "Auth0", "MUI", "Kotlin", "Spring Boot", "Azure Service Bus", "Azure Pipelines", "Terraform", "GraphQL", "CQRS", "Lerna"]
+      tech: ["Next.js", "TypeScript", "React Query", "Auth0", "MUI", "Kotlin", "Spring Boot", "WebFlux", "Reactor", "Corrutinas", "MongoDB", "Azure Service Bus", "Azure Pipelines", "Terraform", "GraphQL", "CQRS", "Lerna"]
     },
     {
       t: "Desarrollador React & Node.js",
