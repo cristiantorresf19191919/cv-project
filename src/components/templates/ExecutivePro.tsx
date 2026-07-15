@@ -298,7 +298,7 @@ export default function ExecutivePro() {
               <div className={s.timeline}>
                 {data.exp.map((exp, i) => (
                   <AnimatedSection key={i} direction="right" delay={i * 0.1}>
-                    <div className={`${s.timelineItem} ${activeSkill && !exp.tech.includes(activeSkill) ? s.timelineItemDimmed : ''} ${activeSkill && exp.tech.includes(activeSkill) ? s.timelineItemHighlighted : ''}`}>
+                    <div className={`${s.timelineItem} ${exp.dt.toLowerCase().includes('present') ? s.timelineItemCurrent : ''} ${activeSkill && !exp.tech.includes(activeSkill) ? s.timelineItemDimmed : ''} ${activeSkill && exp.tech.includes(activeSkill) ? s.timelineItemHighlighted : ''}`}>
                       <div className={s.timelineDot} />
                       <motion.div className={s.timelineCard} whileHover={cardHover}>
                         <h3 className={s.expTitle}>{exp.t}</h3>

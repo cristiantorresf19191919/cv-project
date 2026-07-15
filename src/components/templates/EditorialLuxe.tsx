@@ -71,7 +71,7 @@ export default function EditorialLuxe() {
           animate="visible"
           variants={photoReveal}
         >
-          <CodeShowcase variant="hero" />
+          <CodeShowcase variant="hero" heroSide="left" />
         </motion.div>
 
         <motion.div initial="hidden" animate="visible" variants={heroContainer}>

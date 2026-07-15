@@ -1,5 +1,6 @@
 'use client';
 
+import type { CSSProperties } from 'react';
 import { motion } from 'framer-motion';
 import { useContent } from '@/context/ContentContext';
 import AnimatedSection from '@/components/shared/AnimatedSection';
@@ -64,7 +65,7 @@ export default function ArcticMinimal() {
   return (
     <div className={s.template}>
       <div className={s.hero}>
-        <motion.div initial="hidden" animate="visible" variants={heroContainer}>
+        <motion.div initial="hidden" animate="visible" variants={heroContainer} style={{ position: 'relative', zIndex: 2 }}>
           <motion.div variants={heroItem} className={s.heroTag}>{data.title}</motion.div>
           <motion.h1 variants={heroItem} className={s.h1}>
             {data.name}<br /><span className={s.h1Accent}>{data.last}</span>
@@ -89,7 +90,9 @@ export default function ArcticMinimal() {
             ))}
           </motion.div>
         </motion.div>
-        <motion.div initial="hidden" animate="visible" variants={photoSlide}>
+        {/* Light theme: keep the IDE bleed inside the column gutter — dark
+            card under dark typography would be unreadable */}
+        <motion.div initial="hidden" animate="visible" variants={photoSlide} style={{ '--cs-bleed': '56px' } as CSSProperties}>
           <CodeShowcase variant="hero" />
         </motion.div>
       </div>

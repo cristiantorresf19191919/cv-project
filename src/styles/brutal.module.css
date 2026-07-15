@@ -377,6 +377,7 @@
   line-height: 1.9;
   margin: 1rem 0;
   font-size: 0.93rem;
+  max-width: 75ch;
 }
 
 .tcUl {
@@ -394,6 +395,7 @@
   line-height: 1.85;
   margin-bottom: 0.7rem;
   font-size: 0.88rem;
+  max-width: 80ch;
 }
 
 .tcLi::before {
@@ -411,12 +413,20 @@
 
 .ttg {
   padding: 0.2rem 0.5rem;
-  border: 2px solid rgba(26, 26, 26, 0.12);
+  background: rgba(239, 68, 68, 0.06);
+  border: 2px solid rgba(239, 68, 68, 0.3);
   border-radius: 0;
   font-size: 0.7rem;
-  color: #888;
+  color: #555;
   font-weight: 700;
   text-transform: uppercase;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.ttg:hover {
+  background: var(--a);
+  border-color: var(--a);
+  color: #fff;
 }
 
 /* Portfolio */

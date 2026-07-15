@@ -54,7 +54,7 @@ export default function Horizon() {
           <div className={s.heroHorizon} />
           <div className={s.heroGrain} />
         </div>
-        <motion.div initial="hidden" animate="visible" variants={heroContainer} className={s.heroContent}>
+        <motion.div initial="hidden" animate="visible" variants={heroContainer} className={s.heroContent} style={{ position: 'relative', zIndex: 2 }}>
           <motion.div variants={heroItem} className={s.heroLine} />
           <motion.span variants={heroItem} className={s.heroTag}>{data.title}</motion.span>
           <motion.h1 variants={heroItem} className={s.h1}>

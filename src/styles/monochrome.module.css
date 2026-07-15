@@ -471,6 +471,8 @@
 
 .timelineItem {
   position: relative;
+  isolation: isolate;
+  overflow: hidden;
   margin-bottom: 0;
   padding: 1.6rem 0 1.6rem 3.9rem;
   background: transparent;
@@ -479,6 +481,19 @@
   border-radius: 0;
   box-shadow: none;
   transition: background 0.35s, padding-left 0.35s, opacity 0.35s;
+}
+
+/* Barely-there ink wash in the top-right corner — depth without color */
+.timelineItem::after {
+  content: '';
+  position: absolute;
+  top: -28%;
+  right: -14%;
+  width: 52%;
+  height: 72%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.03), transparent 74%);
 }
 
 .timelineItem:last-child {
@@ -588,7 +603,7 @@
 /* ── Tech tags — mono outlined chips ── */
 .techTag {
   padding: 0.22rem 0.55rem;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.05);
   border: 1px solid #000;
   border-radius: 0;
   font-family: var(--font-space-mono), 'Space Mono', monospace;
@@ -597,7 +612,7 @@
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .techTag:hover {

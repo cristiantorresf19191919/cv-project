@@ -343,6 +343,9 @@
 
 .tc {
   position: relative;
+  /* isolate + hidden so the corner-glow ::after can sit between bg and content */
+  isolation: isolate;
+  overflow: hidden;
   background: #fff;
   padding: 1.8rem 1.8rem 1.8rem 2rem;
   border-radius: 18px;
@@ -362,6 +365,19 @@
   width: 3px;
   border-radius: 3px;
   background: linear-gradient(180deg, #6366f1, #818cf8);
+}
+
+/* ambient corner glow — very subtle on the light ground */
+.tc::after {
+  content: '';
+  position: absolute;
+  top: -28%;
+  right: -14%;
+  width: 52%;
+  height: 72%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(99, 102, 241, 0.06), transparent 74%);
 }
 
 .tc:hover {
@@ -412,6 +428,7 @@
   line-height: 1.8;
   margin: 0.6rem 0 1.2rem;
   font-size: 0.9rem;
+  max-width: 75ch;
 }
 
 .tcUl {
@@ -427,6 +444,7 @@
   line-height: 1.8;
   margin-bottom: 0.4rem;
   font-size: 0.85rem;
+  max-width: 80ch;
 }
 
 .tcLi::before {

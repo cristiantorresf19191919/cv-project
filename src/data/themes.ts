@@ -127,6 +127,13 @@ export const THEMES: Record<TemplateName, ThemeConfig> = {
     accent: '#c084fc',
     labelColor: 'rgba(192,132,252,0.35)',
   },
+  lumina: {
+    bg: 'linear-gradient(160deg, #2b0a4e 0%, #3b1173 48%, #581c87 100%)',
+    navBg: 'rgba(43,10,78,0.85)',
+    navText: 'rgba(255,255,255,0.5)',
+    accent: '#e879f9',
+    labelColor: 'rgba(255,255,255,0.35)',
+  },
 };
 
 const DARK: TemplateCategory = 'dark';
@@ -152,4 +159,5 @@ export const TEMPLATE_LIST: TemplateInfo[] = [
   { name: 'blueprint', label: 'Blueprint', dotColor: '#4fc3f7', desc: 'Engineering schematic with grid lines', shortcut: 'b', category: DARK },
   { name: 'brutal', label: 'Brutalist', dotColor: '#ef4444', desc: 'Raw concrete web brutalism', shortcut: 'u', category: LIGHT },
   { name: 'cosmic', label: 'Cosmic Dust', dotColor: '#c084fc', desc: 'Deep space starfield & nebula', shortcut: 'c', category: SPECIAL },
+  { name: 'lumina', label: 'Lumina Glass', dotColor: '#e879f9', desc: 'Frosted violet glass, MacPaw style', shortcut: 'l', category: SPECIAL },
 ];

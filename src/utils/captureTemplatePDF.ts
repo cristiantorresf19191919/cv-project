@@ -28,7 +28,10 @@ export async function captureTemplatePDF(filename: string): Promise<void> {
   /* ── 1. Locate template ──────────────────────────────── */
   const wrapper = document.querySelector<HTMLElement>('[data-pdf-target]');
   if (!wrapper) { alert('Template not found.'); return; }
-  const tpl = wrapper.firstElementChild as HTMLElement | null;
+  // The template lives inside [data-pdf-template]; firstElementChild of the
+  // wrapper is the TL;DR bar, NOT the template.
+  const holder = wrapper.querySelector<HTMLElement>('[data-pdf-template]');
+  const tpl = (holder?.firstElementChild ?? wrapper.firstElementChild) as HTMLElement | null;
   if (!tpl) { alert('Template not found.'); return; }
 
   /* ── 2. Save scroll & go to top ──────────────────────── */
@@ -68,10 +71,24 @@ export async function captureTemplatePDF(filename: string): Promise<void> {
       '[class*="focusMode"],[class*="FocusMode"]'
     ).forEach(el => { if (!tpl.contains(el)) hide(el); });
 
-    /* ── 6. Hide footer + interactive elements ───────── */
+    /* ── 6. Hide footer + interactive elements ─────────
+       [data-code-showcase] = whole live-coding IDE section (incl. its
+       header) — an animated screen toy that makes no sense on paper. */
     tpl.querySelectorAll<HTMLElement>(
-      'footer, [data-pdf-hide]'
+      'footer, [data-pdf-hide], [data-code-showcase]'
     ).forEach(hide);
+
+    /* ── 6b. Collapse the hero column that held the IDE ─
+       Hiding the IDE alone leaves an empty grid column; drop the column
+       so the hero typography uses the full capture width. */
+    tpl.querySelectorAll<HTMLElement>('[data-pdf-collapse]').forEach(el => {
+      const item = el.parentElement;
+      const grid = item?.parentElement;
+      if (item && grid && getComputedStyle(grid).display === 'grid') {
+        hide(item);
+        set(grid, 'grid-template-columns', '1fr');
+      }
+    });
 
     /* ── 7. Remove wrapper padding (switcher offset) ─── */
     const parent = wrapper.parentElement;

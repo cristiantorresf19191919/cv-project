@@ -104,15 +104,23 @@
   font-size: 9.5px;
   letter-spacing: 0.4px;
   color: #6e7681;
+  background: transparent;
   border: 1px solid #2b323b;
   border-radius: 5px;
+  cursor: pointer;
   transition: color 220ms ease, border-color 220ms ease, background 220ms ease;
 }
 
+.langChip:hover {
+  color: #a5ccff;
+  border-color: rgba(121, 192, 255, 0.4);
+  background: rgba(121, 192, 255, 0.07);
+}
+
 .langChipActive {
-  color: #79c0ff;
-  border-color: rgba(121, 192, 255, 0.45);
-  background: rgba(121, 192, 255, 0.08);
+  color: #9ecbff;
+  border-color: rgba(121, 192, 255, 0.65);
+  background: rgba(121, 192, 255, 0.16);
 }
 
 /* ── code body ─────────────────────────────────────────── */
@@ -253,6 +261,37 @@
   padding: 14px 16px 12px;
 }
 
+/* On wide screens the hero IDE breaks out of its grid column — mostly
+   sideways, slightly taller — bleeding left under the hero typography
+   (templates raise their text column above it). Right edge stays anchored.
+   Light templates set --cs-bleed on the IDE's wrapper to keep the bleed
+   inside the column gutter, where dark-on-dark text overlap can't happen. */
+@media (min-width: 1025px) {
+  .wrapHero {
+    width: calc(100% + var(--cs-bleed, 150px));
+    max-width: none;
+    margin-left: calc(-1 * var(--cs-bleed, 150px));
+    flex-shrink: 0;
+  }
+
+  .wrapHero .body {
+    height: 430px;
+  }
+
+  /* IDE occupies the LEFT hero column (EditorialLuxe): the left bleed heads
+     into the page margin, away from the typography — only enable it once the
+     viewport has room to show it un-clipped. */
+  .wrapHeroLeft {
+    --cs-bleed: 0px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .wrapHeroLeft {
+    --cs-bleed: 100px;
+  }
+}
+
 .wrapHero .cam {
   width: 106px;
   height: 106px;
@@ -280,9 +319,11 @@
   border-radius: 50%;
   overflow: hidden;
   background: #0d1117;
-  border: 3px solid #161b22;
+  /* glassmorphic ring — translucent border + frosted halo for depth */
+  border: 3px solid rgba(255, 255, 255, 0.22);
   box-shadow:
     0 0 0 1px rgba(121, 192, 255, 0.35),
+    0 0 0 7px rgba(255, 255, 255, 0.07),
     0 18px 44px -12px rgba(0, 0, 0, 0.75),
     0 0 30px rgba(139, 92, 246, 0.28);
 }

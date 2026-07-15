@@ -65,7 +65,7 @@ export default function NeonCyber() {
   return (
     <div className={s.template}>
       <div className={s.hero}>
-        <motion.div initial="hidden" animate="visible" variants={heroContainer}>
+        <motion.div initial="hidden" animate="visible" variants={heroContainer} style={{ position: 'relative', zIndex: 2 }}>
           <motion.div variants={heroItem} className={s.heroTag}>{data.title}</motion.div>
           <motion.h1 variants={heroItem} className={s.h1}>
             <span className={s.glitch} data-text={data.name}>{data.name}</span>

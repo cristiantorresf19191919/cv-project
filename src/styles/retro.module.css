@@ -425,6 +425,20 @@
   transition: all 0.5s;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
+}
+
+/* Ambient corner glow — neon haze bleeding in from the top-right */
+.tc::before {
+  content: '';
+  position: absolute;
+  top: -28%;
+  right: -14%;
+  width: 52%;
+  height: 72%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255, 110, 199, 0.1), transparent 74%);
 }
 
 .tc::after {
@@ -481,6 +495,7 @@
   line-height: 1.9;
   margin: 1rem 0;
   font-size: 0.93rem;
+  max-width: 75ch;
 }
 
 .tcUl {
@@ -498,6 +513,7 @@
   line-height: 1.85;
   margin-bottom: 0.7rem;
   font-size: 0.88rem;
+  max-width: 80ch;
 }
 
 .tcLi::before {
@@ -523,6 +539,13 @@
   color: var(--ab);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  transition: border-color 0.3s, background 0.3s, color 0.3s;
+}
+
+.ttg:hover {
+  border-color: rgba(0, 212, 255, 0.45);
+  background: rgba(0, 212, 255, 0.13);
+  color: #7ae8ff;
 }
 
 /* Portfolio */

@@ -414,24 +414,56 @@
   box-shadow: 0 0 15px rgba(34, 211, 167, 0.3);
 }
 
+/* Connector branch — ties each node to its card across the rail gap */
+.ti::after {
+  content: '';
+  position: absolute;
+  left: calc(-3.85rem + 14px);
+  top: calc(0.5rem + 7px);
+  width: calc(3.85rem - 14px);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(34, 211, 167, 0.5), rgba(34, 211, 167, 0.08));
+  pointer-events: none;
+}
+
 .tiCurrent::before {
   background: var(--a);
-  box-shadow: 0 0 20px rgba(34, 211, 167, 0.6);
-  animation: nodeGlow 3s infinite;
+  box-shadow: 0 0 0 3px rgba(34, 211, 167, 0.2), 0 0 20px rgba(34, 211, 167, 0.6);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tiCurrent::before {
+    animation: nodeGlow 3s infinite;
+  }
 }
 
 @keyframes nodeGlow {
-  0%, 100% { box-shadow: 0 0 15px rgba(34, 211, 167, 0.4); }
-  50% { box-shadow: 0 0 30px rgba(34, 211, 167, 0.8), 0 0 50px rgba(34, 211, 167, 0.2); }
+  0%, 100% { box-shadow: 0 0 0 3px rgba(34, 211, 167, 0.2), 0 0 15px rgba(34, 211, 167, 0.4); }
+  50% { box-shadow: 0 0 0 4px rgba(34, 211, 167, 0.28), 0 0 30px rgba(34, 211, 167, 0.8), 0 0 50px rgba(34, 211, 167, 0.2); }
 }
 
 .tc {
+  position: relative;
+  overflow: hidden;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(34, 211, 167, 0.08);
   border-radius: 18px;
   padding: 2rem;
   backdrop-filter: blur(10px);
   transition: all 0.5s;
+}
+
+/* Ambient aurora glow pooled in the top-right corner */
+.tc::after {
+  content: '';
+  position: absolute;
+  top: -28%;
+  right: -14%;
+  width: 52%;
+  height: 72%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(34, 211, 167, 0.1), transparent 74%);
 }
 
 .tc:hover {
@@ -465,6 +497,7 @@
   line-height: 1.9;
   margin: 1rem 0;
   font-size: 0.95rem;
+  max-width: 75ch;
 }
 
 .tcUl {
@@ -482,6 +515,7 @@
   line-height: 1.85;
   margin-bottom: 0.8rem;
   font-size: 0.88rem;
+  max-width: 80ch;
 }
 
 .tcLi::before {
@@ -504,6 +538,13 @@
   border-radius: 6px;
   font-size: 0.75rem;
   color: rgba(34, 211, 167, 0.8);
+  transition: border-color 0.3s, background 0.3s, color 0.3s;
+}
+
+.ttg:hover {
+  background: rgba(34, 211, 167, 0.13);
+  border-color: rgba(34, 211, 167, 0.35);
+  color: var(--a);
 }
 
 /* Portfolio */

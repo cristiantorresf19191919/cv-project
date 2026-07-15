@@ -90,19 +90,24 @@
 }
 
 .sub {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
-  font-size: 2.2rem;
-  color: var(--a);
-  font-style: italic;
+  /* crisp sans against the serif name — bridges the editorial left and the
+     technical IDE on the right */
+  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--al);
   margin-bottom: 1.5rem;
-  letter-spacing: 1px;
+  letter-spacing: 0.2px;
+  line-height: 1.45;
+  /* strict column: never run under the IDE bleed */
+  max-width: 30rem;
 }
 
 .desc {
   font-size: 1rem;
-  color: #9ca3af;
+  color: #d1d5db;
   line-height: 2;
-  max-width: 92%;
+  max-width: 33rem;
   margin-bottom: 2rem;
 }
 
@@ -142,6 +147,10 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   margin-top: 3rem;
+  /* dedicated stat-bar zone — soft gold fade grounds the hero */
+  padding-top: 1.6rem;
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(90deg, rgba(212, 175, 55, 0.35), rgba(255, 255, 255, 0.05) 70%, transparent) 1;
 }
 
 .stN {
@@ -160,7 +169,7 @@
   font-size: 0.66rem;
   color: #9ca3af;
   text-transform: uppercase;
-  letter-spacing: 2.5px;
+  letter-spacing: 3.5px;
   margin-top: 0.5rem;
 }
 
@@ -410,6 +419,18 @@
   margin-bottom: 3rem;
 }
 
+/* connector branch — anchors the card to its node on the timeline */
+.ti::after {
+  content: '';
+  position: absolute;
+  left: calc(-3.5rem + 15px);
+  top: calc(0.35rem + 7px);
+  width: calc(3.5rem - 15px);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.55), rgba(212, 175, 55, 0.08));
+  pointer-events: none;
+}
+
 .ti::before {
   content: '';
   position: absolute;
@@ -430,7 +451,10 @@
   top: 0.35rem;
   background: var(--a);
   border: 3px solid #010409;
-  box-shadow: 0 0 12px rgba(212, 175, 55, 0.55), 0 0 24px rgba(212, 175, 55, 0.22);
+  box-shadow:
+    0 0 0 3px rgba(212, 175, 55, 0.22),
+    0 0 12px rgba(212, 175, 55, 0.55),
+    0 0 24px rgba(212, 175, 55, 0.22);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -483,6 +507,19 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 22px 55px rgba(0, 0, 0, 0.4), 0 0 40px rgba(212, 175, 55, 0.1);
 }
 
+/* ambient corner glow — breaks up the flat card ground */
+.tc::after {
+  content: '';
+  position: absolute;
+  top: -28%;
+  right: -14%;
+  width: 52%;
+  height: 72%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(212, 175, 55, 0.12), transparent 74%);
+}
+
 .tcH3 {
   font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
   font-size: 1.7rem;
@@ -508,6 +545,7 @@
   line-height: 1.95;
   margin: 1rem 0;
   font-size: 0.95rem;
+  max-width: 75ch;
 }
 
 .tcUl {
@@ -526,6 +564,8 @@
   margin-bottom: 0.85rem;
   font-size: 0.88rem;
   padding-left: 0.2rem;
+  /* editorial measure — long lines are the main scannability killer */
+  max-width: 80ch;
 }
 
 .tcLi::before {
@@ -550,6 +590,13 @@
   border-radius: 6px;
   font-size: 0.78rem;
   color: #c8b87a;
+  transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.ttg:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  background: rgba(212, 175, 55, 0.13);
+  color: #e8d9a0;
 }
 
 /* Contact */

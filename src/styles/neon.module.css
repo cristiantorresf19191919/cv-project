@@ -152,14 +152,17 @@
   margin-bottom: 1.5rem;
   letter-spacing: 3px;
   text-shadow: 0 0 16px rgba(0, 240, 255, 0.35);
+  /* keep glyphs clear of the IDE bleed */
+  max-width: 27rem;
 }
 
 .desc {
   font-family: var(--font-outfit), 'Outfit', sans-serif;
   font-size: 0.92rem;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.62);
   line-height: 1.8;
   font-weight: 300;
+  max-width: 27rem;
 }
 
 .photoWrap {
@@ -449,7 +452,10 @@
 
 .tc {
   position: relative;
-  background: rgba(18, 5, 28, 0.3);
+  /* ambient corner glow lives in the bg stack — ::before/::after are taken by the HUD brackets */
+  background:
+    radial-gradient(55% 65% at 100% 0%, rgba(255, 0, 128, 0.1), transparent 74%),
+    rgba(18, 5, 28, 0.3);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   padding: 1.8rem;
@@ -525,6 +531,7 @@
   margin: 0.6rem 0;
   font-size: 0.88rem;
   font-weight: 300;
+  max-width: 75ch;
 }
 
 .tcUl {
@@ -542,6 +549,7 @@
   margin-bottom: 0.4rem;
   font-size: 0.82rem;
   font-weight: 300;
+  max-width: 80ch;
 }
 
 .tcLi::before {
@@ -563,7 +571,7 @@
 .ttg {
   padding: 0.25rem 0.5rem;
   border: 1px solid rgba(0, 240, 255, 0.28);
-  background: rgba(0, 240, 255, 0.04);
+  background: rgba(0, 240, 255, 0.06);
   font-family: var(--font-outfit), 'Outfit', sans-serif;
   font-size: 0.68rem;
   color: #7fefff;
@@ -573,6 +581,7 @@
 
 .ttg:hover {
   border-color: #00f0ff;
+  background: rgba(0, 240, 255, 0.12);
   color: #00f0ff;
   box-shadow: 0 0 10px rgba(0, 240, 255, 0.35);
 }

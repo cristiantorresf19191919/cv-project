@@ -23,6 +23,7 @@ import Retrowave from '@/components/templates/Retrowave';
 import Blueprint from '@/components/templates/Blueprint';
 import Brutalist from '@/components/templates/Brutalist';
 import CosmicDust from '@/components/templates/CosmicDust';
+import LuminaGlass from '@/components/templates/LuminaGlass';
 import CommandPalette from '@/components/shared/CommandPalette';
 import FloatingActions from '@/components/shared/FloatingActions';
 import LiveAvailability from '@/components/shared/LiveAvailability';
@@ -65,6 +66,7 @@ const templateMap: Record<TemplateName, ComponentType> = {
   blueprint: Blueprint,
   brutal: Brutalist,
   cosmic: CosmicDust,
+  lumina: LuminaGlass,
 };
 
 export default function Home() {
@@ -107,7 +109,10 @@ export default function Home() {
               }}
             >
               <TLDRSummary />
-              <ActiveTemplate />
+              {/* data-pdf-template: PDF export captures this subtree only */}
+              <div data-pdf-template>
+                <ActiveTemplate />
+              </div>
               <SkillsMatrix />
               <CalendarCTA />
             </motion.div>

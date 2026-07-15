@@ -441,6 +441,7 @@
 }
 
 .ti {
+  position: relative;
   margin-bottom: 2.5rem;
 }
 
@@ -462,14 +463,46 @@
   box-shadow: 0 0 0 5px var(--cream), 0 2px 6px rgba(90, 124, 89, 0.28);
 }
 
+/* Slender stem connecting the leaf node to its card */
+.ti::after {
+  content: '';
+  position: absolute;
+  left: calc(-2.7rem + 14px);
+  top: calc(0.5rem + 7px);
+  width: calc(2.7rem - 14px);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(90, 124, 89, 0.5), rgba(90, 124, 89, 0.08));
+  pointer-events: none;
+}
+
+/* Current role — crisp sage ring around the leaf */
+.tiCurrent::before {
+  box-shadow: 0 0 0 5px var(--cream), 0 0 0 7px rgba(90, 124, 89, 0.35), 0 2px 6px rgba(90, 124, 89, 0.28);
+}
+
 .tc {
   position: relative;
+  overflow: hidden;
+  isolation: isolate;
   background: linear-gradient(160deg, var(--paper), #fff);
   padding: 2.1rem;
   border-radius: 24px;
   border: 1px solid var(--border-warm);
   box-shadow: var(--shadow-soft), var(--inner-sheen);
   transition: transform 0.45s var(--ease-calm), box-shadow 0.45s var(--ease-calm), border-color 0.45s var(--ease-calm);
+}
+
+/* Whisper of sage pooled in the top corner */
+.tc::after {
+  content: '';
+  position: absolute;
+  top: -28%;
+  right: -14%;
+  width: 52%;
+  height: 72%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(90, 124, 89, 0.06), transparent 74%);
 }
 
 .tc:hover {
@@ -513,6 +546,7 @@
   font-size: 0.95rem;
   line-height: 1.8;
   margin-bottom: 1rem;
+  max-width: 75ch;
 }
 
 .tcUl {
@@ -526,6 +560,7 @@
   line-height: 1.85;
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
+  max-width: 80ch;
 }
 
 /* Leaf-tipped bullet */
@@ -548,21 +583,21 @@
   margin-top: 1rem;
 }
 
-/* Tech pills use warm sand to enrich the palette */
+/* Tech pills — sage-tinted chips that echo the accent */
 .ttg {
   padding: 0.32rem 0.8rem;
   font-size: 0.72rem;
   font-weight: 500;
-  background: var(--sand);
-  color: #6a6152;
-  border: 1px solid var(--border-warm);
+  background: rgba(90, 124, 89, 0.07);
+  color: var(--accent-deep);
+  border: 1px solid rgba(90, 124, 89, 0.3);
   border-radius: 999px;
-  transition: background 0.3s var(--ease-calm), color 0.3s var(--ease-calm);
+  transition: background 0.3s var(--ease-calm), color 0.3s var(--ease-calm), border-color 0.3s var(--ease-calm);
 }
 
 .ttg:hover {
-  background: var(--clay-soft);
-  color: #fff;
+  background: rgba(90, 124, 89, 0.13);
+  border-color: rgba(90, 124, 89, 0.55);
 }
 
 /* Portfolio */

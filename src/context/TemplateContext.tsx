@@ -7,21 +7,49 @@ import { Analytics } from '@/utils/analytics';
 
 const VALID_TEMPLATES = new Set<string>(TEMPLATE_LIST.map((t) => t.name));
 
+/* Bare visits (no ?t=) land on a weighted-random template — the showcase
+   pieces (lumina, noir) surface most often, every other template still
+   gets airtime. */
+const RANDOM_WEIGHTS: Partial<Record<TemplateName, number>> = {
+  lumina: 8,
+  noir: 5,
+};
+const BASE_WEIGHT = 1;
+
+// One roll per page load — back/forward within the session stays stable.
+let sessionPick: TemplateName | null = null;
+
+function pickRandomTemplate(): TemplateName {
+  if (sessionPick) return sessionPick;
+  const entries = TEMPLATE_LIST.map(
+    (t) => [t.name, RANDOM_WEIGHTS[t.name] ?? BASE_WEIGHT] as const
+  );
+  const total = entries.reduce((sum, [, w]) => sum + w, 0);
+  let roll = Math.random() * total;
+  for (const [name, weight] of entries) {
+    roll -= weight;
+    if (roll <= 0) {
+      sessionPick = name;
+      return name;
+    }
+  }
+  sessionPick = entries[entries.length - 1][0];
+  return sessionPick;
+}
+
 function getTemplateFromURL(): TemplateName {
   if (typeof window === 'undefined') return 'noir';
   const params = new URLSearchParams(window.location.search);
   const t = params.get('t');
   if (t && VALID_TEMPLATES.has(t)) return t as TemplateName;
-  return 'noir';
+  return pickRandomTemplate();
 }
 
 function updateURL(name: TemplateName) {
   const url = new URL(window.location.href);
-  if (name === 'noir') {
-    url.searchParams.delete('t');
-  } else {
-    url.searchParams.set('t', name);
-  }
+  // Always write the param — a deliberately chosen template must survive
+  // refresh; only bare visits re-roll the random pick.
+  url.searchParams.set('t', name);
   window.history.pushState({}, '', url.toString());
 }
 

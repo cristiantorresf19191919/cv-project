@@ -427,6 +427,21 @@
   padding: 2.2rem;
   backdrop-filter: blur(10px);
   transition: all 0.5s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ambient corner glow — nebula light pooling in the top-right */
+.tc::after {
+  content: '';
+  position: absolute;
+  top: -28%;
+  right: -14%;
+  width: 52%;
+  height: 72%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(192, 132, 252, 0.12), transparent 74%);
 }
 
 .tiCurrent .tc {
@@ -464,6 +479,7 @@
   line-height: 1.9;
   margin: 1rem 0;
   font-size: 0.93rem;
+  max-width: 75ch;
 }
 
 .tcUl {
@@ -481,6 +497,7 @@
   line-height: 1.85;
   margin-bottom: 0.7rem;
   font-size: 0.88rem;
+  max-width: 80ch;
 }
 
 .tcLi::before {
@@ -498,11 +515,18 @@
 
 .ttg {
   padding: 0.25rem 0.7rem;
-  background: rgba(192, 132, 252, 0.04);
-  border: 1px solid rgba(192, 132, 252, 0.1);
+  background: rgba(192, 132, 252, 0.06);
+  border: 1px solid rgba(192, 132, 252, 0.16);
   border-radius: 100px;
   font-size: 0.72rem;
   color: rgba(192, 132, 252, 0.7);
+  transition: border-color 0.3s, background 0.3s, color 0.3s;
+}
+
+.ttg:hover {
+  border-color: rgba(192, 132, 252, 0.4);
+  background: rgba(192, 132, 252, 0.13);
+  color: rgba(192, 132, 252, 0.95);
 }
 
 /* Portfolio */

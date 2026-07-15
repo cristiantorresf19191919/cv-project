@@ -83,9 +83,12 @@ interface CodeShowcaseProps {
   className?: string;
   /** `hero` = compact fit for a hero photo slot; `section` = full-width card */
   variant?: 'section' | 'hero';
+  /** Which hero column the IDE occupies — controls which side the wide-screen
+   *  bleed extends toward (always toward the typography). */
+  heroSide?: 'left' | 'right';
 }
 
-export default function CodeShowcase({ className, variant = 'section' }: CodeShowcaseProps) {
+export default function CodeShowcase({ className, variant = 'section', heroSide = 'right' }: CodeShowcaseProps) {
   const reduce = useReducedMotion();
   const { photoUrl } = useContent();
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -148,6 +151,19 @@ export default function CodeShowcase({ className, variant = 'section' }: CodeSho
     return pool[i];
   }, []);
 
+  /** Jump straight to a chosen language pool (the TSX/KT/OPS tabs). */
+  const switchTo = useCallback((lang: SnippetLang) => {
+    const pool = CODE_SNIPPETS[lang];
+    let i = Math.floor(Math.random() * pool.length);
+    if (pool.length > 1 && i === lastIdxRef.current[lang]) {
+      i = (i + 1) % pool.length;
+    }
+    lastIdxRef.current[lang] = i;
+    setSnippet(pool[i]);
+    setPos(0);
+    setRun((r) => r + 1);
+  }, []);
+
   // Typing engine — one self-cleaning timeout per character.
   useEffect(() => {
     if (reduce || !inView || pos >= total) return;
@@ -184,10 +200,12 @@ export default function CodeShowcase({ className, variant = 'section' }: CodeSho
   return (
     <div
       ref={wrapRef}
-      className={`${s.wrap} ${variant === 'hero' ? s.wrapHero : ''} ${className ?? ''}`}
+      className={`${s.wrap} ${variant === 'hero' ? s.wrapHero : ''} ${variant === 'hero' && heroSide === 'left' ? s.wrapHeroLeft : ''} ${className ?? ''}`}
       onMouseEnter={() => (hoverRef.current = true)}
       onMouseLeave={() => (hoverRef.current = false)}
       aria-hidden
+      data-pdf-hide
+      data-pdf-collapse
     >
       <div className={s.grid} />
       <div className={s.glow} />
@@ -209,13 +227,17 @@ export default function CodeShowcase({ className, variant = 'section' }: CodeSho
             </motion.span>
           </AnimatePresence>
           <span className={s.langChips}>
+            {/* decorative card (aria-hidden) → pointer-only, kept out of tab order */}
             {CHIPS.map((chip) => (
-              <span
+              <button
                 key={chip.lang}
+                type="button"
+                tabIndex={-1}
+                onClick={() => switchTo(chip.lang)}
                 className={`${s.langChip} ${snippet.lang === chip.lang ? s.langChipActive : ''}`}
               >
                 {chip.label}
-              </span>
+              </button>
             ))}
           </span>
         </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import type { CSSProperties } from 'react';
 import { motion } from 'framer-motion';
 import { useContent } from '@/context/ContentContext';
 import AnimatedSection from '@/components/shared/AnimatedSection';
@@ -52,7 +53,7 @@ export default function SereneBento() {
     <div className={s.template}>
       <div className={s.hero}>
         <div className={s.heroOrb} aria-hidden="true" />
-        <motion.div initial="hidden" animate="visible" variants={heroContainer} className={s.heroContent}>
+        <motion.div initial="hidden" animate="visible" variants={heroContainer} className={s.heroContent} style={{ position: 'relative', zIndex: 2 }}>
           <motion.span variants={heroItem} className={s.heroTag}>{data.title}</motion.span>
           <motion.h1 variants={heroItem} className={s.h1}>
             {data.name} {data.last}
@@ -78,7 +79,9 @@ export default function SereneBento() {
             <a href={`https://${data.github}`} target="_blank" rel="noopener noreferrer" className={s.b2}>GitHub</a>
           </motion.div>
         </motion.div>
-        <motion.div initial="hidden" animate="visible" variants={photoReveal} className={s.photoBento}>
+        {/* Light theme: keep the IDE bleed inside the column gutter — dark
+            card under dark typography would be unreadable */}
+        <motion.div initial="hidden" animate="visible" variants={photoReveal} className={s.photoBento} style={{ '--cs-bleed': '56px' } as CSSProperties}>
           <div className={s.photoArc} aria-hidden="true" />
           <CodeShowcase variant="hero" />
         </motion.div>
@@ -111,7 +114,7 @@ export default function SereneBento() {
         <div className={s.tl}>
           {data.exp.map((exp, i) => (
             <AnimatedSection key={i} direction="left" delay={i * 0.1} scale>
-              <div className={s.ti}>
+              <div className={`${s.ti} ${exp.dt.toLowerCase().includes('present') ? s.tiCurrent : ''}`}>
                 <div className={s.tc}>
                   <div className={s.tcMeta}>
                     <h3 className={s.tcH3}>{exp.t}</h3>

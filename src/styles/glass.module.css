@@ -175,13 +175,15 @@
   color: rgba(255, 255, 255, 0.7);
   font-weight: 300;
   margin-bottom: 1.2rem;
+  /* keep glyphs clear of the IDE bleed */
+  max-width: 27rem;
 }
 
 .desc {
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.65);
   line-height: 1.9;
-  max-width: 90%;
+  max-width: 27rem;
 }
 
 /* Photo - premium frosted glass frame */
@@ -630,11 +632,14 @@
 .tc {
   position: relative;
   isolation: isolate;
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.11) 0%,
-    rgba(255, 255, 255, 0.04) 100%
-  );
+  /* ambient corner glow lives in the bg stack — ::before/::after are taken by the shared glass details */
+  background:
+    radial-gradient(55% 65% at 100% 0%, rgba(168, 85, 247, 0.12), transparent 74%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.11) 0%,
+      rgba(255, 255, 255, 0.04) 100%
+    );
   backdrop-filter: blur(26px) saturate(160%);
   -webkit-backdrop-filter: blur(26px) saturate(160%);
   padding: 2rem;
@@ -650,11 +655,13 @@
 }
 
 .tc:hover {
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.15) 0%,
-    rgba(255, 255, 255, 0.06) 100%
-  );
+  background:
+    radial-gradient(55% 65% at 100% 0%, rgba(168, 85, 247, 0.12), transparent 74%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.06) 100%
+    );
   border-left-color: rgba(236, 72, 153, 0.8);
   transform: translateX(4px);
   box-shadow:
@@ -689,6 +696,7 @@
   line-height: 1.85;
   margin: 0.7rem 0;
   font-size: 0.88rem;
+  max-width: 75ch;
 }
 
 .tcUl {
@@ -704,6 +712,7 @@
   line-height: 1.8;
   margin-bottom: 0.5rem;
   font-size: 0.84rem;
+  max-width: 80ch;
 }
 
 .tcLi::before {
@@ -742,6 +751,11 @@
 
 .ttg:hover {
   border-color: rgba(168, 85, 247, 0.45);
+  background: linear-gradient(
+    135deg,
+    rgba(168, 85, 247, 0.3) 0%,
+    rgba(118, 75, 162, 0.2) 100%
+  );
   box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, 0.22),
     0 0 16px rgba(168, 85, 247, 0.22);

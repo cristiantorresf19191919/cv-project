@@ -338,6 +338,21 @@
     4px 4px 0 rgba(44, 24, 16, 0.03);
   transition: all 0.4s;
   position: relative;
+  isolation: isolate;
+}
+
+/* Ambient corner wash — a hint of warm light on the page corner */
+.tc::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 46%;
+  height: 62%;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 3px;
+  background: radial-gradient(circle at 100% 0%, rgba(180, 83, 9, 0.06), transparent 72%);
 }
 
 .tiCurrent .tc {
@@ -391,6 +406,7 @@
   line-height: 1.9;
   margin: 1rem 0;
   font-size: 0.93rem;
+  max-width: 75ch;
 }
 
 .tcUl {
@@ -408,6 +424,7 @@
   line-height: 1.85;
   margin-bottom: 0.7rem;
   font-size: 0.88rem;
+  max-width: 80ch;
 }
 
 .tcLi::before {
@@ -426,10 +443,17 @@
 .ttg {
   padding: 0.25rem 0.6rem;
   background: rgba(180, 83, 9, 0.06);
-  border: 1px solid rgba(44, 24, 16, 0.08);
+  border: 1px solid rgba(180, 83, 9, 0.22);
   border-radius: 3px;
   font-size: 0.72rem;
   color: var(--a);
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.ttg:hover {
+  border-color: rgba(180, 83, 9, 0.45);
+  background: rgba(180, 83, 9, 0.12);
+  color: #92400e;
 }
 
 /* Portfolio */

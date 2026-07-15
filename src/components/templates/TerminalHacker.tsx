@@ -63,7 +63,7 @@ export default function TerminalHacker() {
   return (
     <div className={s.template}>
       <div className={s.hero}>
-        <motion.div initial="hidden" animate="visible" variants={heroContainer}>
+        <motion.div initial="hidden" animate="visible" variants={heroContainer} style={{ position: 'relative', zIndex: 2 }}>
           <motion.div variants={terminalLine} className={s.prompt}>
             $ cat ./portfolio.txt<span className={s.cursor} />
           </motion.div>

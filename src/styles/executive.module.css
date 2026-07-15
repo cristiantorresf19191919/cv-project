@@ -622,6 +622,18 @@
   margin-bottom: 0;
 }
 
+/* Connector branch — ties each node to its card's left edge */
+.timelineItem::after {
+  content: '';
+  position: absolute;
+  left: calc(-2.6rem + 16px);
+  top: 14px;
+  width: calc(2.6rem - 16px);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.5), rgba(37, 99, 235, 0.08));
+  pointer-events: none;
+}
+
 /* Refined node marker: white ring + accent dot */
 .timelineDot {
   position: absolute;
@@ -644,13 +656,15 @@
   background: var(--accent);
 }
 
-/* Current role (most recent) highlighted node */
-.timelineItem:first-child .timelineDot {
+/* Current role ("Present" date, plus most recent) highlighted node */
+.timelineItem:first-child .timelineDot,
+.timelineItemCurrent .timelineDot {
   box-shadow: 0 0 0 4px var(--surface), 0 0 0 7px var(--accent-glow);
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .timelineItem:first-child .timelineDot {
+  .timelineItem:first-child .timelineDot,
+  .timelineItemCurrent .timelineDot {
     animation: dotPulse 2.6s ease-in-out infinite;
   }
 }
@@ -661,12 +675,28 @@
 }
 
 .timelineCard {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 1.5rem 1.8rem;
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
   box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 6px 16px rgba(16, 24, 40, 0.05);
+}
+
+/* Ambient corner glow — soft accent wash in the card's top-right */
+.timelineCard::after {
+  content: '';
+  position: absolute;
+  top: -28%;
+  right: -14%;
+  width: 52%;
+  height: 72%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(37, 99, 235, 0.06), transparent 74%);
 }
 
 .timelineItem:first-child .timelineCard {
@@ -728,6 +758,7 @@
   color: var(--gray-600);
   line-height: 1.7;
   margin-bottom: 0.8rem;
+  max-width: 75ch;
 }
 
 .expAchievements {
@@ -743,6 +774,7 @@
   color: var(--gray-700);
   line-height: 1.7;
   margin-bottom: 0.4rem;
+  max-width: 80ch;
 }
 
 .expAchievementItem::before {
@@ -764,8 +796,8 @@
 /* Corporate tech chips */
 .expTechTag {
   padding: 0.25rem 0.62rem;
-  background: var(--surface-tint);
-  border: 1px solid var(--line);
+  background: var(--accent-tint);
+  border: 1px solid rgba(37, 99, 235, 0.16);
   border-radius: 7px;
   font-size: 0.71rem;
   color: var(--gray-600);
@@ -774,9 +806,9 @@
 }
 
 .expTechTag:hover {
-  background: var(--accent-tint);
+  background: var(--accent-tint-2);
   color: var(--accent-dark);
-  border-color: rgba(37, 99, 235, 0.28);
+  border-color: rgba(37, 99, 235, 0.32);
 }
 
 /* ─── Skill-to-experience filtering ───────────────────────────── */
@@ -1118,6 +1150,12 @@
     height: 14px;
   }
 
+  .timelineItem::after {
+    left: calc(-2rem + 14px);
+    top: 13px;
+    width: calc(2rem - 14px);
+  }
+
   .timeline::before {
     left: 6px;
   }
@@ -1181,7 +1219,8 @@
 @media (prefers-reduced-motion: reduce) {
   .photoRing,
   .availDot,
-  .timelineItem:first-child .timelineDot {
+  .timelineItem:first-child .timelineDot,
+  .timelineItemCurrent .timelineDot {
     animation: none;
   }
 }

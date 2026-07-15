@@ -197,6 +197,7 @@ export default function DarkEmber() {
           initial="hidden"
           animate="visible"
           variants={heroContainer}
+          style={{ position: 'relative', zIndex: 2 }}
         >
           <motion.div variants={popIn} className={s.badge}>
             <span className={s.badgeDot} />

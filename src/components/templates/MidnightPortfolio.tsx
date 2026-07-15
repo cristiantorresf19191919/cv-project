@@ -336,7 +336,7 @@ export default function MidnightPortfolio() {
             </AnimatedSection>
             {data.exp.map((exp, i) => (
               <AnimatedSection key={i} direction="up" delay={i * 0.12} scale>
-                <div className={`${s.expCard} ${activeSkill && !exp.tech.includes(activeSkill) ? s.expCardDimmed : ''} ${activeSkill && exp.tech.includes(activeSkill) ? s.expCardHighlighted : ''}`}>
+                <div className={`${s.expCard} ${exp.dt.toLowerCase().includes('present') ? s.expCardCurrent : ''} ${activeSkill && !exp.tech.includes(activeSkill) ? s.expCardDimmed : ''} ${activeSkill && exp.tech.includes(activeSkill) ? s.expCardHighlighted : ''}`}>
                   <h3 className={s.expRole}>{exp.t}</h3>
                   <div className={s.expMeta}>
                     <span className={s.expCompany}>{exp.co}</span>
