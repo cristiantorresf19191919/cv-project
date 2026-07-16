@@ -1,0 +1,496 @@
+/* ─── Blush Editorial ──────────────────────────────────────────── */
+/* Warm cream / ivory editorial CV. Rounded beige sidebar + big serif  */
+/* name + signature taupe rounded PILL section headers. Print-safe:    */
+/* fully opaque hex, real borders, no filters/masks/gradient-text/vh.   */
+
+.template {
+  --a: #b08d6a;              /* muted taupe / mocha accent (customizable) */
+  --ink: #211b15;           /* deep near-black */
+  --muted: #6d5f4e;         /* soft mocha text */
+  --soft: #4f4536;          /* body ink */
+  --page: #efe7db;          /* page canvas */
+  --sheet: #f7f1e7;         /* card / right column */
+  --panel: #eaddcb;         /* left beige panel */
+  --line: #e7dbc7;          /* hairline on sheet */
+  --line-warm: #d8c6ac;     /* hairline on panel */
+  --serif: Georgia, 'Times New Roman', serif;
+
+  min-height: 100%;
+  background-color: #efe7db;
+  padding: 40px 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Sheet: the two-column CV card ─────────────────────────────── */
+.sheet {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 38% 1fr;
+  gap: 30px;
+  padding: 30px;
+  background-color: #f7f1e7;
+  border: 1px solid #ece0cd;
+  border-radius: 22px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.14);
+  align-items: stretch;
+}
+
+/* ─── Left beige panel ──────────────────────────────────────────── */
+.sidebar {
+  background-color: #eaddcb;
+  border: 1px solid #ddccb2;
+  border-radius: 18px;
+  padding: 26px 22px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  min-width: 0;
+}
+
+.photoWrap {
+  position: relative;
+  width: 100%;
+  height: 256px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #d3c1a4;
+  box-shadow: 0 8px 22px rgba(33, 27, 21, 0.16);
+}
+
+.sideSection {
+  display: block;
+}
+
+/* Centered small-caps letter-spaced section headers with accent rule */
+.sideHead {
+  margin: 0 0 14px;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--ink);
+}
+
+.sideHead::after {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 2px;
+  margin: 9px auto 0;
+  background-color: var(--a, #b08d6a);
+  border-radius: 2px;
+}
+
+/* Contact */
+.contactList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--soft);
+}
+
+.contactIcon {
+  flex-shrink: 0;
+  display: inline-flex;
+  color: var(--a, #b08d6a);
+}
+
+.contactIcon svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.contactText {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Profile summary */
+.profileText {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.68;
+  color: var(--muted);
+  text-align: justify;
+}
+
+/* Education (compact, centered) */
+.eduList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.eduItem {
+  text-align: center;
+}
+
+.eduDegree {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.eduSchool {
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.eduDate {
+  margin-top: 3px;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: var(--a, #b08d6a);
+  font-weight: 600;
+}
+
+/* Languages */
+.langList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.langItem {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line-warm);
+  font-size: 12.5px;
+}
+
+.langItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.langName {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.langLevel {
+  font-size: 11.5px;
+  color: var(--muted);
+  text-align: right;
+}
+
+/* ─── Right main column ─────────────────────────────────────────── */
+.main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-top: 4px;
+}
+
+.nameBlock {
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.name {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+}
+
+.nameLine {
+  display: block;
+  font-size: 60px;
+}
+
+.title {
+  margin: 14px 0 0;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.availBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  padding: 5px 13px;
+  background-color: #efe4d1;
+  border: 1px solid #d8c6ac;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6b5a44;
+}
+
+.availDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #5a9367;
+}
+
+/* Signature rounded PILL section header */
+.pill {
+  margin: 0 0 18px;
+  padding: 9px 20px;
+  background-color: var(--a, #b08d6a);
+  color: #ffffff;
+  text-align: center;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-radius: 999px;
+}
+
+.mainSection {
+  display: block;
+}
+
+/* Experience */
+.expList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.expItem {
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.expItem:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.expRole {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.expMeta {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.expCo {
+  font-weight: 600;
+  color: var(--a, #b08d6a);
+}
+
+.expSep {
+  margin: 0 7px;
+  color: #bfa985;
+}
+
+.expDate {
+  color: var(--muted);
+}
+
+.expSummary {
+  margin: 9px 0 10px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--soft);
+}
+
+.bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.bullet {
+  position: relative;
+  padding-left: 17px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--soft);
+}
+
+.bullet::before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--a, #b08d6a);
+}
+
+.bullet strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* Skills */
+.skillsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 28px;
+}
+
+.skillGroup {
+  min-width: 0;
+}
+
+.skillGroupTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 9px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.skillIco {
+  font-size: 14px;
+}
+
+.skillList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skillItem {
+  position: relative;
+  padding-left: 15px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--soft);
+}
+
+.skillItem::before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: 7px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--a, #b08d6a);
+}
+
+/* References */
+.refList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.refItem {
+  margin: 0;
+  padding: 15px 18px;
+  background-color: #fbf6ec;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--a, #b08d6a);
+  border-radius: 12px;
+}
+
+.refQuote {
+  margin: 0 0 9px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 12.5px;
+  line-height: 1.62;
+  color: var(--soft);
+}
+
+.refFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.refName {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.refRole {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+/* ─── Responsive: single column ─────────────────────────────────── */
+@media (max-width: 820px) {
+  .template {
+    padding: 24px 12px;
+  }
+
+  .sheet {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 20px;
+  }
+
+  .skillsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .nameLine {
+    font-size: 46px;
+  }
+
+  .photoWrap {
+    height: 300px;
+  }
+}

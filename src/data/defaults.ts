@@ -102,6 +102,12 @@ export const DEFAULT_DATA: PortfolioData = {
   ],
   projects: [
     {
+      title: "Yakeline Contadora \u2014 Accounting & Tax Platform",
+      desc: "Bilingual (ES/EN) marketing and client platform for a Colombian CPA \u2014 interactive tax-savings and income-tax calculators, online appointment booking, a downloadable resource library, and a technical blog. Built to help entrepreneurs, SMEs, and independent professionals optimize their finances and reduce their tax burden.",
+      url: "https://yakelincontadora.com",
+      tech: ["Next.js", "React", "TypeScript", "Firebase"]
+    },
+    {
       title: "Optimus Agency \u2014 Developer Hub",
       desc: "Full-stack developer resource platform featuring live coding playgrounds, Kotlin/React/TypeScript courses, interview prep modules, and a technical blog. Serves 500+ developers with interactive learning tools and a command palette search.",
       url: "https://agencypartner2.netlify.app/es/developer-section",
@@ -159,6 +165,10 @@ export const DEFAULT_DATA: PortfolioData = {
       date: "2024 \u2014 Present",
       desc: "Backend development with Kotlin, Spring Boot microservices, and JVM ecosystem."
     }
+  ],
+  languages: [
+    { name: "Spanish", level: "Native" },
+    { name: "English", level: "Professional \u00b7 C1" }
   ]
 };
 
@@ -264,6 +274,12 @@ export const DEFAULT_DATA_ES: PortfolioData = {
   ],
   projects: [
     {
+      title: "Yakeline Contadora \u2014 Plataforma Contable y Tributaria",
+      desc: "Plataforma biling\u00fce (ES/EN) de marketing y clientes para una contadora p\u00fablica colombiana \u2014 calculadoras interactivas de ahorro y de renta, agendamiento de citas en l\u00ednea, biblioteca de recursos descargables y un blog t\u00e9cnico. Pensada para que emprendedores, pymes y profesionales independientes optimicen sus finanzas y reduzcan su carga tributaria.",
+      url: "https://yakelincontadora.com",
+      tech: ["Next.js", "React", "TypeScript", "Firebase"]
+    },
+    {
       title: "Optimus Agency \u2014 Hub de Desarrolladores",
       desc: "Plataforma de recursos para desarrolladores con playgrounds de c\u00F3digo en vivo, cursos de Kotlin/React/TypeScript, m\u00F3dulos de preparaci\u00F3n para entrevistas y un blog t\u00E9cnico. Sirve a m\u00E1s de 500 desarrolladores con herramientas de aprendizaje interactivo.",
       url: "https://agencypartner2.netlify.app/es/developer-section",
@@ -321,6 +337,10 @@ export const DEFAULT_DATA_ES: PortfolioData = {
       date: "2024 \u2014 Presente",
       desc: "Desarrollo backend con Kotlin, microservicios Spring Boot y ecosistema JVM."
     }
+  ],
+  languages: [
+    { name: "Espa\u00f1ol", level: "Nativo" },
+    { name: "Ingl\u00e9s", level: "Profesional \u00b7 C1" }
   ]
 };
 

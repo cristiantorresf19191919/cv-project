@@ -24,6 +24,10 @@ import Blueprint from '@/components/templates/Blueprint';
 import Brutalist from '@/components/templates/Brutalist';
 import CosmicDust from '@/components/templates/CosmicDust';
 import LuminaGlass from '@/components/templates/LuminaGlass';
+import CorporateBlue from '@/components/templates/CorporateBlue';
+import OnyxSidebar from '@/components/templates/OnyxSidebar';
+import BlushEditorial from '@/components/templates/BlushEditorial';
+import SlateAmber from '@/components/templates/SlateAmber';
 import CommandPalette from '@/components/shared/CommandPalette';
 import FloatingActions from '@/components/shared/FloatingActions';
 import LiveAvailability from '@/components/shared/LiveAvailability';
@@ -67,6 +71,10 @@ const templateMap: Record<TemplateName, ComponentType> = {
   brutal: Brutalist,
   cosmic: CosmicDust,
   lumina: LuminaGlass,
+  corporate: CorporateBlue,
+  onyx: OnyxSidebar,
+  blush: BlushEditorial,
+  slate: SlateAmber,
 };
 
 export default function Home() {

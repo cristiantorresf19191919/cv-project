@@ -40,6 +40,11 @@ export interface Education {
   desc?: string;
 }
 
+export interface Language {
+  name: string;
+  level: string;
+}
+
 export interface PortfolioData {
   name: string;
   last: string;
@@ -58,6 +63,7 @@ export interface PortfolioData {
   projects: Project[];
   testimonials: Testimonial[];
   education: Education[];
+  languages?: Language[];
 }
 
 export interface PortfolioContent {

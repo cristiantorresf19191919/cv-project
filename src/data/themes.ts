@@ -134,6 +134,34 @@ export const THEMES: Record<TemplateName, ThemeConfig> = {
     accent: '#e879f9',
     labelColor: 'rgba(255,255,255,0.35)',
   },
+  corporate: {
+    bg: '#eaeef4',
+    navBg: 'rgba(234,238,244,0.92)',
+    navText: '#64748b',
+    accent: '#1d4ed8',
+    labelColor: 'rgba(0,0,0,0.3)',
+  },
+  onyx: {
+    bg: '#e7ebf2',
+    navBg: 'rgba(231,235,242,0.92)',
+    navText: '#64748b',
+    accent: '#5b7cfa',
+    labelColor: 'rgba(0,0,0,0.3)',
+  },
+  blush: {
+    bg: '#efe7db',
+    navBg: 'rgba(239,231,219,0.92)',
+    navText: '#8b7d68',
+    accent: '#b08d6a',
+    labelColor: 'rgba(0,0,0,0.3)',
+  },
+  slate: {
+    bg: '#e7e7ea',
+    navBg: 'rgba(231,231,234,0.92)',
+    navText: '#6b7280',
+    accent: '#f5a623',
+    labelColor: 'rgba(0,0,0,0.3)',
+  },
 };
 
 const DARK: TemplateCategory = 'dark';
@@ -160,4 +188,8 @@ export const TEMPLATE_LIST: TemplateInfo[] = [
   { name: 'brutal', label: 'Brutalist', dotColor: '#ef4444', desc: 'Raw concrete web brutalism', shortcut: 'u', category: LIGHT },
   { name: 'cosmic', label: 'Cosmic Dust', dotColor: '#c084fc', desc: 'Deep space starfield & nebula', shortcut: 'c', category: SPECIAL },
   { name: 'lumina', label: 'Lumina Glass', dotColor: '#e879f9', desc: 'Frosted violet glass, MacPaw style', shortcut: 'l', category: SPECIAL },
+  { name: 'corporate', label: 'Corporate Blue', dotColor: '#1d4ed8', desc: 'Corporate CV: navy sidebar & blue timeline', shortcut: 'k', category: LIGHT },
+  { name: 'onyx', label: 'Onyx Sidebar', dotColor: '#5b7cfa', desc: 'Dark-sidebar résumé, crisp white main', shortcut: 'y', category: LIGHT },
+  { name: 'blush', label: 'Blush Editorial', dotColor: '#b08d6a', desc: 'Warm cream serif CV with pill headers', shortcut: 'h', category: LIGHT },
+  { name: 'slate', label: 'Slate & Amber', dotColor: '#f5a623', desc: 'Charcoal + amber graphic-designer CV', shortcut: 'g', category: LIGHT },
 ];

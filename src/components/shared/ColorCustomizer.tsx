@@ -18,8 +18,16 @@ export default function ColorCustomizer() {
   const defaultAccent = THEMES[current].accent;
   const [customColor, setCustomColor] = useState<string | null>(null);
 
+  /* The template root carries the accent CSS vars. It lives inside
+     [data-pdf-template]; the wrapper's firstElementChild is the TL;DR bar,
+     NOT the template — targeting that silently broke recolouring. */
+  const getTemplateRoot = (): HTMLElement | null => {
+    const holder = document.querySelector('[data-pdf-template]');
+    return (holder?.firstElementChild as HTMLElement | null) ?? null;
+  };
+
   const applyColor = (color: string) => {
-    const tpl = document.querySelector('[data-pdf-target]')?.firstElementChild as HTMLElement;
+    const tpl = getTemplateRoot();
     if (!tpl) return;
     tpl.style.setProperty('--a', color);
     tpl.style.setProperty('--accent', color);
@@ -28,7 +36,7 @@ export default function ColorCustomizer() {
   };
 
   const reset = () => {
-    const tpl = document.querySelector('[data-pdf-target]')?.firstElementChild as HTMLElement;
+    const tpl = getTemplateRoot();
     if (!tpl) return;
     tpl.style.removeProperty('--a');
     tpl.style.removeProperty('--accent');

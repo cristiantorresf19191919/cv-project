@@ -4,7 +4,8 @@ import { jsPDF } from 'jspdf';
 /* ══════════════════════════════════════════════════════════
    Beautiful template-to-PDF capture — v2
    ──────────────────────────────────────────────────────────
-   Handles all 18 templates with consistent high-quality output.
+   Handles every template with consistent high-quality output.
+   Smart page breaks cut on clean rows so text is never guillotined.
 
    Key fixes for html2canvas limitations:
    • background-clip:text   → solid accent color fallback
@@ -162,42 +163,56 @@ export async function captureTemplatePDF(filename: string): Promise<void> {
       scrollY: 0,
     });
 
-    /* ── 20. Build multi-page A4 PDF ─────────────────── */
+    /* ── 20. Build multi-page A4 PDF with smart breaks ──
+       Instead of slicing at fixed A4 heights (which guillotines text and
+       photos mid-line), scan a window above each page boundary for the
+       cleanest row to cut on. A short smart-cut slice just leaves tidy
+       whitespace at the bottom of that page — like a real page break. */
     const usableW = A4_W - PDF_MARGIN * 2;
     const usableH = A4_H - PDF_MARGIN * 2;
-    const pxPerMm = canvas.width / usableW;
-    const pgH = Math.floor(usableH * pxPerMm);
-    const pages = Math.ceil(canvas.height / pgH);
+    const mmPerPx = usableW / canvas.width;       // horizontal scale (mm per px)
+    const pgH = Math.floor(usableH / mmPerPx);    // full-page slice height in px
+    const fullCtx = canvas.getContext('2d');
     const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
 
-    for (let i = 0; i < pages; i++) {
-      if (i > 0) pdf.addPage();
+    let sy = 0;
+    let firstPage = true;
+    for (let guard = 0; sy < canvas.height - 2 && guard < 300; guard++) {
+      const idealEnd = Math.min(sy + pgH, canvas.height);
+      // Only hunt for a clean cut when real content remains below.
+      const cutEnd = idealEnd < canvas.height
+        ? findSafeCut(fullCtx, canvas.width, sy, idealEnd, pgH)
+        : idealEnd;
+      const sh = cutEnd - sy;
+
+      if (!firstPage) pdf.addPage();
+      firstPage = false;
 
       // Fill page with background color
       pdf.setFillColor(bg);
       pdf.rect(0, 0, A4_W, A4_H, 'F');
 
-      const sy = i * pgH;
-      const sh = Math.min(pgH, canvas.height - sy);
-
       const pc = document.createElement('canvas');
       pc.width = canvas.width;
-      pc.height = pgH;
-
+      pc.height = sh;
       const ctx = pc.getContext('2d')!;
-      // Fill with bg for last page (may be shorter)
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, pc.width, pc.height);
       ctx.drawImage(canvas, 0, sy, canvas.width, sh, 0, 0, canvas.width, sh);
 
+      // Keep the horizontal scale — a smart-cut (shorter) slice yields a
+      // proportionally shorter image, so the page bottom stays clean.
+      const imgH = sh * mmPerPx;
       pdf.addImage(
-        pc.toDataURL('image/jpeg', 0.95),
+        pc.toDataURL('image/jpeg', 0.96),
         'JPEG',
         PDF_MARGIN,
         PDF_MARGIN,
         usableW,
-        usableH,
+        imgH,
       );
+
+      sy = cutEnd;
     }
 
     pdf.save(filename);
@@ -217,6 +232,62 @@ export async function captureTemplatePDF(filename: string): Promise<void> {
 
 function sleep(ms: number) {
   return new Promise<void>(r => setTimeout(r, ms));
+}
+
+/**
+ * Find a clean horizontal row to end a PDF page so we never slice through
+ * text or photos. Scans a window above the ideal boundary for the row with
+ * the least vertical "ink" energy: text and image edges create large
+ * row-to-row luminance jumps, while gaps AND solid fills (e.g. a full-height
+ * coloured sidebar) sit near zero — so this is column-agnostic and a solid
+ * sidebar never blocks a cut. Enforces a 55% minimum page fill and falls
+ * back to the ideal boundary when the canvas can't be read.
+ */
+function findSafeCut(
+  ctx: CanvasRenderingContext2D | null,
+  width: number,
+  start: number,
+  idealEnd: number,
+  pgH: number,
+): number {
+  if (!ctx) return idealEnd;
+  const searchWindow = Math.round(pgH * 0.18);
+  const minFill = start + Math.round(pgH * 0.55);
+  const searchTop = Math.max(minFill, idealEnd - searchWindow);
+  if (searchTop >= idealEnd - 1) return idealEnd;
+
+  const yGap = 2;                       // compare rows 2px apart
+  const bandTop = searchTop - yGap;
+  const bandH = idealEnd - bandTop;
+
+  let data: Uint8ClampedArray;
+  try {
+    data = ctx.getImageData(0, bandTop, width, bandH).data;
+  } catch {
+    return idealEnd;                    // tainted canvas — cannot inspect
+  }
+
+  const xStep = 4;                      // sample every 4th column for speed
+  const rowStride = width * 4;
+  let bestRow = idealEnd;
+  let bestEnergy = Infinity;
+  for (let r = yGap; r < bandH; r++) {
+    let energy = 0;
+    const rowOff = r * rowStride;
+    const prevOff = (r - yGap) * rowStride;
+    for (let x = 0; x < width; x += xStep) {
+      const i = rowOff + x * 4;
+      const p = prevOff + x * 4;
+      const lum = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+      const lumP = 0.299 * data[p] + 0.587 * data[p + 1] + 0.114 * data[p + 2];
+      energy += Math.abs(lum - lumP);
+    }
+    if (energy < bestEnergy) {
+      bestEnergy = energy;
+      bestRow = bandTop + r;
+    }
+  }
+  return bestRow;
 }
 
 function qsa(sel: string): HTMLElement[] {
