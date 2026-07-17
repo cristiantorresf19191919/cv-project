@@ -387,6 +387,136 @@ export function Counter({ step = 1 }: { step?: number }) {
   return <button onClick={inc}>{count}</button>;
 }`,
   },
+  {
+    tab: 'useEvent.ts',
+    lang: 'react',
+    badge: 'refactor · kill stale closures',
+    code: `// the handler in deps re-subscribed the socket
+// every render — pin it, drop it from deps.
+
+export function useEvent<A extends unknown[], R>(
+  fn: (...args: A) => R
+) {
+  const ref = useRef(fn);
+  useLayoutEffect(() => {
+    ref.current = fn;
+  });
+  return useCallback((...args: A) => ref.current(...args), []);
+}`,
+  },
+  {
+    tab: 'SearchResults.tsx',
+    lang: 'react',
+    badge: 'refactor · debounce → useDeferredValue',
+    code: `// was: setTimeout debounce + isStale flags
+export function SearchResults({ query }: { query: string }) {
+  const deferred = useDeferredValue(query);
+  const stale = query !== deferred;
+  const hits = useMemo(() => search(deferred), [deferred]);
+
+  return (
+    <ul style={{ opacity: stale ? 0.5 : 1 }}>
+      {hits.map((h) => <Row key={h.id} hit={h} />)}
+    </ul>
+  );
+}`,
+  },
+  {
+    tab: 'Field.tsx',
+    lang: 'react',
+    badge: 'refactor · clean imperative handle',
+    code: `export const Field = forwardRef<FieldHandle, Props>(
+  function Field(props, ref) {
+    const input = useRef<HTMLInputElement>(null);
+    useImperativeHandle(ref, () => ({
+      focus: () => input.current?.focus(),
+      clear: () => { input.current!.value = ''; },
+    }), []);
+    return <input ref={input} {...props} />;
+  }
+);`,
+  },
+  {
+    tab: 'Tabs.tsx',
+    lang: 'react',
+    badge: 'refactor · props → compound components',
+    code: `// <Tabs active onChange renderTab/> → composable
+export function Tabs({ children, defaultId }: TabsProps) {
+  const [active, setActive] = useState(defaultId);
+  const api = useMemo(() => ({ active, setActive }), [active]);
+  return (
+    <TabsCtx.Provider value={api}>{children}</TabsCtx.Provider>
+  );
+}
+
+Tabs.List = TabList;
+Tabs.Tab = Tab;
+Tabs.Panel = TabPanel;`,
+  },
+  {
+    tab: 'Page.tsx',
+    lang: 'react',
+    badge: 'refactor · move state down',
+    code: `// typing re-rendered the whole tree — isolate the
+// fast-changing state in a small leaf component.
+
+function SearchBox() {
+  const [q, setQ] = useState('');
+  return <input value={q} onChange={(e) => setQ(e.target.value)} />;
+}
+
+export function Page() {
+  return (
+    <>
+      <SearchBox />
+      <ExpensiveTree /> {/* skips keypress re-renders */}
+    </>
+  );
+}`,
+  },
+  {
+    tab: 'useLocalStorage.ts',
+    lang: 'react',
+    badge: 'refactor · effect soup → one hook',
+    code: `export function useLocalStorage<T>(key: string, initial: T) {
+  const [value, setValue] = useState<T>(() => {
+    if (typeof window === 'undefined') return initial;
+    const raw = window.localStorage.getItem(key);
+    return raw ? (JSON.parse(raw) as T) : initial;
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
+
+  return [value, setValue] as const;
+}`,
+  },
+  {
+    tab: 'useHover.ts',
+    lang: 'react',
+    badge: 'refactor · render prop → hook',
+    code: `// <Hover>{(on) => ...}</Hover> → const [ref, on] = useHover()
+export function useHover<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [on, setOn] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const enter = () => setOn(true);
+    const leave = () => setOn(false);
+    el.addEventListener('pointerenter', enter);
+    el.addEventListener('pointerleave', leave);
+    return () => {
+      el.removeEventListener('pointerenter', enter);
+      el.removeEventListener('pointerleave', leave);
+    };
+  }, []);
+
+  return [ref, on] as const;
+}`,
+  },
 ];
 
 const KOTLIN_SNIPPETS: CodeSnippet[] = [
