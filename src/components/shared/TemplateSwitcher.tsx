@@ -6,27 +6,8 @@ import { useLanguage } from '@/context/LanguageContext';
 import { THEMES, TEMPLATE_LIST } from '@/data/themes';
 import { TemplateName, TemplateInfo, TemplateCategory } from '@/types/templates';
 import ColorCustomizer from '@/components/shared/ColorCustomizer';
-import ContentDensityToggle from '@/components/shared/ContentDensityToggle';
+import DownloadPDFButton from '@/components/shared/DownloadPDFButton';
 import styles from '@/styles/switcher.module.css';
-
-function CodeIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <polyline points="16 18 22 12 16 6" />
-      <polyline points="8 6 2 12 8 18" />
-    </svg>
-  );
-}
-
-function MonitorIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect width="20" height="14" x="2" y="3" rx="2" />
-      <line x1="8" x2="16" y1="21" y2="21" />
-      <line x1="12" x2="12" y1="17" y2="21" />
-    </svg>
-  );
-}
 
 function ChevronIcon({ className, open }: { className?: string; open?: boolean }) {
   return (
@@ -206,18 +187,9 @@ export default function TemplateSwitcher() {
         </span>
       </button>
 
-      <div
-        className={`${styles.kbdHint} ${isDarkNav ? styles.kbdHintDark : styles.kbdHintLight}`}
-        title="Use number keys 1-0 to switch templates"
-      >
-        <CodeIcon className={styles.kbdIcon} />
-        <MonitorIcon className={styles.kbdIcon} />
-        <span className={styles.kbdLabel}>switch</span>
-      </div>
-
       <div className={styles.divider} />
 
-      <ContentDensityToggle />
+      <DownloadPDFButton />
 
       <div className={styles.divider} />
 

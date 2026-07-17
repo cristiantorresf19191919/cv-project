@@ -108,11 +108,11 @@ export default function Home() {
             <motion.div
               key={current}
               data-pdf-target
-              initial={{ opacity: 0, x: '40%', scale: 0.98, filter: 'blur(4px)' }}
-              animate={{ opacity: 1, x: '0%', scale: 1, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, x: '-25%', scale: 0.98, filter: 'blur(3px)' }}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
               transition={{
-                duration: 0.35,
+                duration: 0.3,
                 ease: [0.16, 1, 0.3, 1] as const,
               }}
             >

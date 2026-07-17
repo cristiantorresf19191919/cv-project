@@ -102,6 +102,12 @@ export const DEFAULT_DATA: PortfolioData = {
   ],
   projects: [
     {
+      title: "SolCity \u2014 Solar Energy Platform",
+      desc: "Marketing and quoting platform for a Colombian solar-energy company \u2014 satellite-based roof-area measurement (Google Solar SDK), an interactive savings calculator, OnGrid/Hybrid/OffGrid system configurators, financing flows, and 24/7 monitoring dashboards. Helps homes and businesses cut their energy bills by 80%+.",
+      url: "https://solcity.com.co",
+      tech: ["Next.js", "React", "TypeScript", "Google Solar SDK"]
+    },
+    {
       title: "Yakeline Contadora \u2014 Accounting & Tax Platform",
       desc: "Bilingual (ES/EN) marketing and client platform for a Colombian CPA \u2014 interactive tax-savings and income-tax calculators, online appointment booking, a downloadable resource library, and a technical blog. Built to help entrepreneurs, SMEs, and independent professionals optimize their finances and reduce their tax burden.",
       url: "https://yakelincontadora.com",
@@ -273,6 +279,12 @@ export const DEFAULT_DATA_ES: PortfolioData = {
     }
   ],
   projects: [
+    {
+      title: "SolCity \u2014 Plataforma de Energ\u00eda Solar",
+      desc: "Plataforma de marketing y cotizaci\u00f3n para una empresa colombiana de energ\u00eda solar \u2014 medici\u00f3n de \u00e1rea de techo por sat\u00e9lite (Google Solar SDK), calculadora interactiva de ahorro, configuradores de sistemas OnGrid/H\u00edbrido/OffGrid, flujos de financiaci\u00f3n y dashboards de monitoreo 24/7. Ayuda a hogares y empresas a reducir su factura de energ\u00eda en m\u00e1s del 80%.",
+      url: "https://solcity.com.co",
+      tech: ["Next.js", "React", "TypeScript", "Google Solar SDK"]
+    },
     {
       title: "Yakeline Contadora \u2014 Plataforma Contable y Tributaria",
       desc: "Plataforma biling\u00fce (ES/EN) de marketing y clientes para una contadora p\u00fablica colombiana \u2014 calculadoras interactivas de ahorro y de renta, agendamiento de citas en l\u00ednea, biblioteca de recursos descargables y un blog t\u00e9cnico. Pensada para que emprendedores, pymes y profesionales independientes optimicen sus finanzas y reduzcan su carga tributaria.",

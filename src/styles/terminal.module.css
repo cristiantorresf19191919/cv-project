@@ -1,7 +1,7 @@
 .template {
   font-family: var(--font-space-mono), 'Space Mono', monospace;
   background: #0c0c0c;
-  color: #00ff41;
+  color: var(--a, #00ff41);
   min-height: 100vh;
   position: relative;
 }
@@ -14,8 +14,8 @@
     0deg,
     transparent,
     transparent 2px,
-    rgba(0, 255, 65, 0.012) 2px,
-    rgba(0, 255, 65, 0.012) 4px
+    var(--al, rgba(0, 255, 65, 0.012)) 2px,
+    var(--al, rgba(0, 255, 65, 0.012)) 4px
   );
   pointer-events: none;
   z-index: 1;
@@ -43,10 +43,10 @@
   display: inline-block;
   width: 8px;
   height: 15px;
-  background: #00ff41;
+  background: var(--a, #00ff41);
   vertical-align: middle;
   margin-left: 3px;
-  box-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
+  box-shadow: 0 0 8px var(--al, rgba(0, 255, 65, 0.5));
 }
 
 @keyframes blink {
@@ -63,11 +63,13 @@
 
 .h1 {
   font-size: 2.6rem;
-  color: #00ff41;
+  color: var(--a, #00ff41);
   line-height: 1.2;
   margin-bottom: 0.8rem;
-  text-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+  text-shadow: 0 0 15px var(--al, rgba(0, 255, 65, 0.3));
   font-family: var(--font-space-mono), 'Space Mono', monospace;
+  /* keep a long single-word name from overflowing into the IDE (no-op for current names) */
+  overflow-wrap: break-word;
 }
 
 .sub {
@@ -90,9 +92,9 @@
 .photoWrap {
   width: 240px;
   height: 290px;
-  border: 2px solid #00ff41;
+  border: 2px solid var(--a, #00ff41);
   overflow: hidden;
-  box-shadow: 0 0 25px rgba(0, 255, 65, 0.15);
+  box-shadow: 0 0 25px var(--al, rgba(0, 255, 65, 0.15));
   position: relative;
 }
 
@@ -100,7 +102,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 255, 65, 0.03), rgba(0, 255, 65, 0.1));
+  background: linear-gradient(180deg, var(--al, rgba(0, 255, 65, 0.03)), var(--al, rgba(0, 255, 65, 0.1)));
   mix-blend-mode: overlay;
   pointer-events: none;
 }
@@ -110,15 +112,15 @@
   gap: 1.5rem;
   margin-top: 1.5rem;
   padding: 0.8rem 0;
-  border-top: 1px solid rgba(0, 255, 65, 0.15);
-  border-bottom: 1px solid rgba(0, 255, 65, 0.15);
+  border-top: 1px solid var(--al, rgba(0, 255, 65, 0.15));
+  border-bottom: 1px solid var(--al, rgba(0, 255, 65, 0.15));
 }
 
 .stN {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #00ff41;
-  text-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+  color: var(--a, #00ff41);
+  text-shadow: 0 0 8px var(--al, rgba(0, 255, 65, 0.4));
 }
 
 .stL {
@@ -136,9 +138,9 @@
 
 .b1, .b2 {
   padding: 0.7rem 1.5rem;
-  border: 1px solid #00ff41;
-  background: rgba(0, 255, 65, 0.08);
-  color: #00ff41;
+  border: 1px solid var(--a, #00ff41);
+  background: var(--al, rgba(0, 255, 65, 0.08));
+  color: var(--a, #00ff41);
   font-family: var(--font-space-mono), 'Space Mono', monospace;
   font-size: 0.8rem;
   cursor: pointer;
@@ -147,7 +149,7 @@
 }
 
 .b1:hover, .b2:hover {
-  background: #00ff41;
+  background: var(--a, #00ff41);
   color: #0c0c0c;
 }
 
@@ -173,8 +175,8 @@
 
 .secTitle {
   font-size: 1.8rem;
-  color: #00ff41;
-  text-shadow: 0 0 8px rgba(0, 255, 65, 0.25);
+  color: var(--a, #00ff41);
+  text-shadow: 0 0 8px var(--al, rgba(0, 255, 65, 0.25));
   margin-top: 0.3rem;
 }
 
@@ -191,16 +193,16 @@
 
 .sc {
   position: relative;
-  background: rgba(0, 255, 65, 0.02);
+  background: var(--al, rgba(0, 255, 65, 0.02));
   padding: 2.5rem 1.3rem 1.3rem;
-  border: 1px solid rgba(0, 255, 65, 0.12);
-  box-shadow: inset 0 1px 0 rgba(0, 255, 65, 0.04);
+  border: 1px solid var(--al, rgba(0, 255, 65, 0.12));
+  box-shadow: inset 0 1px 0 var(--al, rgba(0, 255, 65, 0.04));
   transition: all 0.3s;
 }
 
 .sc:hover {
-  border-color: #00ff41;
-  box-shadow: 0 0 15px rgba(0, 255, 65, 0.08);
+  border-color: var(--a, #00ff41);
+  box-shadow: 0 0 15px var(--al, rgba(0, 255, 65, 0.08));
 }
 
 .ico {
@@ -209,7 +211,7 @@
 
 .scH3 {
   font-size: 0.95rem;
-  color: #00ff41;
+  color: var(--a, #00ff41);
   margin: 0.4rem 0;
 }
 
@@ -221,7 +223,7 @@
 
 .tg {
   padding: 0.25rem 0.5rem;
-  border: 1px solid rgba(0, 255, 65, 0.25);
+  border: 1px solid var(--al, rgba(0, 255, 65, 0.25));
   border-radius: 6px;
   font-size: 0.68rem;
   color: #66ff99;
@@ -231,13 +233,13 @@
 
 .tg:hover {
   transform: scale(1.05);
-  background: #00ff41;
+  background: var(--a, #00ff41);
   color: #0c0c0c;
 }
 
 .tgActive {
   transform: scale(1.08);
-  box-shadow: 0 0 12px rgba(0, 255, 65, 0.3);
+  box-shadow: 0 0 12px var(--al, rgba(0, 255, 65, 0.3));
 }
 
 /* Experience */
@@ -250,11 +252,11 @@
   /* isolate + hidden so the corner-tint ::after sits between bg and content */
   isolation: isolate;
   overflow: hidden;
-  background: rgba(0, 255, 65, 0.015);
+  background: var(--al, rgba(0, 255, 65, 0.015));
   padding: 1.3rem;
-  border: 1px solid rgba(0, 255, 65, 0.08);
-  border-left: 3px solid #00ff41;
-  box-shadow: inset 0 1px 0 rgba(0, 255, 65, 0.04);
+  border: 1px solid var(--al, rgba(0, 255, 65, 0.08));
+  border-left: 3px solid var(--a, #00ff41);
+  box-shadow: inset 0 1px 0 var(--al, rgba(0, 255, 65, 0.04));
   transition: all 0.5s;
 }
 
@@ -268,12 +270,12 @@
   height: 72%;
   z-index: -1;
   pointer-events: none;
-  background: radial-gradient(closest-side, rgba(0, 255, 65, 0.07), transparent 74%);
+  background: radial-gradient(closest-side, var(--al, rgba(0, 255, 65, 0.07)), transparent 74%);
 }
 
 .tcH3 {
   font-size: 1.1rem;
-  color: #00ff41;
+  color: var(--a, #00ff41);
 }
 
 .co {
@@ -335,10 +337,10 @@
 
 .ttg {
   padding: 0.2rem 0.4rem;
-  background: rgba(0, 255, 65, 0.06);
-  border: 1px solid rgba(0, 255, 65, 0.18);
+  background: var(--al, rgba(0, 255, 65, 0.06));
+  border: 1px solid var(--al, rgba(0, 255, 65, 0.18));
   font-size: 0.66rem;
-  color: #00ff41;
+  color: var(--a, #00ff41);
   letter-spacing: 0.02em;
   transition: text-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
@@ -356,14 +358,14 @@
 }
 
 .ttg:hover {
-  border-color: rgba(0, 255, 65, 0.45);
-  background: rgba(0, 255, 65, 0.13);
-  text-shadow: 0 0 8px rgba(0, 255, 65, 0.55);
+  border-color: var(--al, rgba(0, 255, 65, 0.45));
+  background: var(--al, rgba(0, 255, 65, 0.13));
+  text-shadow: 0 0 8px var(--al, rgba(0, 255, 65, 0.55));
 }
 
 .ttg:hover::before,
 .ttg:hover::after {
-  color: #00ff41;
+  color: var(--a, #00ff41);
 }
 
 /* Skill-to-experience filtering */
@@ -373,8 +375,8 @@
 }
 
 .tcHighlighted {
-  border-color: rgba(0, 255, 65, 0.5) !important;
-  box-shadow: 0 0 25px rgba(0, 255, 65, 0.15);
+  border-color: var(--al, rgba(0, 255, 65, 0.5)) !important;
+  box-shadow: 0 0 25px var(--al, rgba(0, 255, 65, 0.15));
   transition: all 0.3s ease;
 }
 
@@ -387,9 +389,9 @@
 }
 
 .cc {
-  background: rgba(0, 255, 65, 0.015);
+  background: var(--al, rgba(0, 255, 65, 0.015));
   padding: 1.2rem;
-  border: 1px solid rgba(0, 255, 65, 0.08);
+  border: 1px solid var(--al, rgba(0, 255, 65, 0.08));
   text-align: center;
 }
 
@@ -400,12 +402,12 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto 0.8rem;
-  color: #00ff41;
+  color: var(--a, #00ff41);
 }
 
 .ccH3 {
   font-size: 0.85rem;
-  color: #00ff41;
+  color: var(--a, #00ff41);
   margin-bottom: 0.2rem;
 }
 
@@ -416,7 +418,7 @@
 }
 
 .ccA:hover {
-  color: #00ff41;
+  color: var(--a, #00ff41);
   text-decoration: underline;
 }
 
@@ -437,7 +439,7 @@
 }
 
 .pc {
-  border: 1px solid rgba(0, 255, 65, 0.12);
+  border: 1px solid var(--al, rgba(0, 255, 65, 0.12));
   overflow: hidden;
   transition: all 0.3s;
   text-decoration: none;
@@ -445,16 +447,16 @@
 }
 
 .pc:hover {
-  border-color: #00ff41;
-  box-shadow: 0 0 15px rgba(0, 255, 65, 0.08);
+  border-color: var(--a, #00ff41);
+  box-shadow: 0 0 15px var(--al, rgba(0, 255, 65, 0.08));
 }
 
 .pcImg {
   width: 100%;
   height: 180px;
   position: relative;
-  background: rgba(0, 255, 65, 0.02);
-  border-bottom: 1px solid rgba(0, 255, 65, 0.08);
+  background: var(--al, rgba(0, 255, 65, 0.02));
+  border-bottom: 1px solid var(--al, rgba(0, 255, 65, 0.08));
   overflow: hidden;
 }
 
@@ -464,7 +466,7 @@
 
 .pcTitle {
   font-size: 1rem;
-  color: #00ff41;
+  color: var(--a, #00ff41);
   margin-bottom: 0.5rem;
 }
 
@@ -477,7 +479,7 @@
 }
 
 .pcLink {
-  color: #00ff41;
+  color: var(--a, #00ff41);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 1px;
@@ -517,7 +519,7 @@
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(0, 255, 65, 0.04), transparent 45%),
+    radial-gradient(ellipse at 50% 0%, var(--al, rgba(0, 255, 65, 0.04)), transparent 45%),
     radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.45) 100%);
   pointer-events: none;
   z-index: 1;
@@ -525,7 +527,7 @@
 
 /* Scoped green selection + terminal scrollbar (template only, no globals) */
 .template ::selection {
-  background: rgba(0, 255, 65, 0.28);
+  background: var(--al, rgba(0, 255, 65, 0.28));
   color: #eafff0;
   text-shadow: none;
 }
@@ -537,11 +539,11 @@
   background: #0a0a0a;
 }
 .template::-webkit-scrollbar-thumb {
-  background: rgba(0, 255, 65, 0.22);
+  background: var(--al, rgba(0, 255, 65, 0.22));
   border: 2px solid #0a0a0a;
 }
 .template::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 255, 65, 0.4);
+  background: var(--al, rgba(0, 255, 65, 0.4));
 }
 
 /* $ whoami command line above the hero name */
@@ -552,9 +554,9 @@
   margin-bottom: 0.45rem;
 }
 .cmdPrompt {
-  color: #00ff41;
+  color: var(--a, #00ff41);
   margin-right: 0.4rem;
-  text-shadow: 0 0 6px rgba(0, 255, 65, 0.45);
+  text-shadow: 0 0 6px var(--al, rgba(0, 255, 65, 0.45));
 }
 
 /* Big phosphor block cursor after the hero name */
@@ -563,22 +565,22 @@
   width: 0.55rem;
   height: 1.5rem;
   margin-left: 0.5rem;
-  background: #00ff41;
+  background: var(--a, #00ff41);
   vertical-align: -0.2rem;
-  box-shadow: 0 0 12px rgba(0, 255, 65, 0.55);
+  box-shadow: 0 0 12px var(--al, rgba(0, 255, 65, 0.55));
 }
 
 /* Phosphor glow on key headings */
 .scH3,
 .tcH3,
 .pcTitle {
-  text-shadow: 0 0 8px rgba(0, 255, 65, 0.28);
+  text-shadow: 0 0 8px var(--al, rgba(0, 255, 65, 0.28));
 }
 .ccH3 {
-  text-shadow: 0 0 6px rgba(0, 255, 65, 0.22);
+  text-shadow: 0 0 6px var(--al, rgba(0, 255, 65, 0.22));
 }
 .sc:hover .scH3 {
-  text-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
+  text-shadow: 0 0 10px var(--al, rgba(0, 255, 65, 0.4));
 }
 
 /* Skill cards -> mini terminal windows (title bar + traffic-light dots) */
@@ -589,8 +591,8 @@
   left: 0;
   right: 0;
   height: 1.9rem;
-  background: rgba(0, 255, 65, 0.04);
-  border-bottom: 1px solid rgba(0, 255, 65, 0.12);
+  background: var(--al, rgba(0, 255, 65, 0.04));
+  border-bottom: 1px solid var(--al, rgba(0, 255, 65, 0.12));
   pointer-events: none;
 }
 .sc::after {
@@ -605,7 +607,7 @@
   box-shadow: 13px 0 0 #ffbd2e, 26px 0 0 #27c93f;
 }
 .sc:hover::before {
-  background: rgba(0, 255, 65, 0.07);
+  background: var(--al, rgba(0, 255, 65, 0.07));
 }
 
 /* Skill tags -> #hashtag tokens with hover glow */
@@ -615,7 +617,7 @@
   margin-right: 1px;
 }
 .tg:hover {
-  box-shadow: 0 0 10px rgba(0, 255, 65, 0.35);
+  box-shadow: 0 0 10px var(--al, rgba(0, 255, 65, 0.35));
 }
 
 /* Terminal window chrome bar (experience + project cards) */
@@ -624,8 +626,8 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0.85rem;
-  background: rgba(0, 255, 65, 0.045);
-  border-bottom: 1px solid rgba(0, 255, 65, 0.14);
+  background: var(--al, rgba(0, 255, 65, 0.045));
+  border-bottom: 1px solid var(--al, rgba(0, 255, 65, 0.14));
 }
 .tcBar {
   margin: -1.3rem -1.3rem 1.1rem;
@@ -649,7 +651,7 @@
 /* Button phosphor glow on hover */
 .b1:hover,
 .b2:hover {
-  box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+  box-shadow: 0 0 20px var(--al, rgba(0, 255, 65, 0.4));
 }
 
 /* Contact card border-glow on hover */
@@ -657,11 +659,11 @@
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .cc:hover {
-  border-color: rgba(0, 255, 65, 0.45);
-  box-shadow: 0 0 16px rgba(0, 255, 65, 0.1);
+  border-color: var(--al, rgba(0, 255, 65, 0.45));
+  box-shadow: 0 0 16px var(--al, rgba(0, 255, 65, 0.1));
 }
 .ccA:hover {
-  text-shadow: 0 0 8px rgba(0, 255, 65, 0.45);
+  text-shadow: 0 0 8px var(--al, rgba(0, 255, 65, 0.45));
 }
 
 /* Project "> View Project" link -> underline sweep + glow */
@@ -676,20 +678,20 @@
   bottom: -3px;
   width: 100%;
   height: 1px;
-  background: #00ff41;
+  background: var(--a, #00ff41);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.35s ease;
 }
 .pc:hover .pcTitle {
-  text-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
+  text-shadow: 0 0 10px var(--al, rgba(0, 255, 65, 0.4));
 }
 .pc:hover .pcLink {
-  text-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
+  text-shadow: 0 0 8px var(--al, rgba(0, 255, 65, 0.5));
 }
 .pc:hover .pcLink::after {
   transform: scaleX(1);
-  box-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
+  box-shadow: 0 0 8px var(--al, rgba(0, 255, 65, 0.6));
 }
 
 /* Motion-only CRT effects (reduced-motion safe) */

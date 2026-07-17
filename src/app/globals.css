@@ -39,6 +39,28 @@ a {
   text-decoration: none;
 }
 
+/* Shared spinner keyframe — used by inline export/download button spinners */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Respect reduced-motion: calm the always-on animations for users who ask,
+   which also keeps low-power devices smooth. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 ::selection {
   background: rgba(212, 175, 55, 0.3);
   color: #fff;

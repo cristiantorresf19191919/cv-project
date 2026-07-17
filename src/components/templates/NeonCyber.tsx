@@ -44,14 +44,14 @@ const neonPhotoReveal = {
 };
 
 const skillHover = {
-  borderColor: '#ff0080',
+  borderColor: 'var(--a, #ff0080)',
   y: -8,
   scale: 1.03,
   transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
 };
 
 const contactHover = {
-  borderColor: '#ff0080',
+  borderColor: 'var(--a, #ff0080)',
   scale: 1.05,
   y: -4,
   transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
@@ -157,7 +157,7 @@ export default function NeonCyber() {
               <motion.a
                 key={i}
                 variants={staggerItem}
-                whileHover={{ y: -10, scale: 1.02, borderColor: '#ff0080', transition: { type: 'spring' as const, stiffness: 300, damping: 20 } }}
+                whileHover={{ y: -10, scale: 1.02, borderColor: 'var(--a, #ff0080)', transition: { type: 'spring' as const, stiffness: 300, damping: 20 } }}
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"

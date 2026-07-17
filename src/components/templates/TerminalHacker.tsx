@@ -44,13 +44,13 @@ const photoGlitch = {
 };
 
 const skillHover = {
-  borderColor: '#00ff41',
+  borderColor: 'var(--a, #00ff41)',
   y: -6,
   transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
 };
 
 const contactHover = {
-  borderColor: '#00ff41',
+  borderColor: 'var(--a, #00ff41)',
   y: -4,
   transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
 };
@@ -166,7 +166,7 @@ export default function TerminalHacker() {
               <motion.a
                 key={i}
                 variants={staggerItem}
-                whileHover={{ y: -8, borderColor: '#00ff41', transition: { type: 'spring' as const, stiffness: 300, damping: 20 } }}
+                whileHover={{ y: -8, borderColor: 'var(--a, #00ff41)', transition: { type: 'spring' as const, stiffness: 300, damping: 20 } }}
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"

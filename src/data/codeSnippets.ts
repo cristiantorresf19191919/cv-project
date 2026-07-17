@@ -263,6 +263,130 @@ export function useBusEvent<K extends keyof Events>(
   }, [type, handler]);
 }`,
   },
+  {
+    tab: 'useMediaQuery.ts',
+    lang: 'react',
+    badge: 'refactor · extract custom hook',
+    code: `// this effect was copy-pasted into 5 components
+// refactor: one hook, one source of truth
+
+export function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia(query);
+    const sync = () => setMatches(mql.matches);
+    sync();
+    mql.addEventListener('change', sync);
+    return () => mql.removeEventListener('change', sync);
+  }, [query]);
+
+  return matches;
+}`,
+  },
+  {
+    tab: 'useVisibleRows.ts',
+    lang: 'react',
+    badge: 'refactor · derive, do not sync',
+    code: `// smell: state mirrored from props with an effect
+// refactor: compute in render with useMemo
+
+export function useVisibleRows(rows: Row[], q: string) {
+  // was: const [out, setOut] = useState(rows);
+  // was: useEffect(() => setOut(filter(rows, q)));
+
+  return useMemo(() => {
+    const needle = q.trim().toLowerCase();
+    if (!needle) return rows;
+    return rows.filter((r) =>
+      r.label.toLowerCase().includes(needle)
+    );
+  }, [rows, q]);
+}`,
+  },
+  {
+    tab: 'cartReducer.ts',
+    lang: 'react',
+    badge: 'refactor · setStates → useReducer',
+    code: `// five useState calls collapsed into one reducer
+
+type Action =
+  | { type: 'add'; sku: string }
+  | { type: 'remove'; sku: string }
+  | { type: 'clear' };
+
+export function reduce(state: Cart, action: Action): Cart {
+  switch (action.type) {
+    case 'add':
+      return bump(state, action.sku, +1);
+    case 'remove':
+      return omit(state, action.sku);
+    case 'clear':
+      return {};
+  }
+}`,
+  },
+  {
+    tab: 'ThemeContext.tsx',
+    lang: 'react',
+    badge: 'refactor · prop drilling → context',
+    code: `// stop threading \`theme\` through 6 layers of props
+
+const Ctx = createContext<ThemeApi | null>(null);
+
+export function ThemeProvider({ children }: Props) {
+  const [theme, setTheme] = useState<Theme>('dark');
+  const api = useMemo<ThemeApi>(
+    () => ({ theme, toggle: () => setTheme(flip) }),
+    [theme]
+  );
+  return (
+    <Ctx.Provider value={api}>{children}</Ctx.Provider>
+  );
+}
+
+export function useTheme() {
+  const api = useContext(Ctx);
+  if (!api) throw new Error('need <ThemeProvider>');
+  return api;
+}`,
+  },
+  {
+    tab: 'PriceChart.tsx',
+    lang: 'react',
+    badge: 'refactor · memo to stop re-renders',
+    code: `// parent re-rendered this 60x/sec — not anymore
+
+export const PriceChart = memo(function PriceChart({
+  points,
+}: { points: Point[] }) {
+  const d = useMemo(() => toSvgPath(points), [points]);
+  return <path d={d} className="spark" />;
+});
+
+// stable identity so React.memo actually holds
+const onZoom = useCallback(
+  (delta: number) => setScale((s) => clamp(s + delta)),
+  []
+);`,
+  },
+  {
+    tab: 'Counter.tsx',
+    lang: 'react',
+    badge: 'refactor · class → function + hooks',
+    code: `// 40 lines of class boilerplate → 9 lines of hooks
+
+export function Counter({ step = 1 }: { step?: number }) {
+  const [count, setCount] = useState(0);
+  const inc = () => setCount((c) => c + step);
+
+  useEffect(() => {
+    document.title = \`Count: \${count}\`;
+  }, [count]);
+
+  return <button onClick={inc}>{count}</button>;
+}`,
+  },
 ];
 
 const KOTLIN_SNIPPETS: CodeSnippet[] = [
